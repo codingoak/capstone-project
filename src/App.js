@@ -1,7 +1,9 @@
+import Dashboard from './pages/Dashboard.js';
+
 function App() {
   return (
     <div className="App">
-      <h1>Welcome to my capstone-project!</h1>
+      <Dashboard />
     </div>
   );
 }
