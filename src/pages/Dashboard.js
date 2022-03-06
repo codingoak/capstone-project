@@ -9,6 +9,7 @@ function Dashboard() {
         <span>Title</span>
         <span>State</span>
       </ListHeading>
+
       <GetFetch />
       <Footer>
         <small>by Daniel Eicher</small>
@@ -34,9 +35,10 @@ const Heading = styled.h1`
 const ListHeading = styled.h2`
   display: flex;
   justify-content: space-between;
-  margin-left: 10px;
-  margin-right: 10px;
-  font-size: 24px;
+  font-size: 1px;
+  padding: 0 10px;
+  margin: 25px 10px -15px;
+  font-size: 18px;
   letter-spacing: 2px;
   border-bottom: 1px solid #0b2b40;
 `;
