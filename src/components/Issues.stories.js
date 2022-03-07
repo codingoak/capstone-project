@@ -1,11 +1,11 @@
-import IssueList from './IssueList';
+import Issues from './Issues';
 
 export default {
-  title: 'IssueList',
-  component: IssueList,
+  title: 'Issues',
+  component: Issues,
 };
 
-const Template = args => <IssueList {...args} />;
+const Template = args => <Issues {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {

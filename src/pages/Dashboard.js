@@ -2,7 +2,7 @@ import styled from 'styled-components/macro';
 import Heading from '../components/Heading';
 import LoadingAnimation from '../components/LoadingAnimation';
 import ListHeading from '../components/ListHeading';
-import IssueList from '../components/IssueList';
+import Issues from '../components/Issues';
 import Footer from '../components/Footer';
 
 function Dashboard({ issues, loading, error }) {
@@ -15,7 +15,7 @@ function Dashboard({ issues, loading, error }) {
       {issues && (
         <>
           <ListHeading />
-          <IssueList issues={issues} />
+          <Issues issues={issues} />
         </>
       )}
       {/* Error state */}

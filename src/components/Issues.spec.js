@@ -1,10 +1,10 @@
 import { render, screen } from '@testing-library/react';
-import IssueList from './IssueList';
+import Issues from './Issues';
 
-describe('IssueList', () => {
+describe('Issues', () => {
   it('renders', () => {
     render(
-      <IssueList
+      <Issues
         issues={[
           { id: 111, title: 'Teststring1', state: 'open' },
           { id: 112, title: 'Teststring2', state: 'open' },

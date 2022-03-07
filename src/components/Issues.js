@@ -1,6 +1,6 @@
 import styled from 'styled-components/macro';
 
-function IssueList({ issues }) {
+function Issues({ issues }) {
   return (
     <>
       {issues.map(issue => (
@@ -13,7 +13,7 @@ function IssueList({ issues }) {
   );
 }
 
-export default IssueList;
+export default Issues;
 
 const Wrapper = styled.div`
   grid-column: 2/4;
