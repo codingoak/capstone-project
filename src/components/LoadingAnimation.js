@@ -4,18 +4,13 @@ import logo from '../images/arrow-clockwise.svg';
 
 function LoadingAnimation() {
   return (
-    <Wrapper>
+    <>
       <Circle src={logo} width="32" height="32" alt="Loading..." />
-    </Wrapper>
+    </>
   );
 }
 
 export default LoadingAnimation;
-
-const Wrapper = styled.span`
-  display: flex;
-  justify-content: center;
-`;
 
 const TurnAnimation = keyframes`
   from { transform: rotate(-360deg); }
@@ -23,7 +18,6 @@ const TurnAnimation = keyframes`
 `;
 
 const Circle = styled.img`
-  display: flex;
   width: 32px;
   height: 32px;
 

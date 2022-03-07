@@ -8,9 +8,8 @@ export default Heading;
 
 const HeadingText = styled.h1`
   display: grid;
+  grid-column: 1/5;
   place-items: center;
-  height: 44px;
-  padding: 0;
   margin: 0;
   font-size: 24px;
   letter-spacing: 3px;

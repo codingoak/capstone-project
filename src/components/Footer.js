@@ -9,7 +9,10 @@ export default function Footer() {
 }
 
 const FooterText = styled.footer`
-  margin-top: 3rem;
+  grid-row: -1;
+  grid-column: 2;
+
+  margin-top: 20px;
   color: gray;
   text-align: center;
 `;

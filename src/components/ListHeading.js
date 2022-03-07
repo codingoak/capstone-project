@@ -2,20 +2,26 @@ import styled from 'styled-components/macro';
 
 export default function ListHeading() {
   return (
-    <ListHeadingText>
-      <span>Title</span>
-      <span>State</span>
-    </ListHeadingText>
+    <>
+      <Title>Title</Title>
+      <State>State</State>
+    </>
   );
 }
 
-const ListHeadingText = styled.h2`
-  display: flex;
-  justify-content: space-between;
-  font-size: 1px;
+const Title = styled.h2`
+  grid-column: 2/3;
+  font-size: 18px;
+  letter-spacing: 2px;
   padding: 0 10px;
-  margin: 25px 10px -15px;
+  border-bottom: 1px solid #0b2b40;
+  margin-bottom: -1px;
+`;
+
+const State = styled.h2`
+  grid-column: 3/4;
   font-size: 18px;
   letter-spacing: 2px;
   border-bottom: 1px solid #0b2b40;
+  margin-bottom: -1px;
 `;

@@ -6,8 +6,6 @@ const GlobalStyles = createGlobalStyle`
   }
 
   body {
-    display: grid;
-    grid-template-rows: 44px repeat(30, 60px);
     margin: 0;
     padding: 0;
     font-family: 'Roboto', sans-serif;

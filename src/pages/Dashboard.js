@@ -34,11 +34,12 @@ export default Dashboard;
 
 const LoadingState = styled.p`
   margin: 50px auto;
+  grid-column: 1/-1;
 `;
 
 const ErrorState = styled.p`
   margin: 50px auto;
-  text-align: center;
+  grid-column: 1/-1;
   font-size: 16px;
   color: crimson;
 `;
