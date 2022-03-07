@@ -12,7 +12,7 @@ const GlobalStyles = createGlobalStyle`
     padding: 0;
     font-family: 'Roboto', sans-serif;
     font-size: 12px;
-    color: #0B2B40;
+    color: #0b2b40;
     background-color: #EDF8FF;
   }
 `;

@@ -1,9 +1,14 @@
-import Dashboard from './pages/Dashboard.js';
+import Dashboard from './pages/Dashboard';
+import useFetch from './hooks/useFetch';
 
 function App() {
+  const { issues, loading, error } = useFetch(
+    'https://api.github.com/repos/reactjs/reactjs.org/issues'
+  );
+
   return (
     <div className="App">
-      <Dashboard />
+      <Dashboard issues={issues} loading={loading} error={error} />
     </div>
   );
 }
