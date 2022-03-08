@@ -1,4 +1,5 @@
 import styled from 'styled-components/macro';
+import pin from '../images/pin.svg';
 
 function Issues({ issues }) {
   return (
@@ -15,7 +16,7 @@ function Issues({ issues }) {
 
 export default Issues;
 
-const Wrapper = styled.div`
+const Wrapper = styled.section`
   grid-column: 2/4;
   display: grid;
   align-items: center;
