@@ -3,9 +3,9 @@
 ## Desription
 
 App to track react issues on GitHub. Show an overview of the latest issues.
-<img src="./src/images/Dashboard.png" alt="dashboard" width="300">
-<img src="./src/images/LoadingState.png" alt="dashboard" width="300">
-<img src="./src/images/ErrorState.png" alt="dashboard" width="300">
+<img src="./src/images/Dashboard.png" alt="dashboard" width="250">
+<img src="./src/images/LoadingState.png" alt="dashboard" width="250">
+<img src="./src/images/ErrorState.png" alt="dashboard" width="250">
 
 ### Tech Stack
 

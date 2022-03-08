@@ -1,15 +1,13 @@
 import styled from 'styled-components/macro';
 
-function Heading() {
+export default function Heading() {
   return <HeadingText>DASHBOARD</HeadingText>;
 }
 
-export default Heading;
-
 const HeadingText = styled.h1`
   display: grid;
-  grid-column: 1/5;
   place-items: center;
+  height: 44px;
   margin: 0;
   font-size: 24px;
   letter-spacing: 3px;

@@ -1,21 +1,18 @@
 import styled from 'styled-components/macro';
-import Heading from '../components/Heading';
 import LoadingAnimation from '../components/LoadingAnimation';
-import ListHeading from '../components/ListHeading';
+import IssueHeading from '../components/IssueHeading';
 import Issues from '../components/Issues';
-import Footer from '../components/Footer';
 
-function Dashboard({ issues, loading, error }) {
+export default function Dashboard({ issues, loading, error, togglePin }) {
   return (
     <>
-      <Heading />
       {/* Loading state */}
       {loading && <LoadingState>{LoadingAnimation()}</LoadingState>}
       {/* State after successful fetch */}
       {issues && (
         <>
-          <ListHeading />
-          <Issues issues={issues} />
+          <IssueHeading />
+          <Issues issues={issues} togglePin={togglePin} />
         </>
       )}
       {/* Error state */}
@@ -25,20 +22,19 @@ function Dashboard({ issues, loading, error }) {
           Please try again!
         </ErrorState>
       )}
-      <Footer />
     </>
   );
 }
 
-export default Dashboard;
-
 const LoadingState = styled.p`
-  margin: 50px auto;
+  margin: 100px;
+  text-align: center;
   grid-column: 1/-1;
 `;
 
 const ErrorState = styled.p`
-  margin: 50px auto;
+  margin: 100px;
+  text-align: center;
   grid-column: 1/-1;
   font-size: 16px;
   color: crimson;

@@ -1,27 +1,47 @@
 import styled from 'styled-components/macro';
+import { useState } from 'react';
+import Button from './Button';
 import pin from '../images/pin.svg';
+import pinFill from '../images/pin-fill.svg';
 
-function Issues({ issues }) {
+export default function Issues({ issues, togglePin }) {
+  // const [isPinned, setIsPinned] = useState(false);
+  const [isClicked, setIsClicked] = useState(false);
+
   return (
     <>
       {issues.map(issue => (
         <Wrapper key={issue.id} title={issue.title} state={issue.state}>
-          <Title>{issue.title}</Title>
-          <State>{issue.state}</State>
+          <IssueTitle>{issue.title}</IssueTitle>
+          <IssueState>{issue.state}</IssueState>
+          <Button onClick={() => handleClick(issue.id)}>
+            <img
+              id={issue.id}
+              src={pin}
+              // src={isPinned ? pin : pinFill}
+              alt="pin"
+              width="16"
+              heigth="16"
+            />
+          </Button>
         </Wrapper>
       ))}
     </>
   );
+
+  function handleClick(id) {
+    // event.stopPropagation();
+    togglePin(id);
+  }
 }
 
-export default Issues;
-
 const Wrapper = styled.section`
-  grid-column: 2/4;
+  margin-left: 10px;
+  margin-right: 10px;
   display: grid;
   align-items: center;
-  grid-template-columns: 1fr 60px;
-  padding: 0 10px;
+  grid-template-columns: 10px 1fr 60px 60px 10px;
+  grid-template-rows: 60px;
 
   :nth-of-type(2n) {
     background-color: #d8e4eb;
@@ -29,14 +49,14 @@ const Wrapper = styled.section`
   }
 `;
 
-const Title = styled.p`
-  grid-column: 1;
+const IssueTitle = styled.p`
+  grid-column: 2/3;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 65vw;
 `;
 
-const State = styled.p`
-  grid-column: 2;
+const IssueState = styled.p`
+  grid-column: 3;
 `;

@@ -1,9 +1,9 @@
 import { render, screen } from '@testing-library/react';
-import ListHeading from './ListHeading';
+import IssueHeading from './IssueHeading';
 
-describe('ListHeading', () => {
+describe('IssueHeading', () => {
   it('renders', () => {
-    render(<ListHeading />);
+    render(<IssueHeading />);
     expect(screen.getByText('Title', 'State')).toBeInTheDocument();
   });
 });

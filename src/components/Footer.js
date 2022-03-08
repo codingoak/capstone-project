@@ -9,9 +9,6 @@ export default function Footer() {
 }
 
 const FooterText = styled.footer`
-  grid-row: -1;
-  grid-column: 1/-1;
-  margin-top: 20px;
   color: gray;
   text-align: center;
 `;
