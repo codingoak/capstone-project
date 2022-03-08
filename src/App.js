@@ -19,5 +19,5 @@ export default App;
 const Container = styled.div`
   display: grid;
   grid-template-rows: 44px 1fr repeat(30, 60px);
-  grid-template-columns: 10px 1fr 60px 10px;
+  grid-template-columns: 10px 1fr 70px 10px;
 `;

@@ -19,7 +19,7 @@ const Wrapper = styled.div`
   grid-column: 2/4;
   display: grid;
   align-items: center;
-  grid-template-columns: 1fr 50px;
+  grid-template-columns: 1fr 60px;
   padding: 0 10px;
 
   :nth-of-type(2n) {
