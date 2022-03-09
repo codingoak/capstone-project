@@ -7,8 +7,6 @@ export default function App() {
   const [issues, setIssues] = useState([]);
   const [loading, setLoading] = useState(null);
   const [error, setError] = useState(null);
-  const [issueIds, setIssueIds] = useState([]);
-  const [isPinned, setIsPinned] = useState();
 
   useEffect(() => {
     GetFetch('https://api.github.com/repos/reactjs/reactjs.org/issues');
@@ -20,51 +18,42 @@ export default function App() {
       <Heading />
       <Dashboard
         issues={issues}
-        issueIds={issueIds}
         loading={loading}
         error={error}
         togglePin={togglePin}
-        isPinned={isPinned}
       />
       <Footer />
     </>
   );
 
-  function togglePin(buttonId) {
-    console.log('Current id', buttonId);
-    // Change value clicked
-    const nextIssueIds = issueIds.map(issueId => {
-      if (issueId.id === buttonId) {
-        return {
-          id: issueId.id,
-          clicked: !issueId.clicked,
-        };
-      } else {
-        return {
-          ...issueId,
-        };
-      }
-    });
-    setIssueIds(nextIssueIds);
-    console.log('AFTER:', nextIssueIds);
-  }
-
   function GetFetch(url) {
     setLoading(true);
-    setIssues(null);
+    // setError(null);
 
     const fetchData = async () => {
       try {
         const response = await fetch(url);
         if (response.ok) {
           const data = await response.json();
-          setIssues(data);
-          setLoading(false);
-          setIssueIds(
-            data.map(element => {
-              return { id: element.id, clicked: false };
+          setIssues(
+            data.map(issue => {
+              const foundIssue = issues.find(
+                prevIssue => prevIssue.id === issue.id
+              );
+              if (foundIssue) {
+                return {
+                  ...issue,
+                  isPinned: foundIssue.isPinned,
+                };
+              } else {
+                return {
+                  ...issue,
+                  isPinned: false,
+                };
+              }
             })
           );
+          setLoading(false);
         } else {
           throw new Error('Response not ok');
         }
@@ -75,7 +64,21 @@ export default function App() {
       }
     };
     setTimeout(() => fetchData(), 1500);
+  }
 
-    return { issues, issueIds, loading, error };
+  function togglePin(buttonId) {
+    const nextIssues = issues.map(issue => {
+      if (issue.id === buttonId) {
+        return {
+          ...issue,
+          clicked: !issue.clicked,
+        };
+      } else {
+        return {
+          ...issue,
+        };
+      }
+    });
+    setIssues(nextIssues);
   }
 }

@@ -3,13 +3,7 @@ import LoadingAnimation from '../components/LoadingAnimation';
 import IssueHeading from '../components/IssueHeading';
 import Issues from '../components/Issues';
 
-export default function Dashboard({
-  issues,
-  issueIds,
-  loading,
-  error,
-  togglePin,
-}) {
+export default function Dashboard({ issues, loading, error, togglePin }) {
   return (
     <>
       {/* Loading state */}
@@ -18,7 +12,7 @@ export default function Dashboard({
       {issues && (
         <>
           <IssueHeading />
-          <Issues issues={issues} issueIds={issueIds} togglePin={togglePin} />
+          <Issues issues={issues} togglePin={togglePin} />
         </>
       )}
       {/* Error state */}

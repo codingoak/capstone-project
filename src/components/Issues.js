@@ -3,26 +3,32 @@ import Button from './Button';
 import pin from '../images/pin.svg';
 import pinFill from '../images/pin-fill.svg';
 
-export default function Issues({ issues, issueIds, togglePin, isPinned }) {
+export default function Issues({ issues, togglePin }) {
   return (
     <>
-      {issues.map(issue => (
-        <Wrapper key={issue.id} title={issue.title} state={issue.state}>
-          <IssueTitle>{issue.title}</IssueTitle>
-          <IssueState>{issue.state}</IssueState>
-          <Button onClick={() => handleClick(issue.id)}>
-            {
-              <img
-                id={issue.id}
-                src={pinFill}
-                alt="pin"
-                width="16"
-                heigth="16"
-              />
-            }
-          </Button>
-        </Wrapper>
-      ))}
+      {issues.map(issue => {
+        const isPinned = issues.find(
+          issueId => issueId.id === issue.id
+        ).clicked;
+
+        return (
+          <Wrapper key={issue.id} title={issue.title} state={issue.state}>
+            <IssueTitle>{issue.title}</IssueTitle>
+            <IssueState>{issue.state}</IssueState>
+            <Button onClick={() => handleClick(issue.id)}>
+              {
+                <img
+                  id={issue.id}
+                  src={isPinned ? pinFill : pin}
+                  alt="pin"
+                  width="16"
+                  heigth="16"
+                />
+              }
+            </Button>
+          </Wrapper>
+        );
+      })}
     </>
   );
 
