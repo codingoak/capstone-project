@@ -1,5 +1,4 @@
-import Heading from './components/Heading';
-import Footer from './components/Footer';
+// import Heading from './components/Heading';
 import Dashboard from './pages/Dashboard';
 import { useState, useEffect } from 'react';
 
@@ -15,20 +14,18 @@ export default function App() {
 
   return (
     <>
-      <Heading />
       <Dashboard
         issues={issues}
         loading={loading}
         error={error}
         togglePin={togglePin}
       />
-      <Footer />
     </>
   );
 
   function GetFetch(url) {
     setLoading(true);
-    // setError(null);
+    setIssues(null);
 
     const fetchData = async () => {
       try {

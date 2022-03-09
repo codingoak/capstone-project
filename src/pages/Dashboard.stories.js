@@ -1,4 +1,4 @@
-import Dashboard from './Dashboard'
+import Dashboard from './Dashboard';
 
 export default {
   title: 'Dashboard',
@@ -9,4 +9,3 @@ const Template = args => <Dashboard {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {};
-    

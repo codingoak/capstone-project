@@ -2,29 +2,43 @@ import { render, screen } from '@testing-library/react';
 import Dashboard from './Dashboard';
 
 describe('Dashboard', () => {
-  it('renders the Dashboard LoadingState', () => {
-    render(<Dashboard loading={true} />);
-    expect(screen.getByAltText(/Loading/i)).toBeInTheDocument(); // Animation
+  it('renders the heading', () => {
+    render(<Dashboard />);
+    const heading = screen.getByText('DASHBOARD');
+
+    expect(heading).toBeInTheDocument();
   });
 
-  it('renders the Dashboard', () => {
+  it('renders the loading animation', () => {
+    render(<Dashboard loading={true} />);
+    const loadingAnimation = screen.getByAltText('Loading...');
+
+    expect(loadingAnimation).toBeInTheDocument();
+  });
+
+  it('renders the dashboard', () => {
     const issues = [
       { id: 111, title: 'Teststring1', state: 'open' },
-      { id: 112, title: 'Teststring2', state: 'open' },
+      { id: 112, title: 'Teststring2', state: 'close' },
+      { id: 113, title: 'Teststring3', state: 'open' },
     ];
-
     render(<Dashboard issues={issues} />);
 
-    expect(
-      screen.getByText(/Title/, /State/, /Teststring1/, /Teststring2/)
-    ).toBeInTheDocument(); // IssueHeading
-    // IssueList
+    const cards = screen.getAllByText(/Teststring/);
+    expect(cards).toHaveLength(3);
   });
 
-  it('renders the Dashboard ErrorState', () => {
+  it('renders the dashboard error message', () => {
     render(<Dashboard error={true} />);
-    expect(
-      screen.getByText(/Oops, something went wrong./i)
-    ).toBeInTheDocument(); // Error text
+    const errorState = screen.getByText(/Oops, something went wrong./i);
+
+    expect(errorState).toBeInTheDocument();
+  });
+
+  it('renders the footer', () => {
+    render(<Dashboard />);
+    const footer = screen.getByText(/Daniel Eicher/);
+
+    expect(footer).toBeInTheDocument();
   });
 });
