@@ -2,12 +2,14 @@ import Heading from './components/Heading';
 import Footer from './components/Footer';
 import Dashboard from './pages/Dashboard';
 import { useState, useEffect } from 'react';
+import { useImmer } from 'use-immer';
 
 export default function App() {
-  const [issues, setIssues] = useState(null);
+  const [issues, setIssues] = useState([]);
   const [loading, setLoading] = useState(null);
   const [error, setError] = useState(null);
-  const [IssueIds, setIssueIds] = useState([]);
+  const [IssueIds, updateIssueIds] = useImmer([]);
+  const [isPinned, setIsPinned] = useState();
 
   useEffect(() => {
     GetFetch('https://api.github.com/repos/reactjs/reactjs.org/issues');
@@ -22,13 +24,22 @@ export default function App() {
         loading={loading}
         error={error}
         togglePin={togglePin}
+        isPinned={isPinned}
       />
       <Footer />
     </>
   );
 
-  function togglePin(id) {
-    console.log('TEST', id);
+  function togglePin(buttonId) {
+    console.log('Current Id:', buttonId);
+    // Change value clicked
+    IssueIds.forEach(element => {
+      if (buttonId === element.id) {
+        element.clicked = !element.clicked;
+      }
+    });
+
+    console.log('AFTER:', IssueIds);
   }
 
   function GetFetch(url) {
@@ -42,11 +53,10 @@ export default function App() {
           const data = await response.json();
           setIssues(data);
           setLoading(false);
-          setIssueIds(
-            issues &&
-              issues.map(item => {
-                return { id: item.id, clicked: false };
-              })
+          updateIssueIds(
+            data.map(element => {
+              return { id: element.id, clicked: false };
+            })
           );
         } else {
           throw new Error('Response not ok');

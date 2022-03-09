@@ -1,13 +1,9 @@
 import styled from 'styled-components/macro';
-import { useState } from 'react';
 import Button from './Button';
 import pin from '../images/pin.svg';
 import pinFill from '../images/pin-fill.svg';
 
-export default function Issues({ issues, togglePin }) {
-  // const [isPinned, setIsPinned] = useState(false);
-  const [isClicked, setIsClicked] = useState(false);
-
+export default function Issues({ issues, togglePin, isPinned }) {
   return (
     <>
       {issues.map(issue => (
@@ -17,8 +13,7 @@ export default function Issues({ issues, togglePin }) {
           <Button onClick={() => handleClick(issue.id)}>
             <img
               id={issue.id}
-              src={pin}
-              // src={isPinned ? pin : pinFill}
+              src={isPinned ? pinFill : pin}
               alt="pin"
               width="16"
               heigth="16"
@@ -29,9 +24,8 @@ export default function Issues({ issues, togglePin }) {
     </>
   );
 
-  function handleClick(id) {
-    // event.stopPropagation();
-    togglePin(id);
+  function handleClick(buttonId) {
+    togglePin(buttonId);
   }
 }
 
