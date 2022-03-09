@@ -2,13 +2,12 @@ import Heading from './components/Heading';
 import Footer from './components/Footer';
 import Dashboard from './pages/Dashboard';
 import { useState, useEffect } from 'react';
-import { useImmer } from 'use-immer';
 
 export default function App() {
   const [issues, setIssues] = useState([]);
   const [loading, setLoading] = useState(null);
   const [error, setError] = useState(null);
-  const [IssueIds, updateIssueIds] = useImmer([]);
+  const [issueIds, setIssueIds] = useState([]);
   const [isPinned, setIsPinned] = useState();
 
   useEffect(() => {
@@ -21,6 +20,7 @@ export default function App() {
       <Heading />
       <Dashboard
         issues={issues}
+        issueIds={issueIds}
         loading={loading}
         error={error}
         togglePin={togglePin}
@@ -31,15 +31,22 @@ export default function App() {
   );
 
   function togglePin(buttonId) {
-    console.log('Current Id:', buttonId);
+    console.log('Current id', buttonId);
     // Change value clicked
-    IssueIds.forEach(element => {
-      if (buttonId === element.id) {
-        element.clicked = !element.clicked;
+    const nextIssueIds = issueIds.map(issueId => {
+      if (issueId.id === buttonId) {
+        return {
+          id: issueId.id,
+          clicked: !issueId.clicked,
+        };
+      } else {
+        return {
+          ...issueId,
+        };
       }
     });
-
-    console.log('AFTER:', IssueIds);
+    setIssueIds(nextIssueIds);
+    console.log('AFTER:', nextIssueIds);
   }
 
   function GetFetch(url) {
@@ -53,7 +60,7 @@ export default function App() {
           const data = await response.json();
           setIssues(data);
           setLoading(false);
-          updateIssueIds(
+          setIssueIds(
             data.map(element => {
               return { id: element.id, clicked: false };
             })
@@ -69,6 +76,6 @@ export default function App() {
     };
     setTimeout(() => fetchData(), 1500);
 
-    return { issues, loading, IssueIds, error };
+    return { issues, issueIds, loading, error };
   }
 }

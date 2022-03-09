@@ -3,7 +3,7 @@ import Button from './Button';
 import pin from '../images/pin.svg';
 import pinFill from '../images/pin-fill.svg';
 
-export default function Issues({ issues, togglePin, isPinned }) {
+export default function Issues({ issues, issueIds, togglePin, isPinned }) {
   return (
     <>
       {issues.map(issue => (
@@ -11,13 +11,15 @@ export default function Issues({ issues, togglePin, isPinned }) {
           <IssueTitle>{issue.title}</IssueTitle>
           <IssueState>{issue.state}</IssueState>
           <Button onClick={() => handleClick(issue.id)}>
-            <img
-              id={issue.id}
-              src={isPinned ? pinFill : pin}
-              alt="pin"
-              width="16"
-              heigth="16"
-            />
+            {
+              <img
+                id={issue.id}
+                src={pinFill}
+                alt="pin"
+                width="16"
+                heigth="16"
+              />
+            }
           </Button>
         </Wrapper>
       ))}

@@ -5,10 +5,10 @@ import Issues from '../components/Issues';
 
 export default function Dashboard({
   issues,
+  issueIds,
   loading,
   error,
   togglePin,
-  isPinned,
 }) {
   return (
     <>
@@ -18,7 +18,7 @@ export default function Dashboard({
       {issues && (
         <>
           <IssueHeading />
-          <Issues issues={issues} togglePin={togglePin} isPinned={isPinned} />
+          <Issues issues={issues} issueIds={issueIds} togglePin={togglePin} />
         </>
       )}
       {/* Error state */}
