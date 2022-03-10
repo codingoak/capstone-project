@@ -3,20 +3,19 @@ import { keyframes } from 'styled-components';
 import logo from '../images/arrow-clockwise.svg';
 import Issues from '../components/Issues';
 
-export default function Dashboard({ issues, loading, error, togglePin }) {
+export default function Dashboard({ savedIssues, loading, error, togglePin }) {
   return (
     <>
       <Heading>DASHBOARD</Heading>
-      {/* Loading state */}
       {loading && (
         <LoadingState>
           {' '}
           <Circle src={logo} width="32" height="32" alt="Loading..." />
         </LoadingState>
       )}
-      {/* State after successful fetch */}
-      {issues && <Issues issues={issues} togglePin={togglePin} />}
-      {/* Error state */}
+      {!loading && savedIssues && (
+        <Issues savedIssues={savedIssues} togglePin={togglePin} />
+      )}
       {error && (
         <ErrorState>
           Oops, something went wrong. <br />

@@ -2,7 +2,7 @@ import styled from 'styled-components/macro';
 import pin from '../images/pin.svg';
 import pinFill from '../images/pin-fill.svg';
 
-export default function Issues({ issues, togglePin }) {
+export default function Issues({ savedIssues, togglePin }) {
   return (
     <>
       <HeadingWrapper>
@@ -10,8 +10,8 @@ export default function Issues({ issues, togglePin }) {
         <HeadingState>State</HeadingState>
       </HeadingWrapper>
 
-      {issues.map(issue => {
-        const isPinned = issues.find(
+      {savedIssues.map(issue => {
+        const isPinned = savedIssues.find(
           issueId => issueId.id === issue.id
         ).clicked;
 

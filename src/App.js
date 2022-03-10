@@ -1,9 +1,10 @@
 // import Heading from './components/Heading';
 import Dashboard from './pages/Dashboard';
+import useLocalStorage from './hooks/useLocalStorage';
 import { useState, useEffect } from 'react';
 
 export default function App() {
-  const [issues, setIssues] = useState([]);
+  const [savedIssues, setSavedIssues] = useLocalStorage('savedIssues', {});
   const [loading, setLoading] = useState(null);
   const [error, setError] = useState(null);
 
@@ -14,7 +15,7 @@ export default function App() {
 
   return (
     <Dashboard
-      issues={issues}
+      savedIssues={savedIssues}
       loading={loading}
       error={error}
       togglePin={togglePin}
@@ -23,16 +24,15 @@ export default function App() {
 
   function GetFetch(url) {
     setLoading(true);
-    setIssues(null);
 
     const fetchData = async () => {
       try {
         const response = await fetch(url);
         if (response.ok) {
           const data = await response.json();
-          setIssues(
+          setSavedIssues(
             data.map(issue => {
-              const foundIssue = issues.find(
+              const foundIssue = savedIssues.find(
                 prevIssue => prevIssue.id === issue.id
               );
               if (foundIssue) {
@@ -58,22 +58,34 @@ export default function App() {
         setError(true);
       }
     };
-    setTimeout(() => fetchData(), 1500);
+    setTimeout(() => fetchData(), 2000);
   }
 
   function togglePin(buttonId) {
-    const nextIssues = issues.map(issue => {
-      if (issue.id === buttonId) {
+    const nextIssues = savedIssues.map(savedIssue => {
+      if (savedIssue.id === buttonId) {
         return {
-          ...issue,
-          clicked: !issue.clicked,
+          ...savedIssue,
+          clicked: !savedIssue.clicked,
         };
       } else {
         return {
-          ...issue,
+          ...savedIssue,
         };
       }
     });
-    setIssues(nextIssues);
+    setSavedIssues(nextIssues);
+  }
+
+  function saveToLocal(key, data) {
+    localStorage.setItem(key, JSON.stringify(data));
+  }
+
+  function loadFromLocal(key, data) {
+    try {
+      return JSON.parse(localStorage.getItem(key));
+    } catch (error) {
+      console.error('Error loading from local');
+    }
   }
 }

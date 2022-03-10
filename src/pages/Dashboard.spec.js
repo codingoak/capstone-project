@@ -17,12 +17,12 @@ describe('Dashboard', () => {
   });
 
   it('renders the dashboard', () => {
-    const issues = [
-      { id: 111, title: 'Teststring1', state: 'open' },
-      { id: 112, title: 'Teststring2', state: 'close' },
-      { id: 113, title: 'Teststring3', state: 'open' },
+    const savedIssues = [
+      { id: 111, title: 'Teststring1', state: 'open', clicked: true },
+      { id: 112, title: 'Teststring2', state: 'close', clicked: false },
+      { id: 113, title: 'Teststring3', state: 'open', clicked: true },
     ];
-    render(<Dashboard issues={issues} />);
+    render(<Dashboard savedIssues={savedIssues} />);
 
     const cards = screen.getAllByText(/Teststring/);
     expect(cards).toHaveLength(3);

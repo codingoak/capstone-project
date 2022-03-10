@@ -6,9 +6,9 @@ describe('Issues', () => {
   it('renders the heading, two issues with buttons', () => {
     render(
       <Issues
-        issues={[
-          { id: 111, title: 'Teststring1', state: 'open' },
-          { id: 112, title: 'Teststring2', state: 'close' },
+        savedIssues={[
+          { id: 111, title: 'Teststring1', state: 'open', clicked: true },
+          { id: 112, title: 'Teststring2', state: 'close', clicked: false },
         ]}
       />
     );
@@ -27,7 +27,9 @@ describe('Issues', () => {
     const callback = jest.fn();
     render(
       <Issues
-        issues={[{ id: 333, title: 'Teststring3', state: 'open' }]}
+        savedIssues={[
+          { id: 333, title: 'Teststring3', state: 'open', clicked: true },
+        ]}
         togglePin={callback}
       />
     );
