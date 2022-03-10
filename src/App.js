@@ -1,23 +1,79 @@
-import styled from 'styled-components';
+// import Heading from './components/Heading';
 import Dashboard from './pages/Dashboard';
-import useFetch from './hooks/useFetch';
+import { useState, useEffect } from 'react';
 
-function App() {
-  const { issues, loading, error } = useFetch(
-    'https://api.github.com/repos/reactjs/reactjs.org/issues'
-  );
+export default function App() {
+  const [issues, setIssues] = useState([]);
+  const [loading, setLoading] = useState(null);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    GetFetch('https://api.github.com/repos/reactjs/reactjs.org/issues');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
-    <Container className="App">
-      <Dashboard issues={issues} loading={loading} error={error} />
-    </Container>
+    <Dashboard
+      issues={issues}
+      loading={loading}
+      error={error}
+      togglePin={togglePin}
+    />
   );
+
+  function GetFetch(url) {
+    setLoading(true);
+    setIssues(null);
+
+    const fetchData = async () => {
+      try {
+        const response = await fetch(url);
+        if (response.ok) {
+          const data = await response.json();
+          setIssues(
+            data.map(issue => {
+              const foundIssue = issues.find(
+                prevIssue => prevIssue.id === issue.id
+              );
+              if (foundIssue) {
+                return {
+                  ...issue,
+                  isPinned: foundIssue.isPinned,
+                };
+              } else {
+                return {
+                  ...issue,
+                  isPinned: false,
+                };
+              }
+            })
+          );
+          setLoading(false);
+        } else {
+          throw new Error('Response not ok');
+        }
+      } catch (error) {
+        console.error(error);
+        setLoading(false);
+        setError(true);
+      }
+    };
+    setTimeout(() => fetchData(), 1500);
+  }
+
+  function togglePin(buttonId) {
+    const nextIssues = issues.map(issue => {
+      if (issue.id === buttonId) {
+        return {
+          ...issue,
+          clicked: !issue.clicked,
+        };
+      } else {
+        return {
+          ...issue,
+        };
+      }
+    });
+    setIssues(nextIssues);
+  }
 }
-
-export default App;
-
-const Container = styled.div`
-  display: grid;
-  grid-template-rows: 44px 1fr repeat(30, 60px);
-  grid-template-columns: 10px 1fr 70px 10px;
-`;

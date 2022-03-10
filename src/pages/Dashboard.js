@@ -1,23 +1,21 @@
 import styled from 'styled-components/macro';
-import Heading from '../components/Heading';
-import LoadingAnimation from '../components/LoadingAnimation';
-import ListHeading from '../components/ListHeading';
+import { keyframes } from 'styled-components';
+import logo from '../images/arrow-clockwise.svg';
 import Issues from '../components/Issues';
-import Footer from '../components/Footer';
 
-function Dashboard({ issues, loading, error }) {
+export default function Dashboard({ issues, loading, error, togglePin }) {
   return (
     <>
-      <Heading />
+      <Heading>DASHBOARD</Heading>
       {/* Loading state */}
-      {loading && <LoadingState>{LoadingAnimation()}</LoadingState>}
-      {/* State after successful fetch */}
-      {issues && (
-        <>
-          <ListHeading />
-          <Issues issues={issues} />
-        </>
+      {loading && (
+        <LoadingState>
+          {' '}
+          <Circle src={logo} width="32" height="32" alt="Loading..." />
+        </LoadingState>
       )}
+      {/* State after successful fetch */}
+      {issues && <Issues issues={issues} togglePin={togglePin} />}
       {/* Error state */}
       {error && (
         <ErrorState>
@@ -25,21 +23,50 @@ function Dashboard({ issues, loading, error }) {
           Please try again!
         </ErrorState>
       )}
-      <Footer />
+      <Footer>by Daniel Eicher</Footer>
     </>
   );
 }
 
-export default Dashboard;
+const Heading = styled.h1`
+  display: grid;
+  place-items: center;
+  height: 44px;
+  margin: 0;
+  font-size: 24px;
+  letter-spacing: 3px;
+  color: #eee;
+  background-color: #0b2b40;
+`;
 
 const LoadingState = styled.p`
-  margin: 50px auto;
+  margin: 100px;
+  text-align: center;
   grid-column: 1/-1;
 `;
 
+const TurnAnimation = keyframes`
+  from { transform: rotate(-360deg); }
+  to { transform: rotate(0deg); }
+`;
+
+const Circle = styled.img`
+  width: 32px;
+  height: 32px;
+
+  /* Animation */
+  animation: ${TurnAnimation} 1s ease infinite;
+`;
+
 const ErrorState = styled.p`
-  margin: 50px auto;
+  margin: 100px;
+  text-align: center;
   grid-column: 1/-1;
   font-size: 16px;
   color: crimson;
+`;
+
+const Footer = styled.footer`
+  color: gray;
+  text-align: center;
 `;
