@@ -35,8 +35,8 @@ const Heading = styled.h1`
   margin: 0;
   font-size: 24px;
   letter-spacing: 3px;
-  color: #eee;
-  background-color: #0b2b40;
+  color: var(--font-color-light);
+  background-color: var(--font-color-dark);
 `;
 
 const LoadingState = styled.p`

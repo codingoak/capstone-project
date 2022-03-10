@@ -39,7 +39,7 @@ export default function Issues({ issues, togglePin }) {
 
 const HeadingWrapper = styled.section`
   display: grid;
-  grid-template-columns: 10px 1fr 60px 60px 10px 10px;
+  grid-template-columns: 10px 1fr 52px 32px 10px 10px;
 `;
 
 const HeadingTitle = styled.h2`
@@ -47,14 +47,14 @@ const HeadingTitle = styled.h2`
   font-size: 18px;
   letter-spacing: 2px;
   padding-left: 10px;
-  border-bottom: 1px solid #0b2b40;
+  border-bottom: 1px solid var(--border-color);
 `;
 
 const HeadingState = styled.h2`
   grid-column: 3/6;
   font-size: 18px;
   letter-spacing: 2px;
-  border-bottom: 1px solid #0b2b40;
+  border-bottom: 1px solid var(--border-color);
 `;
 
 const Wrapper = styled.section`
@@ -62,11 +62,11 @@ const Wrapper = styled.section`
   margin-right: 10px;
   display: grid;
   align-items: center;
-  grid-template-columns: 10px 1fr 60px 60px 10px;
+  grid-template-columns: 10px 1fr 52px 32px 10px;
   grid-template-rows: 60px;
 
   :nth-of-type(2n) {
-    background-color: #d8e4eb;
+    background-color: var(--bg-color-light);
     border-radius: 5px;
   }
 `;
@@ -85,9 +85,10 @@ const IssueState = styled.p`
 
 const Button = styled.button`
   grid-column: 4;
-  text-align: center;
-  width: 60px;
-  height: 60px;
+  justify-self: end;
+  width: 32px;
+  height: 32px;
   background: none;
   border: none;
+  border-radius: 50%;
 `;
