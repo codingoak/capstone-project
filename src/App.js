@@ -5,25 +5,28 @@ import { useState, useEffect } from 'react';
 
 export default function App() {
   const [savedIssues, setSavedIssues] = useLocalStorage('savedIssues', {});
-  const [loading, setLoading] = useState(null);
-  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(null);
+  const [hasError, setHasError] = useState(null);
 
   useEffect(() => {
-    GetFetch('https://api.github.com/repos/reactjs/reactjs.org/issues');
+    GetFetch('https://api.github.com/repos/reactjs/reactjs.org/isues');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <Dashboard
       savedIssues={savedIssues}
-      loading={loading}
-      error={error}
+      isLoading={isLoading}
+      hasError={hasError}
+      setHasError={setHasError}
       togglePin={togglePin}
+      GetFetch={GetFetch}
     />
   );
 
   function GetFetch(url) {
-    setLoading(true);
+    setIsLoading(true);
+    setHasError(false);
 
     const fetchData = async () => {
       try {
@@ -48,14 +51,14 @@ export default function App() {
               }
             })
           );
-          setLoading(false);
+          setIsLoading(false);
         } else {
           throw new Error('Response not ok');
         }
       } catch (error) {
         console.error(error);
-        setLoading(false);
-        setError(true);
+        setIsLoading(false);
+        setHasError(true);
       }
     };
     setTimeout(() => fetchData(), 2000);
@@ -77,15 +80,15 @@ export default function App() {
     setSavedIssues(nextIssues);
   }
 
-  function saveToLocal(key, data) {
-    localStorage.setItem(key, JSON.stringify(data));
-  }
+  // function saveToLocal(key, data) {
+  //   localStorage.setItem(key, JSON.stringify(data));
+  // }
 
-  function loadFromLocal(key, data) {
-    try {
-      return JSON.parse(localStorage.getItem(key));
-    } catch (error) {
-      console.error('Error loading from local');
-    }
-  }
+  // function loadFromLocal(key, data) {
+  //   try {
+  //     return JSON.parse(localStorage.getItem(key));
+  //   } catch (error) {
+  //     console.error('Error loading from local');
+  //   }
+  // }
 }

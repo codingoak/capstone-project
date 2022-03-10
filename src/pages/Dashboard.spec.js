@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import Dashboard from './Dashboard';
 
 describe('Dashboard', () => {
@@ -10,7 +11,7 @@ describe('Dashboard', () => {
   });
 
   it('renders the loading animation', () => {
-    render(<Dashboard loading={true} />);
+    render(<Dashboard isLoading={true} />);
     const loadingAnimation = screen.getByAltText('Loading...');
 
     expect(loadingAnimation).toBeInTheDocument();
@@ -29,8 +30,8 @@ describe('Dashboard', () => {
   });
 
   it('renders the dashboard error message', () => {
-    render(<Dashboard error={true} />);
-    const errorState = screen.getByText(/Oops, something went wrong./i);
+    render(<Dashboard hasError={true} />);
+    const errorState = screen.getByText(/Oops, something went wrong/i);
 
     expect(errorState).toBeInTheDocument();
   });

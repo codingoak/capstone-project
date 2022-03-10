@@ -19,7 +19,7 @@ export default function Issues({ savedIssues, togglePin }) {
           <Wrapper key={issue.id} title={issue.title} state={issue.state}>
             <IssueTitle>{issue.title}</IssueTitle>
             <IssueState>{issue.state}</IssueState>
-            <Button onClick={() => togglePin(issue.id)}>
+            <PinButton onClick={() => togglePin(issue.id)}>
               {
                 <img
                   id={issue.id}
@@ -29,7 +29,7 @@ export default function Issues({ savedIssues, togglePin }) {
                   heigth="16"
                 />
               }
-            </Button>
+            </PinButton>
           </Wrapper>
         );
       })}
@@ -83,7 +83,7 @@ const IssueState = styled.p`
   grid-column: 3;
 `;
 
-const Button = styled.button`
+const PinButton = styled.button`
   grid-column: 4;
   justify-self: end;
   width: 32px;

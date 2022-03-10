@@ -23,7 +23,7 @@ describe('Issues', () => {
     expect(button).toHaveLength(2);
   });
 
-  it('calls callback with page name', () => {
+  it('calls callback from PinButton', () => {
     const callback = jest.fn();
     render(
       <Issues
@@ -33,9 +33,9 @@ describe('Issues', () => {
         togglePin={callback}
       />
     );
-    const button = screen.getByRole('button');
+    const PinButton = screen.getByRole('button');
 
-    userEvent.click(button);
+    userEvent.click(PinButton);
     expect(callback).toHaveBeenCalled();
   });
 });
