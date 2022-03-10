@@ -13,14 +13,12 @@ export default function App() {
   }, []);
 
   return (
-    <>
-      <Dashboard
-        issues={issues}
-        loading={loading}
-        error={error}
-        togglePin={togglePin}
-      />
-    </>
+    <Dashboard
+      issues={issues}
+      loading={loading}
+      error={error}
+      togglePin={togglePin}
+    />
   );
 
   function GetFetch(url) {

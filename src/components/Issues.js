@@ -19,7 +19,7 @@ export default function Issues({ issues, togglePin }) {
           <Wrapper key={issue.id} title={issue.title} state={issue.state}>
             <IssueTitle>{issue.title}</IssueTitle>
             <IssueState>{issue.state}</IssueState>
-            <Button onClick={() => handleClick(issue.id)}>
+            <Button onClick={() => togglePin(issue.id)}>
               {
                 <img
                   id={issue.id}
@@ -35,10 +35,6 @@ export default function Issues({ issues, togglePin }) {
       })}
     </>
   );
-
-  function handleClick(buttonId) {
-    togglePin(buttonId);
-  }
 }
 
 const HeadingWrapper = styled.section`
