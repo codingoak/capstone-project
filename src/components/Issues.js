@@ -13,7 +13,7 @@ export default function Issues({ savedIssues, togglePin }) {
       {savedIssues.map(issue => {
         const isPinned = savedIssues.find(
           issueId => issueId.id === issue.id
-        ).clicked;
+        ).isPinned;
 
         return (
           <Wrapper key={issue.id} title={issue.title} state={issue.state}>
@@ -22,7 +22,6 @@ export default function Issues({ savedIssues, togglePin }) {
             <PinButton onClick={() => togglePin(issue.id)}>
               {
                 <img
-                  id={issue.id}
                   src={isPinned ? pinFill : pin}
                   alt="pin"
                   width="16"

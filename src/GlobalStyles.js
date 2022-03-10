@@ -5,7 +5,6 @@ const GlobalStyles = createGlobalStyle`
     box-sizing: border-box;
   }
 
-
   :root {
         --bg-color-main: #EDF8FF;
         --bg-color-light: #d8e4eb;
