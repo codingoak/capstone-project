@@ -2,13 +2,6 @@ import { render, screen } from '@testing-library/react';
 import Dashboard from './Dashboard';
 
 describe('Dashboard', () => {
-  it('renders the heading', () => {
-    render(<Dashboard />);
-    const heading = screen.getByText('DASHBOARD');
-
-    expect(heading).toBeInTheDocument();
-  });
-
   it('renders the loading animation', () => {
     render(<Dashboard isLoading={true} />);
     const loadingAnimation = screen.getByAltText('Loading...');
