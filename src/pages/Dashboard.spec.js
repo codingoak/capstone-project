@@ -1,5 +1,4 @@
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import Dashboard from './Dashboard';
 
 describe('Dashboard', () => {
@@ -34,12 +33,5 @@ describe('Dashboard', () => {
     const errorState = screen.getByText(/Oops, something went wrong/i);
 
     expect(errorState).toBeInTheDocument();
-  });
-
-  it('renders the footer', () => {
-    render(<Dashboard />);
-    const footer = screen.getByText(/Daniel Eicher/);
-
-    expect(footer).toBeInTheDocument();
   });
 });

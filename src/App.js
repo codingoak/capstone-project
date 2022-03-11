@@ -23,43 +23,44 @@ export default function App() {
     />
   );
 
-  function GetFetch(url) {
+  async function GetFetch(url) {
     setIsLoading(true);
     setHasError(false);
 
-    const fetchData = async () => {
-      try {
-        const response = await fetch(url);
-        if (response.ok) {
-          const data = await response.json();
-          const fetchedData = data.map(issue => {
-            const foundIssue = savedIssues.find(
-              prevIssue => prevIssue.id === issue.id
-            );
-            if (foundIssue) {
-              return {
-                ...issue,
-                isPinned: foundIssue.isPinned,
-              };
-            } else {
-              return {
-                ...issue,
-                isPinned: false,
-              };
-            }
-          });
-          setSavedIssues(fetchedData);
-          setTimeout(() => setIsLoading(false), 2000);
-        } else {
-          throw new Error('Response not ok');
-        }
-      } catch (error) {
-        console.error(error);
-        setIsLoading(false);
-        setHasError(true);
+    try {
+      const response = await fetch(url);
+      if (response.ok) {
+        const data = await response.json();
+        const fetchedData = data.map(issue => {
+          const foundIssue = savedIssues.find(
+            prevIssue => prevIssue.id === issue.id
+          );
+          if (foundIssue) {
+            return {
+              ...issue,
+              isPinned: foundIssue.isPinned,
+            };
+          } else {
+            return {
+              ...issue,
+              isPinned: false,
+            };
+          }
+        });
+        setSavedIssues(fetchedData);
+        setTimeout(() => setIsLoading(false), 2000);
+      } else {
+        throw new Error('Response not ok');
       }
-    };
-    fetchData();
+    } catch (error) {
+      console.error(error);
+      setIsLoading(false);
+      setHasError(true);
+    }
+  }
+
+  function resetError() {
+    GetFetch('https://api.github.com/repos/reactjs/reactjs.org/issues');
   }
 
   function togglePin(buttonId) {

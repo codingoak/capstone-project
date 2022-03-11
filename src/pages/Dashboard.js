@@ -28,7 +28,6 @@ export default function Dashboard({
           <Button handleClick={resetError}>TRY AGAIN</Button>
         </ErrorContainer>
       )}
-      <Footer>by Daniel Eicher</Footer>
     </>
   );
 
@@ -52,7 +51,7 @@ const LoadingContainer = styled.div`
   margin: 100px;
   text-align: center;
   grid-column: 1/-1;
-  height: 50vh;
+  height: 70vh;
 `;
 
 const TurnAnimation = keyframes`
@@ -77,9 +76,4 @@ const ErrorContainer = styled.div`
 const ErrorState = styled.p`
   font-size: 16px;
   color: crimson;
-`;
-
-const Footer = styled.footer`
-  color: gray;
-  text-align: center;
 `;
