@@ -1,11 +1,12 @@
 // import Heading from './components/Heading';
 import Dashboard from './pages/Dashboard';
+import useLocalStorage from './hooks/useLocalStorage';
 import { useState, useEffect } from 'react';
 
 export default function App() {
-  const [issues, setIssues] = useState([]);
-  const [loading, setLoading] = useState(null);
-  const [error, setError] = useState(null);
+  const [savedIssues, setSavedIssues] = useLocalStorage('savedIssues', []);
+  const [isLoading, setIsLoading] = useState(null);
+  const [hasError, setHasError] = useState(null);
 
   useEffect(() => {
     GetFetch('https://api.github.com/repos/reactjs/reactjs.org/issues');
@@ -14,66 +15,63 @@ export default function App() {
 
   return (
     <Dashboard
-      issues={issues}
-      loading={loading}
-      error={error}
+      savedIssues={savedIssues}
+      isLoading={isLoading}
+      hasError={hasError}
       togglePin={togglePin}
+      GetFetch={GetFetch}
     />
   );
 
-  function GetFetch(url) {
-    setLoading(true);
-    setIssues(null);
+  async function GetFetch(url) {
+    setIsLoading(true);
+    setHasError(false);
 
-    const fetchData = async () => {
-      try {
-        const response = await fetch(url);
-        if (response.ok) {
-          const data = await response.json();
-          setIssues(
-            data.map(issue => {
-              const foundIssue = issues.find(
-                prevIssue => prevIssue.id === issue.id
-              );
-              if (foundIssue) {
-                return {
-                  ...issue,
-                  isPinned: foundIssue.isPinned,
-                };
-              } else {
-                return {
-                  ...issue,
-                  isPinned: false,
-                };
-              }
-            })
+    try {
+      const response = await fetch(url);
+      if (response.ok) {
+        const data = await response.json();
+        const fetchedData = data.map(issue => {
+          const foundIssue = savedIssues.find(
+            prevIssue => prevIssue.id === issue.id
           );
-          setLoading(false);
-        } else {
-          throw new Error('Response not ok');
-        }
-      } catch (error) {
-        console.error(error);
-        setLoading(false);
-        setError(true);
+          if (foundIssue) {
+            return {
+              ...issue,
+              isPinned: foundIssue.isPinned,
+            };
+          } else {
+            return {
+              ...issue,
+              isPinned: false,
+            };
+          }
+        });
+        setSavedIssues(fetchedData);
+        setTimeout(() => setIsLoading(false), 2000);
+      } else {
+        throw new Error('Response not ok');
       }
-    };
-    setTimeout(() => fetchData(), 1500);
+    } catch (error) {
+      console.error(error);
+      setIsLoading(false);
+      setHasError(true);
+    }
   }
 
   function togglePin(buttonId) {
-    const nextIssues = issues.map(issue => {
-      if (issue.id === buttonId) {
+    const nextIssues = savedIssues.map(savedIssue => {
+      if (savedIssue.id === buttonId) {
         return {
-          ...issue,
-          clicked: !issue.clicked,
+          ...savedIssue,
+          isPinned: !savedIssue.isPinned,
         };
       } else {
         return {
-          ...issue,
+          ...savedIssue,
         };
       }
     });
-    setIssues(nextIssues);
+    setSavedIssues(nextIssues);
   }
 }

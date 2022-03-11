@@ -2,30 +2,38 @@ import styled from 'styled-components/macro';
 import { keyframes } from 'styled-components';
 import logo from '../images/arrow-clockwise.svg';
 import Issues from '../components/Issues';
+import Button from '../components/Button';
 
-export default function Dashboard({ issues, loading, error, togglePin }) {
+export default function Dashboard({
+  savedIssues,
+  isLoading,
+  hasError,
+  togglePin,
+  GetFetch,
+}) {
   return (
     <>
       <Heading>DASHBOARD</Heading>
-      {/* Loading state */}
-      {loading && (
-        <LoadingState>
-          {' '}
+      {isLoading && (
+        <LoadingContainer>
           <Circle src={logo} width="32" height="32" alt="Loading..." />
-        </LoadingState>
+        </LoadingContainer>
       )}
-      {/* State after successful fetch */}
-      {issues && <Issues issues={issues} togglePin={togglePin} />}
-      {/* Error state */}
-      {error && (
-        <ErrorState>
-          Oops, something went wrong. <br />
-          Please try again!
-        </ErrorState>
+      {!isLoading && !hasError && savedIssues && (
+        <Issues savedIssues={savedIssues} togglePin={togglePin} />
       )}
-      <Footer>by Daniel Eicher</Footer>
+      {hasError && (
+        <ErrorContainer>
+          <ErrorState>Oops, something went wrong</ErrorState>
+          <Button handleClick={resetError}>TRY AGAIN</Button>
+        </ErrorContainer>
+      )}
     </>
   );
+
+  function resetError() {
+    GetFetch('https://api.github.com/repos/reactjs/reactjs.org/issues');
+  }
 }
 
 const Heading = styled.h1`
@@ -35,14 +43,15 @@ const Heading = styled.h1`
   margin: 0;
   font-size: 24px;
   letter-spacing: 3px;
-  color: #eee;
-  background-color: #0b2b40;
+  color: var(--font-color-light);
+  background-color: var(--font-color-dark);
 `;
 
-const LoadingState = styled.p`
+const LoadingContainer = styled.div`
   margin: 100px;
   text-align: center;
   grid-column: 1/-1;
+  height: 70vh;
 `;
 
 const TurnAnimation = keyframes`
@@ -58,15 +67,13 @@ const Circle = styled.img`
   animation: ${TurnAnimation} 1s ease infinite;
 `;
 
-const ErrorState = styled.p`
-  margin: 100px;
-  text-align: center;
-  grid-column: 1/-1;
-  font-size: 16px;
-  color: crimson;
+const ErrorContainer = styled.div`
+  display: grid;
+  place-items: center;
+  height: 70vh;
 `;
 
-const Footer = styled.footer`
-  color: gray;
-  text-align: center;
+const ErrorState = styled.p`
+  font-size: 16px;
+  color: crimson;
 `;
