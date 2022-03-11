@@ -9,7 +9,7 @@ export default function App() {
   const [hasError, setHasError] = useState(null);
 
   useEffect(() => {
-    GetFetch('ttps://api.github.com/repos/reactjs/reactjs.org/issues');
+    GetFetch('https://api.github.com/repos/reactjs/reactjs.org/issues');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -57,10 +57,6 @@ export default function App() {
       setIsLoading(false);
       setHasError(true);
     }
-  }
-
-  function resetError() {
-    GetFetch('https://api.github.com/repos/reactjs/reactjs.org/issues');
   }
 
   function togglePin(buttonId) {
