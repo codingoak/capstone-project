@@ -1,6 +1,6 @@
-import styled from 'styled-components/macro';
-import Select from 'react-select';
+// import styled from 'styled-components/macro';
 import Heading from './components/Heading';
+import Selection from './components/Selection';
 import Dashboard from './pages/Dashboard';
 import useLocalStorage from './hooks/useLocalStorage';
 import { useState, useEffect } from 'react';
@@ -17,18 +17,13 @@ export default function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedProject]);
 
-  function loadFromLocal(key) {
-    try {
-      return JSON.parse(localStorage.getItem(key));
-    } catch (error) {
-      console.error('Load from local failed', error);
-    }
-  }
-
   return (
     <>
       <Heading>DASHBOARD</Heading>
-      <Selection />
+      <Selection
+        selectedProject={selectedProject}
+        setSelectedProject={setSelectedProject}
+      />
       {selectedProject && (
         <Dashboard
           selectedProject={selectedProject}
@@ -41,6 +36,14 @@ export default function App() {
       )}
     </>
   );
+
+  function loadFromLocal(key) {
+    try {
+      return JSON.parse(localStorage.getItem(key));
+    } catch (error) {
+      console.error('Load from local failed', error);
+    }
+  }
 
   async function GetFetch(url) {
     setIsLoading(true);
@@ -66,61 +69,24 @@ export default function App() {
       setIsLoading(false);
       setHasError(true);
     }
-  }
 
-  function findIssuesFromData(source, data) {
-    const fetchedData = data.map(issue => {
-      const foundIssue = source.find(prevIssue => prevIssue.id === issue.id);
-      if (foundIssue) {
-        return {
-          ...issue,
-          isPinned: foundIssue.isPinned,
-        };
-      } else {
-        return {
-          ...issue,
-          isPinned: false,
-        };
-      }
-    });
-    setSavedIssues(fetchedData);
-  }
-
-  function Selection() {
-    const handleChange = e => {
-      setSelectedProject(e.value);
-    };
-    const options = [
-      {
-        label: 'REACT',
-        value: 'https://api.github.com/repos/reactjs/reactjs.org/issues',
-      },
-      {
-        label: 'STYLED-COMPONENTS',
-        value:
-          'https://api.github.com/repos/styled-components/styled-components/issues',
-      },
-      {
-        label: 'NODE.JS',
-        value: 'https://api.github.com/repos/nodejs/node/issues',
-      },
-      {
-        label: 'EXPRESS.JS',
-        value: 'https://api.github.com/repos/expressjs/express/issues',
-      },
-    ];
-
-    return (
-      <SelectionContainer selectedProject={selectedProject}>
-        <Select
-          options={options}
-          value={options.find(obj => obj.value === selectedProject)}
-          onChange={handleChange}
-          aria-label="choose a project"
-          name="projects"
-        />
-      </SelectionContainer>
-    );
+    function findIssuesFromData(source, data) {
+      const fetchedData = data.map(issue => {
+        const foundIssue = source.find(prevIssue => prevIssue.id === issue.id);
+        if (foundIssue) {
+          return {
+            ...issue,
+            isPinned: foundIssue.isPinned,
+          };
+        } else {
+          return {
+            ...issue,
+            isPinned: false,
+          };
+        }
+      });
+      setSavedIssues(fetchedData);
+    }
   }
 
   function togglePin(buttonId) {
@@ -139,9 +105,3 @@ export default function App() {
     setSavedIssues(nextIssues);
   }
 }
-
-const SelectionContainer = styled.form`
-  margin: 15px 10px 0;
-  text-align: center;
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-`;
