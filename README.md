@@ -4,6 +4,12 @@
 
 App for tracking react issues. MyTracker fetches data on GitHub and saves it to local storage.
 A dashboard shows an overview of the latest issues and the individual issues can be pinned.
+You can choose between four different projects:
+
+- React.js
+- styled-components
+- Node.js
+- Express.js
 
 <img src="./src/images/Dashboard.png" alt="dashboard" width="200"> <img src="./src/images/LoadingState.png" alt="dashboard" width="200"> <img src="./src/images/ErrorState.png" alt="dashboard" width="200">
 

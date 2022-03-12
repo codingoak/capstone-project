@@ -53,11 +53,9 @@ export default function App() {
       const response = await fetch(url);
       if (response.ok) {
         const data = await response.json();
-        // If no data in the local storage
         if (!loadFromLocal(selectedProject)) {
           findIssuesFromData(savedIssues, data);
         } else {
-          // If saved data in the local storage
           findIssuesFromData(loadFromLocal(selectedProject), data);
         }
         setTimeout(() => setIsLoading(false), 2000);
@@ -70,9 +68,11 @@ export default function App() {
       setHasError(true);
     }
 
-    function findIssuesFromData(source, data) {
+    function findIssuesFromData(prevData, data) {
       const fetchedData = data.map(issue => {
-        const foundIssue = source.find(prevIssue => prevIssue.id === issue.id);
+        const foundIssue = prevData.find(
+          prevIssue => prevIssue.id === issue.id
+        );
         if (foundIssue) {
           return {
             ...issue,

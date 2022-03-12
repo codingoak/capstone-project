@@ -1,7 +1,6 @@
 import styled from 'styled-components/macro';
 import { keyframes } from 'styled-components';
 import logo from '../images/arrow-clockwise.svg';
-// import Selection from '../components/Selection';
 import Issues from '../components/Issues';
 import Button from '../components/Button';
 
@@ -29,16 +28,13 @@ export default function Dashboard({
       {hasError && (
         <ErrorContainer>
           <ErrorState>Oops, something went wrong</ErrorState>
-          <Button handleClick={resetError}>TRY AGAIN</Button>
+          <Button handleClick={() => GetFetch(selectedProject)}>
+            TRY AGAIN
+          </Button>
         </ErrorContainer>
       )}
     </>
   );
-
-  function resetError() {
-    GetFetch(selectedProject);
-    // GetFetch('https://api.github.com/repos/reactjs/reactjs.org/issues');
-  }
 }
 
 const LoadingContainer = styled.div`

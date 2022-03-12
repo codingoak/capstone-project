@@ -40,7 +40,7 @@ export default function Selection({ selectedProject, setSelectedProject }) {
 }
 
 const SelectionContainer = styled.form`
-  margin: 15px 10px 0;
+  margin: 20px 10px 10px;
   text-align: center;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 `;

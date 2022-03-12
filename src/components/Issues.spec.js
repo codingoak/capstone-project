@@ -7,8 +7,8 @@ describe('Issues', () => {
     render(
       <Issues
         savedIssues={[
-          { id: 111, title: 'Teststring1', state: 'open', clicked: true },
-          { id: 112, title: 'Teststring2', state: 'close', clicked: false },
+          { id: 111, title: 'Teststring1', state: 'open', sPinned: true },
+          { id: 112, title: 'Teststring2', state: 'close', sPinned: false },
         ]}
       />
     );
