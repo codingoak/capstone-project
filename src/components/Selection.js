@@ -8,21 +8,41 @@ export default function Selection({ selectedProject, setSelectedProject }) {
 
   const options = [
     {
-      label: 'REACT',
+      label: 'React',
       value: 'https://api.github.com/repos/reactjs/reactjs.org/issues',
     },
     {
-      label: 'STYLED-COMPONENTS',
+      label: 'styled-components',
       value:
         'https://api.github.com/repos/styled-components/styled-components/issues',
     },
     {
-      label: 'NODE.JS',
+      label: 'git',
+      value: 'https://api.github.com/repos/git/git/issues',
+    },
+    {
+      label: 'Node.js',
       value: 'https://api.github.com/repos/nodejs/node/issues',
     },
     {
-      label: 'EXPRESS.JS',
+      label: 'Express',
       value: 'https://api.github.com/repos/expressjs/express/issues',
+    },
+    {
+      label: 'Angular',
+      value: 'https://api.github.com/repos/angular/angular/issues',
+    },
+    {
+      label: 'Babel',
+      value: 'https://api.github.com/repos/babel/babel/issues',
+    },
+    {
+      label: 'Sass',
+      value: 'https://api.github.com/repos/sass/sass/issues',
+    },
+    {
+      label: 'ESLint',
+      value: 'https://api.github.com/repos/eslint/eslint/issues',
     },
   ];
 
