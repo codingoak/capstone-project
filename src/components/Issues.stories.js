@@ -7,10 +7,16 @@ export default {
 
 const Template = args => <Issues {...args} />;
 
-export const Default = Template.bind({});
-Default.args = {
+export const issueNotPinned = Template.bind({});
+issueNotPinned.args = {
+  savedIssues: [
+    { title: 'This is an issue title', state: 'open', isPinned: false },
+  ],
+};
+
+export const issuePinned = Template.bind({});
+issuePinned.args = {
   savedIssues: [
     { title: 'This is an issue title', state: 'open', isPinned: true },
-    { title: 'This is another issue title', state: 'close', isPinned: false },
   ],
 };
