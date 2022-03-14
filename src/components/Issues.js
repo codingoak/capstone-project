@@ -10,16 +10,20 @@ export default function Issues({ savedIssues, togglePin }) {
         <HeadingState>State</HeadingState>
       </HeadingWrapper>
 
-      {savedIssues.map(issue => {
+      {savedIssues.map(savedIssue => {
         const isPinned = savedIssues.find(
-          issueId => issueId.id === issue.id
+          issueId => issueId.id === savedIssue.id
         ).isPinned;
 
         return (
-          <Wrapper key={issue.id} title={issue.title} state={issue.state}>
-            <IssueTitle>{issue.title}</IssueTitle>
-            <IssueState>{issue.state}</IssueState>
-            <PinButton onClick={() => togglePin(issue.id)}>
+          <Wrapper
+            key={savedIssue.id}
+            title={savedIssue.title}
+            state={savedIssue.state}
+          >
+            <IssueTitle>{savedIssue.title}</IssueTitle>
+            <IssueState>{savedIssue.state}</IssueState>
+            <PinButton onClick={() => togglePin(savedIssue.id)}>
               {
                 <img
                   src={isPinned ? pinFill : pin}

@@ -2,16 +2,32 @@
 
 ## Desription
 
-App for tracking react issues. MyTracker fetches data on GitHub and saves it to local storage.
-A dashboard shows an overview of the latest issues and the individual issues can be pinned.
+App for tracking react issues. MyTracker fetches data on GitHub. A dashboard shows an overview of the latest issues and the individual issues can be pinned. The data is stored in local storage.
 
-<img src="./src/images/Dashboard.png" alt="dashboard" width="200"> <img src="./src/images/LoadingState.png" alt="dashboard" width="200"> <img src="./src/images/ErrorState.png" alt="dashboard" width="200">
+You can choose between four different projects:
+
+- React
+- styled-components
+- git
+- Node.js
+- Express.js
+- Angular
+- Babel
+- Sass
+- ESLint
+
+<img src="./src/images/StartScreen.png" alt="start screen" width="200">
+<img src="./src/images/Selection.png" alt="selection" width="200">
+<img src="./src/images/Dashboard.png" alt="dashboard" width="200">
+<img src="./src/images/LoadingState.png" alt="loading state" width="200">
+<img src="./src/images/ErrorState.png" alt="error state" width="200">
 
 ### Tech Stack
 
 - React
 - Storybook
 - styled-components
+- react-select
 
 ### Installation
 

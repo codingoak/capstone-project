@@ -10,42 +10,32 @@ export default function Dashboard({
   hasError,
   togglePin,
   GetFetch,
+  selectedProject,
 }) {
   return (
     <>
-      <Heading>DASHBOARD</Heading>
       {isLoading && (
         <LoadingContainer>
           <Circle src={logo} width="32" height="32" alt="Loading..." />
         </LoadingContainer>
       )}
       {!isLoading && !hasError && savedIssues && (
-        <Issues savedIssues={savedIssues} togglePin={togglePin} />
+        <>
+          {/* <Selection /> */}
+          <Issues savedIssues={savedIssues} togglePin={togglePin} />
+        </>
       )}
       {hasError && (
         <ErrorContainer>
           <ErrorState>Oops, something went wrong</ErrorState>
-          <Button handleClick={resetError}>TRY AGAIN</Button>
+          <Button handleClick={() => GetFetch(selectedProject)}>
+            TRY AGAIN
+          </Button>
         </ErrorContainer>
       )}
     </>
   );
-
-  function resetError() {
-    GetFetch('https://api.github.com/repos/reactjs/reactjs.org/issues');
-  }
 }
-
-const Heading = styled.h1`
-  display: grid;
-  place-items: center;
-  height: 44px;
-  margin: 0;
-  font-size: 24px;
-  letter-spacing: 3px;
-  color: var(--font-color-light);
-  background-color: var(--font-color-dark);
-`;
 
 const LoadingContainer = styled.div`
   margin: 100px;

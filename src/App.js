@@ -1,27 +1,49 @@
-// import Heading from './components/Heading';
+// import styled from 'styled-components/macro';
+import Heading from './components/Heading';
+import Selection from './components/Selection';
 import Dashboard from './pages/Dashboard';
 import useLocalStorage from './hooks/useLocalStorage';
 import { useState, useEffect } from 'react';
 
 export default function App() {
-  const [savedIssues, setSavedIssues] = useLocalStorage('savedIssues', []);
-  const [isLoading, setIsLoading] = useState(null);
-  const [hasError, setHasError] = useState(null);
+  const [selectedProject, setSelectedProject] = useState('');
+  const [savedIssues, setSavedIssues] = useLocalStorage(selectedProject, []);
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
-    GetFetch('https://api.github.com/repos/reactjs/reactjs.org/issues');
+    loadFromLocal(selectedProject);
+    GetFetch(selectedProject);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [selectedProject]);
 
   return (
-    <Dashboard
-      savedIssues={savedIssues}
-      isLoading={isLoading}
-      hasError={hasError}
-      togglePin={togglePin}
-      GetFetch={GetFetch}
-    />
+    <>
+      <Heading>DASHBOARD</Heading>
+      <Selection
+        selectedProject={selectedProject}
+        setSelectedProject={setSelectedProject}
+      />
+      {selectedProject && (
+        <Dashboard
+          selectedProject={selectedProject}
+          savedIssues={savedIssues}
+          isLoading={isLoading}
+          hasError={hasError}
+          togglePin={togglePin}
+          GetFetch={GetFetch}
+        />
+      )}
+    </>
   );
+
+  function loadFromLocal(key) {
+    try {
+      return JSON.parse(localStorage.getItem(key));
+    } catch (error) {
+      console.error('Load from local failed', error);
+    }
+  }
 
   async function GetFetch(url) {
     setIsLoading(true);
@@ -31,31 +53,39 @@ export default function App() {
       const response = await fetch(url);
       if (response.ok) {
         const data = await response.json();
-        const fetchedData = data.map(issue => {
-          const foundIssue = savedIssues.find(
-            prevIssue => prevIssue.id === issue.id
-          );
-          if (foundIssue) {
-            return {
-              ...issue,
-              isPinned: foundIssue.isPinned,
-            };
-          } else {
-            return {
-              ...issue,
-              isPinned: false,
-            };
-          }
-        });
-        setSavedIssues(fetchedData);
+        if (!loadFromLocal(selectedProject)) {
+          findIssuesFromData(savedIssues, data);
+        } else {
+          findIssuesFromData(loadFromLocal(selectedProject), data);
+        }
         setTimeout(() => setIsLoading(false), 2000);
       } else {
         throw new Error('Response not ok');
       }
     } catch (error) {
-      console.error(error);
+      selectedProject && console.error(error);
       setIsLoading(false);
       setHasError(true);
+    }
+
+    function findIssuesFromData(prevData, data) {
+      const fetchedData = data.map(issue => {
+        const foundIssue = prevData.find(
+          prevIssue => prevIssue.id === issue.id
+        );
+        if (foundIssue) {
+          return {
+            ...issue,
+            isPinned: foundIssue.isPinned,
+          };
+        } else {
+          return {
+            ...issue,
+            isPinned: false,
+          };
+        }
+      });
+      setSavedIssues(fetchedData);
     }
   }
 
