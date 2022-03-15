@@ -14,7 +14,7 @@ export default function Dashboard({
   selectedProject,
 }) {
   return (
-    <>
+    <main>
       {isLoading && (
         <LoadingContainer>
           <Circle src={logo} width="32" height="32" alt="Loading..." />
@@ -31,7 +31,7 @@ export default function Dashboard({
           </Button>
         </ErrorContainer>
       )}
-    </>
+    </main>
   );
 }
 

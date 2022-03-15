@@ -111,9 +111,7 @@ export default function App() {
     }
   }
 
-  function togglePin(e, buttonId) {
-    console.log(e);
-    e.stopPropagation();
+  function togglePin(buttonId) {
     const nextIssues = savedIssues.map(savedIssue => {
       if (savedIssue.id === buttonId) {
         return {

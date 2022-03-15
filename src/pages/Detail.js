@@ -35,7 +35,9 @@ export default function Detail({ savedIssue }) {
         <dd>{savedIssue.milestone}</dd>
         <dt>URL:</dt>
         <dd>
-          <a href={savedIssue.html_url}>{savedIssue.html_url}</a>
+          <a href={savedIssue.html_url} target="_blank" rel="noreferrer">
+            {savedIssue.html_url}
+          </a>
         </dd>
         <dt>Labels:</dt>
         {savedIssue.labels?.map(label => (
@@ -45,7 +47,9 @@ export default function Detail({ savedIssue }) {
         <dd>{savedIssue.comments}</dd>
         {savedIssue.comments ? (
           <dd>
-            <a href={savedIssue.comments_url}>{savedIssue.comments_url}</a>
+            <a href={savedIssue.comments_url} target="_blank" rel="noreferrer">
+              {savedIssue.comments_url}
+            </a>
           </dd>
         ) : (
           <dd>No comments available</dd>
@@ -55,7 +59,7 @@ export default function Detail({ savedIssue }) {
   );
 }
 
-const Wrapper = styled.div`
+const Wrapper = styled.main`
   margin: 15px;
 `;
 

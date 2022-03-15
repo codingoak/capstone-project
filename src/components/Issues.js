@@ -25,11 +25,11 @@ export default function Issues({ savedIssues, togglePin }) {
           >
             <IssueTitle>{savedIssue.title}</IssueTitle>
             <IssueState>{savedIssue.state}</IssueState>
+
             <PinButton
               onClick={e => {
-                // e.stopPropagation();
-                togglePin(e, savedIssue.id);
-                // console.log(e);
+                e.stopPropagation(); // So funktioniert es leider nicht
+                togglePin(savedIssue.id);
               }}
             >
               {
