@@ -24,6 +24,7 @@ Default.args = {
     state: 'open',
     milstone: [],
     html_url: 'https://github.com/reactjs/reactjs.org/pull/4458',
+    labels: [{ name: 'beta' }, { name: 'CLA signed' }],
     comments: 2,
     comments_url:
       'https://api.github.com/repos/reactjs/reactjs.org/issues/4458/comments',

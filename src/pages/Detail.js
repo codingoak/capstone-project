@@ -37,10 +37,10 @@ export default function Detail({ savedIssue }) {
         <dd>
           <a href={savedIssue.html_url}>{savedIssue.html_url}</a>
         </dd>
-        {/* <dt>Labels:</dt>
-        {savedIssue.labels.map(label => (
-          <dd key={savedIssue.id + savedIssue.title}>{label}</dd>
-        ))} */}
+        <dt>Labels:</dt>
+        {savedIssue.labels?.map(label => (
+          <dd key={savedIssue.id + savedIssue.title}>{label.name}</dd>
+        ))}
         <dt>Comments:</dt>
         <dd>{savedIssue.comments}</dd>
         {savedIssue.comments ? (
