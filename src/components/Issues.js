@@ -71,7 +71,7 @@ const Wrapper = styled.div`
   margin-right: 10px;
   display: grid;
   align-items: center;
-  grid-template-columns: 10px 1fr 52px 32px 10px;
+  grid-template-columns: 10px 1fr 52px 42px;
   grid-template-rows: 60px;
 
   :nth-of-type(2n) {
@@ -84,7 +84,8 @@ const Link = styled(NavLink)`
   display: inherit;
   align-items: center;
   grid-column: 1 /4;
-  grid-template-columns: 10px 1fr 52px 32px 10px;
+  grid-template-columns: 10px 1fr 52px;
+  grid-template-rows: 60px;
 
   &:link,
   &:visited,
@@ -96,21 +97,21 @@ const Link = styled(NavLink)`
 `;
 
 const IssueTitle = styled.p`
-  grid-column: 2/4;
+  grid-column: 2/3;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 `;
 
 const IssueState = styled.div`
-  grid-column: 4;
+  grid-column: 3;
 `;
 
 const PinButton = styled.button`
-  grid-column: 4;
+  grid-column: 4/6;
   justify-self: end;
-  width: 32px;
-  height: 32px;
+  width: 42px;
+  height: 42px;
   background: none;
   border: none;
   border-radius: 50%;

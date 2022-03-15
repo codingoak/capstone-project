@@ -1,5 +1,4 @@
 import styled from 'styled-components/macro';
-// import { NavLink } from 'react-router-dom';
 import { keyframes } from 'styled-components';
 import logo from '../images/arrow-clockwise.svg';
 import Issues from '../components/Issues';
