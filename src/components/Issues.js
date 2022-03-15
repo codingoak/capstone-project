@@ -1,4 +1,5 @@
 import styled from 'styled-components/macro';
+import { NavLink } from 'react-router-dom';
 import pin from '../images/pin.svg';
 import pinFill from '../images/pin-fill.svg';
 
@@ -21,17 +22,21 @@ export default function Issues({ savedIssues, togglePin }) {
             title={savedIssue.title}
             state={savedIssue.state}
           >
-            <IssueTitle>{savedIssue.title}</IssueTitle>
-            <IssueState>{savedIssue.state}</IssueState>
-            <PinButton onClick={() => togglePin(savedIssue.id)}>
-              {
-                <img
-                  src={isPinned ? pinFill : pin}
-                  alt="pin"
-                  width="16"
-                  heigth="16"
-                />
-              }
+            <Link to={`/${savedIssue.id}`}>
+              <IssueTitle>{savedIssue.title}</IssueTitle>
+              <IssueState>{savedIssue.state}</IssueState>
+            </Link>
+            <PinButton
+              onClick={() => {
+                togglePin(savedIssue.id);
+              }}
+            >
+              <img
+                src={isPinned ? pinFill : pin}
+                alt="pin"
+                width="16"
+                heigth="16"
+              />
             </PinButton>
           </Wrapper>
         );
@@ -41,6 +46,7 @@ export default function Issues({ savedIssues, togglePin }) {
 }
 
 const HeadingWrapper = styled.section`
+  margin-bottom: -15px;
   display: grid;
   grid-template-columns: 10px 1fr 52px 32px 10px 10px;
 `;
@@ -60,12 +66,12 @@ const HeadingState = styled.h2`
   border-bottom: 1px solid var(--border-color);
 `;
 
-const Wrapper = styled.section`
+const Wrapper = styled.div`
   margin-left: 10px;
   margin-right: 10px;
   display: grid;
   align-items: center;
-  grid-template-columns: 10px 1fr 52px 32px 10px;
+  grid-template-columns: 10px 1fr 52px 42px;
   grid-template-rows: 60px;
 
   :nth-of-type(2n) {
@@ -74,23 +80,38 @@ const Wrapper = styled.section`
   }
 `;
 
+const Link = styled(NavLink)`
+  display: inherit;
+  align-items: center;
+  grid-column: 1 /4;
+  grid-template-columns: 10px 1fr 52px;
+  grid-template-rows: 60px;
+
+  &:link,
+  &:visited,
+  &:hover,
+  &:active {
+    text-decoration: none;
+    color: inherit;
+  }
+`;
+
 const IssueTitle = styled.p`
   grid-column: 2/3;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 65vw;
 `;
 
-const IssueState = styled.p`
+const IssueState = styled.div`
   grid-column: 3;
 `;
 
 const PinButton = styled.button`
-  grid-column: 4;
+  grid-column: 4/6;
   justify-self: end;
-  width: 32px;
-  height: 32px;
+  width: 42px;
+  height: 42px;
   background: none;
   border: none;
   border-radius: 50%;

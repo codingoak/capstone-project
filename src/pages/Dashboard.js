@@ -13,17 +13,14 @@ export default function Dashboard({
   selectedProject,
 }) {
   return (
-    <>
+    <main>
       {isLoading && (
         <LoadingContainer>
           <Circle src={logo} width="32" height="32" alt="Loading..." />
         </LoadingContainer>
       )}
-      {!isLoading && !hasError && savedIssues && (
-        <>
-          {/* <Selection /> */}
-          <Issues savedIssues={savedIssues} togglePin={togglePin} />
-        </>
+      {savedIssues && !hasError && (
+        <Issues savedIssues={savedIssues} togglePin={togglePin} />
       )}
       {hasError && (
         <ErrorContainer>
@@ -33,7 +30,7 @@ export default function Dashboard({
           </Button>
         </ErrorContainer>
       )}
-    </>
+    </main>
   );
 }
 

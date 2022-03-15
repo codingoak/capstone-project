@@ -1,9 +1,10 @@
-// import styled from 'styled-components/macro';
 import Heading from './components/Heading';
 import Selection from './components/Selection';
 import Dashboard from './pages/Dashboard';
+import Detail from './pages/Detail';
 import useLocalStorage from './hooks/useLocalStorage';
 import { useState, useEffect } from 'react';
+import { Routes, Route } from 'react-router-dom';
 
 export default function App() {
   const [selectedProject, setSelectedProject] = useState('');
@@ -18,23 +19,42 @@ export default function App() {
   }, [selectedProject]);
 
   return (
-    <>
-      <Heading>DASHBOARD</Heading>
-      <Selection
-        selectedProject={selectedProject}
-        setSelectedProject={setSelectedProject}
+    <Routes>
+      <Route
+        path={'/'}
+        element={
+          <>
+            <Heading>DASHBOARD</Heading>
+            <Selection
+              selectedProject={selectedProject}
+              setSelectedProject={setSelectedProject}
+            />
+            {selectedProject && (
+              <Dashboard
+                selectedProject={selectedProject}
+                savedIssues={savedIssues}
+                isLoading={isLoading}
+                hasError={hasError}
+                togglePin={togglePin}
+                GetFetch={GetFetch}
+              />
+            )}
+          </>
+        }
       />
-      {selectedProject && (
-        <Dashboard
-          selectedProject={selectedProject}
-          savedIssues={savedIssues}
-          isLoading={isLoading}
-          hasError={hasError}
-          togglePin={togglePin}
-          GetFetch={GetFetch}
+      {savedIssues.map(savedIssue => (
+        <Route
+          key={savedIssue.id}
+          path={`${savedIssue.id}`}
+          element={
+            <>
+              <Heading>DETAIL</Heading>
+              <Detail savedIssue={savedIssue} />
+            </>
+          }
         />
-      )}
-    </>
+      ))}
+    </Routes>
   );
 
   function loadFromLocal(key) {
@@ -49,23 +69,25 @@ export default function App() {
     setIsLoading(true);
     setHasError(false);
 
-    try {
-      const response = await fetch(url);
-      if (response.ok) {
-        const data = await response.json();
-        if (!loadFromLocal(selectedProject)) {
-          findIssuesFromData(savedIssues, data);
+    if (selectedProject) {
+      try {
+        const response = await fetch(url);
+        if (response.ok) {
+          const data = await response.json();
+          if (!loadFromLocal(selectedProject)) {
+            findIssuesFromData(savedIssues, data);
+          } else {
+            findIssuesFromData(loadFromLocal(selectedProject), data);
+          }
+          setTimeout(() => setIsLoading(false), 2000);
         } else {
-          findIssuesFromData(loadFromLocal(selectedProject), data);
+          throw new Error('Response not ok');
         }
-        setTimeout(() => setIsLoading(false), 2000);
-      } else {
-        throw new Error('Response not ok');
+      } catch (error) {
+        console.error(error);
+        setIsLoading(false);
+        setHasError(true);
       }
-    } catch (error) {
-      selectedProject && console.error(error);
-      setIsLoading(false);
-      setHasError(true);
     }
 
     function findIssuesFromData(prevData, data) {

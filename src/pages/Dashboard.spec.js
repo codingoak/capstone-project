@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import Dashboard from './Dashboard';
 
 describe('Dashboard', () => {
@@ -15,14 +16,22 @@ describe('Dashboard', () => {
       { id: 112, title: 'Teststring2', state: 'close', clicked: false },
       { id: 113, title: 'Teststring3', state: 'open', clicked: true },
     ];
-    render(<Dashboard savedIssues={savedIssues} />);
+    render(
+      <MemoryRouter>
+        <Dashboard savedIssues={savedIssues} />
+      </MemoryRouter>
+    );
 
     const cards = screen.getAllByText(/Teststring/);
     expect(cards).toHaveLength(3);
   });
 
   it('renders the dashboard error message', () => {
-    render(<Dashboard hasError={true} />);
+    render(
+      <MemoryRouter>
+        <Dashboard hasError={true} />
+      </MemoryRouter>
+    );
     const errorState = screen.getByText(/Oops, something went wrong/i);
 
     expect(errorState).toBeInTheDocument();
