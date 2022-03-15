@@ -1,4 +1,5 @@
 import styled from 'styled-components/macro';
+// import { NavLink } from 'react-router-dom';
 import { keyframes } from 'styled-components';
 import logo from '../images/arrow-clockwise.svg';
 import Issues from '../components/Issues';
@@ -19,11 +20,8 @@ export default function Dashboard({
           <Circle src={logo} width="32" height="32" alt="Loading..." />
         </LoadingContainer>
       )}
-      {!isLoading && !hasError && savedIssues && (
-        <>
-          {/* <Selection /> */}
-          <Issues savedIssues={savedIssues} togglePin={togglePin} />
-        </>
+      {savedIssues && !hasError && (
+        <Issues savedIssues={savedIssues} togglePin={togglePin} />
       )}
       {hasError && (
         <ErrorContainer>

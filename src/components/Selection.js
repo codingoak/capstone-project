@@ -12,12 +12,12 @@ export default function Selection({ selectedProject, setSelectedProject }) {
       value: 'https://api.github.com/repos/reactjs/reactjs.org/issues',
     },
     {
-      label: 'styled-components',
+      label: 'Styled-components',
       value:
         'https://api.github.com/repos/styled-components/styled-components/issues',
     },
     {
-      label: 'git',
+      label: 'Git',
       value: 'https://api.github.com/repos/git/git/issues',
     },
     {

@@ -1,4 +1,5 @@
 import styled from 'styled-components/macro';
+import { NavLink } from 'react-router-dom';
 import pin from '../images/pin.svg';
 import pinFill from '../images/pin-fill.svg';
 
@@ -17,13 +18,20 @@ export default function Issues({ savedIssues, togglePin }) {
 
         return (
           <Wrapper
+            to={`/${savedIssue.id}`}
             key={savedIssue.id}
             title={savedIssue.title}
             state={savedIssue.state}
           >
             <IssueTitle>{savedIssue.title}</IssueTitle>
             <IssueState>{savedIssue.state}</IssueState>
-            <PinButton onClick={() => togglePin(savedIssue.id)}>
+            <PinButton
+              onClick={e => {
+                // e.stopPropagation();
+                togglePin(e, savedIssue.id);
+                // console.log(e);
+              }}
+            >
               {
                 <img
                   src={isPinned ? pinFill : pin}
@@ -60,7 +68,7 @@ const HeadingState = styled.h2`
   border-bottom: 1px solid var(--border-color);
 `;
 
-const Wrapper = styled.section`
+const Wrapper = styled(NavLink)`
   margin-left: 10px;
   margin-right: 10px;
   display: grid;
@@ -71,6 +79,14 @@ const Wrapper = styled.section`
   :nth-of-type(2n) {
     background-color: var(--bg-color-light);
     border-radius: 5px;
+  }
+
+  &:link,
+  &:visited,
+  &:hover,
+  &:active {
+    text-decoration: none;
+    color: inherit;
   }
 `;
 
