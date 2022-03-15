@@ -18,28 +18,25 @@ export default function Issues({ savedIssues, togglePin }) {
 
         return (
           <Wrapper
-            to={`/${savedIssue.id}`}
             key={savedIssue.id}
             title={savedIssue.title}
             state={savedIssue.state}
           >
-            <IssueTitle>{savedIssue.title}</IssueTitle>
-            <IssueState>{savedIssue.state}</IssueState>
-
+            <Link to={`/${savedIssue.id}`}>
+              <IssueTitle>{savedIssue.title}</IssueTitle>
+              <IssueState>{savedIssue.state}</IssueState>
+            </Link>
             <PinButton
-              onClick={e => {
-                e.stopPropagation(); // So funktioniert es leider nicht
+              onClick={() => {
                 togglePin(savedIssue.id);
               }}
             >
-              {
-                <img
-                  src={isPinned ? pinFill : pin}
-                  alt="pin"
-                  width="16"
-                  heigth="16"
-                />
-              }
+              <img
+                src={isPinned ? pinFill : pin}
+                alt="pin"
+                width="16"
+                heigth="16"
+              />
             </PinButton>
           </Wrapper>
         );
@@ -49,6 +46,7 @@ export default function Issues({ savedIssues, togglePin }) {
 }
 
 const HeadingWrapper = styled.section`
+  margin-bottom: -15px;
   display: grid;
   grid-template-columns: 10px 1fr 52px 32px 10px 10px;
 `;
@@ -68,7 +66,7 @@ const HeadingState = styled.h2`
   border-bottom: 1px solid var(--border-color);
 `;
 
-const Wrapper = styled(NavLink)`
+const Wrapper = styled.div`
   margin-left: 10px;
   margin-right: 10px;
   display: grid;
@@ -80,6 +78,13 @@ const Wrapper = styled(NavLink)`
     background-color: var(--bg-color-light);
     border-radius: 5px;
   }
+`;
+
+const Link = styled(NavLink)`
+  display: inherit;
+  align-items: center;
+  grid-column: 1 /4;
+  grid-template-columns: 10px 1fr 52px 32px 10px;
 
   &:link,
   &:visited,
@@ -91,15 +96,14 @@ const Wrapper = styled(NavLink)`
 `;
 
 const IssueTitle = styled.p`
-  grid-column: 2/3;
+  grid-column: 2/4;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 65vw;
 `;
 
-const IssueState = styled.p`
-  grid-column: 3;
+const IssueState = styled.div`
+  grid-column: 4;
 `;
 
 const PinButton = styled.button`
