@@ -9,7 +9,6 @@ const StandardButton = styled.button`
   justify-self: center;
 
   letter-spacing: 1px;
-  font-size: 16px;
   font-weight: bold;
   color: var(--font-color-action);
   background-color: var(--bg-color-action);

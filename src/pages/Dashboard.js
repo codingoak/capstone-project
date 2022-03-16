@@ -1,7 +1,7 @@
 import styled from 'styled-components/macro';
 import { keyframes } from 'styled-components';
 import arrowCircleIcon from '../images/arrow-clockwise.svg';
-import Issues from '../components/Issues';
+import FetchedIssues from '../components/FetchedIssues';
 import Button from '../components/Button';
 
 export default function Dashboard({
@@ -25,7 +25,7 @@ export default function Dashboard({
         </LoadingContainer>
       )}
       {savedIssues && !hasError && (
-        <Issues savedIssues={savedIssues} togglePin={togglePin} />
+        <FetchedIssues savedIssues={savedIssues} togglePin={togglePin} />
       )}
       {hasError && (
         <ErrorContainer>
@@ -66,6 +66,5 @@ const ErrorContainer = styled.div`
 `;
 
 const ErrorState = styled.p`
-  font-size: 16px;
   color: crimson;
 `;

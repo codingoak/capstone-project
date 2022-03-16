@@ -38,7 +38,7 @@ export default function Detail({ savedIssue }) {
         <dd>{savedIssue.milestone}</dd>
         <dt>Labels:</dt>
         {savedIssue.labels?.map(label => (
-          <dd key={savedIssue.id + savedIssue.title}>{label.name}</dd>
+          <dd key={savedIssue.id + savedIssue.created_at}>{label.name}</dd>
         ))}
         <dt>Comments:</dt>
         <dd>
@@ -58,7 +58,7 @@ export default function Detail({ savedIssue }) {
 }
 
 const Wrapper = styled.main`
-  margin: 10px;
+  padding: 0 10px;
 `;
 
 const Navlink = styled(NavLink)`

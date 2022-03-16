@@ -10,7 +10,7 @@ export default function Navigation() {
       <Link to="/">
         <img src={homeIcon} alt="back" width="34" height="34" />
       </Link>
-      <Link to={'add'}>
+      <Link to={'addissue'}>
         <img src={createIcon} alt="back" width="30" height="30" />
       </Link>
       <Link to="myissues">
@@ -29,7 +29,7 @@ const Navbar = styled.nav`
   bottom: 0;
   width: 100vw;
   color: var(--font-color-light);
-  background-color: var(--font-color-dark);
+  background: linear-gradient(#144e74, var(--bg-color-dark));
 `;
 
 const Link = styled(NavLink)`
