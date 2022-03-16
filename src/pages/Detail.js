@@ -1,10 +1,13 @@
 import styled from 'styled-components/macro';
 import { NavLink } from 'react-router-dom';
+import arrowLeftIcon from '../images/arrow-left.svg';
 
 export default function Detail({ savedIssue }) {
   return (
     <Wrapper>
-      <Navlink to="/">BACK</Navlink>
+      <Navlink to="/">
+        <img src={arrowLeftIcon} alt="back" width="38" height="38" />
+      </Navlink>
       <dl>
         <dt>Number:</dt>
         <dd>{savedIssue.number}</dd>
@@ -55,7 +58,7 @@ export default function Detail({ savedIssue }) {
 }
 
 const Wrapper = styled.main`
-  margin: 15px;
+  margin: 10px;
 `;
 
 const Navlink = styled(NavLink)`

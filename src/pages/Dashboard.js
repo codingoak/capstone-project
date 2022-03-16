@@ -1,6 +1,6 @@
 import styled from 'styled-components/macro';
 import { keyframes } from 'styled-components';
-import logo from '../images/arrow-clockwise.svg';
+import arrowCircleIcon from '../images/arrow-clockwise.svg';
 import Issues from '../components/Issues';
 import Button from '../components/Button';
 
@@ -16,7 +16,12 @@ export default function Dashboard({
     <main>
       {isLoading && (
         <LoadingContainer>
-          <Circle src={logo} width="32" height="32" alt="Loading..." />
+          <Circle
+            src={arrowCircleIcon}
+            width="32"
+            height="32"
+            alt="Loading..."
+          />
         </LoadingContainer>
       )}
       {savedIssues && !hasError && (

@@ -11,8 +11,8 @@ const StandardButton = styled.button`
   letter-spacing: 1px;
   font-size: 16px;
   font-weight: bold;
-  color: var(--font-color-light);
-  background-color: var(--bg-color-dark);
+  color: var(--font-color-action);
+  background-color: var(--bg-color-action);
   padding: 12px 18px;
   border: none;
   border-radius: 21px;

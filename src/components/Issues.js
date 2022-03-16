@@ -86,7 +86,6 @@ const Link = styled(NavLink)`
   grid-column: 1 /4;
   grid-template-columns: 10px 1fr 52px;
   grid-template-rows: 60px;
-
   &:link,
   &:visited,
   &:hover,

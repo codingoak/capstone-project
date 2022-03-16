@@ -1,12 +1,13 @@
 import useLocalStorage from './hooks/useLocalStorage';
-import styled from 'styled-components/macro';
 import { useState, useEffect } from 'react';
-import { Routes, Route, NavLink } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Heading from './components/Heading';
 import Selection from './components/Selection';
 import Dashboard from './pages/Dashboard';
 import Detail from './pages/Detail';
+import MyIssues from './pages/MyIssues';
 import AddIssue from './pages/AddIssue';
+import Navigation from './components/Navigation';
 
 export default function App() {
   const [selectedProject, setSelectedProject] = useState('');
@@ -21,52 +22,64 @@ export default function App() {
   }, [selectedProject]);
 
   return (
-    <Routes>
-      <Route
-        path={'/'}
-        element={
-          <>
-            <Heading>DASHBOARD</Heading>
-            <AddButton to={'add'}>+</AddButton>
-            <Selection
-              selectedProject={selectedProject}
-              setSelectedProject={setSelectedProject}
-            />
-            {selectedProject && (
-              <Dashboard
-                selectedProject={selectedProject}
-                savedIssues={savedIssues}
-                isLoading={isLoading}
-                hasError={hasError}
-                togglePin={togglePin}
-                GetFetch={GetFetch}
-              />
-            )}
-          </>
-        }
-      />
-      {savedIssues.map(savedIssue => (
+    <>
+      <Routes>
         <Route
-          key={savedIssue.id}
-          path={`${savedIssue.id}`}
+          path={'/'}
           element={
             <>
-              <Heading>DETAIL</Heading>
-              <Detail savedIssue={savedIssue} />
+              <Heading>DASHBOARD</Heading>
+
+              <Selection
+                selectedProject={selectedProject}
+                setSelectedProject={setSelectedProject}
+              />
+              {selectedProject && (
+                <Dashboard
+                  selectedProject={selectedProject}
+                  savedIssues={savedIssues}
+                  isLoading={isLoading}
+                  hasError={hasError}
+                  togglePin={togglePin}
+                  GetFetch={GetFetch}
+                />
+              )}
             </>
           }
         />
-      ))}
-      <Route
-        path={'add'}
-        element={
-          <>
-            <Heading>ADD AN ISSUE</Heading>
-            <AddIssue />
-          </>
-        }
-      />
-    </Routes>
+        {savedIssues.map(savedIssue => (
+          <Route
+            key={savedIssue.id}
+            path={`${savedIssue.id}`}
+            element={
+              <>
+                <Heading>DETAIL</Heading>
+                <Detail savedIssue={savedIssue} />
+              </>
+            }
+          />
+        ))}
+        <Route
+          path={'myissues'}
+          element={
+            <>
+              <Heading>MY ISSUES</Heading>
+              <MyIssues />
+            </>
+          }
+        />
+        <Route
+          path={'add'}
+          element={
+            <>
+              <Heading>ADD AN ISSUE</Heading>
+              <AddIssue />
+            </>
+          }
+        />
+      </Routes>
+      <Navigation />
+    </>
   );
 
   function loadFromLocal(key) {
@@ -139,25 +152,3 @@ export default function App() {
     setSavedIssues(nextIssues);
   }
 }
-
-const AddButton = styled(NavLink)`
-  display: grid;
-  place-items: center;
-  position: absolute;
-  top: 6px;
-  right: -8px;
-  transform: translate(-50%);
-  font-size: 28px;
-  background-color: coral;
-  border-radius: 50%;
-  width: 32px;
-  height: 32px;
-
-  &:link,
-  &:visited,
-  &:hover,
-  &:active {
-    text-decoration: none;
-    color: inherit;
-  }
-`;

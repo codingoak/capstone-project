@@ -1,6 +1,7 @@
 import styled from 'styled-components/macro';
 import { NavLink } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import arrowLeftIcon from '../images/arrow-left.svg';
 
 export default function AddIssue() {
   const {
@@ -19,7 +20,9 @@ export default function AddIssue() {
 
   return (
     <>
-      <Navlink to="/">BACK</Navlink>
+      <Navlink to="/">
+        <ArrowBack src={arrowLeftIcon} alt="back" width="38" height="38" />
+      </Navlink>
       {/* "handleSubmit" will validate your inputs before invoking "onSubmit" */}
       <Container onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor="user">User: </label>
@@ -65,6 +68,9 @@ const Navlink = styled(NavLink)`
   font-size: 24px;
   font-weight: bold;
 `;
+const ArrowBack = styled.img`
+  margin-top: 10px;
+`;
 
 const InputField = styled.input`
   margin-bottom: 5px;
@@ -81,23 +87,11 @@ const InputButton = styled.input`
   letter-spacing: 1px;
   font-size: 16px;
   font-weight: bold;
-  color: var(--font-color-light);
-  background-color: var(--bg-color-dark);
+  color: var(--font-color-action);
+  background-color: var(--bg-color-action);
   padding: 12px 18px;
   border: none;
   border-radius: 21px;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
     rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
-  opacity: 0.8;
-
-  :hover {
-    cursor: pointer;
-
-    opacity: 1;
-    transition: all 0.15s;
-  }
-
-  :active {
-    transform: scale(0.95);
-  }
 `;

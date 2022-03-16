@@ -44,6 +44,10 @@ export default function Selection({ selectedProject, setSelectedProject }) {
       label: 'ESLint',
       value: 'https://api.github.com/repos/eslint/eslint/issues',
     },
+    {
+      label: 'Test error state',
+      value: 'https://api.gihub.com/repos/eslint/eslint/issues',
+    },
   ];
 
   return (
