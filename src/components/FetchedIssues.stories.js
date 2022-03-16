@@ -1,11 +1,11 @@
-import Issues from './Issues';
+import FetchedIssues from './FetchedIssues';
 
 export default {
-  title: 'Issues',
-  component: Issues,
+  title: 'FetchedIssues',
+  component: FetchedIssues,
 };
 
-const Template = args => <Issues {...args} />;
+const Template = args => <FetchedIssues {...args} />;
 
 export const issueNotPinned = Template.bind({});
 issueNotPinned.args = {

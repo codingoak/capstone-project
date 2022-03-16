@@ -1,13 +1,13 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
-import Issues from './Issues';
+import FetchedIssues from './FetchedIssues';
 
-describe('Issues', () => {
+describe('FetchedIssues', () => {
   it('renders the heading, two issues with buttons', () => {
     render(
       <MemoryRouter>
-        <Issues
+        <FetchedIssues
           savedIssues={[
             { id: 111, title: 'Teststring1', state: 'open', isPinned: true },
             { id: 112, title: 'Teststring2', state: 'close', isPinned: false },
@@ -30,7 +30,7 @@ describe('Issues', () => {
     const callback = jest.fn();
     render(
       <MemoryRouter>
-        <Issues
+        <FetchedIssues
           savedIssues={[
             { id: 333, title: 'Teststring3', state: 'open', clicked: true },
           ]}
