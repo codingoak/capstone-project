@@ -1,12 +1,20 @@
 import styled from 'styled-components/macro';
 import { NavLink } from 'react-router-dom';
-import arrowLeftIcon from '../images/arrow-left.svg';
 
 export default function Detail({ savedIssue }) {
   return (
     <Wrapper>
       <Navlink to="/">
-        <img src={arrowLeftIcon} alt="back" width="38" height="38" />
+        <svg
+          width="38"
+          height="38"
+          fill="#0085dc"
+          stroke="#fff"
+          viewBox="0 0 16 16"
+          title="back"
+        >
+          <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z" />
+        </svg>
       </Navlink>
       <dl>
         <dt>Number:</dt>

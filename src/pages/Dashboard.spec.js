@@ -5,7 +5,7 @@ import Dashboard from './Dashboard';
 describe('Dashboard', () => {
   it('renders the loading animation', () => {
     render(<Dashboard isLoading={true} />);
-    const loadingAnimation = screen.getByAltText('Loading...');
+    const loadingAnimation = screen.getByTitle('Loading...');
 
     expect(loadingAnimation).toBeInTheDocument();
   });
