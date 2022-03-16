@@ -61,6 +61,6 @@ const Wrapper = styled.main`
 const Navlink = styled(NavLink)`
   color: blue;
   text-decoration: none;
-  font-size: large;
+  font-size: 24px;
   font-weight: bold;
 `;

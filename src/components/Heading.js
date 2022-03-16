@@ -1,7 +1,11 @@
 import styled from 'styled-components/macro';
 
 export default function Heading({ children }) {
-  return <Header>{children}</Header>;
+  return (
+    <>
+      <Header>{children}</Header>
+    </>
+  );
 }
 
 const Header = styled.h1`

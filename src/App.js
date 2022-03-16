@@ -1,10 +1,12 @@
+import useLocalStorage from './hooks/useLocalStorage';
+import styled from 'styled-components/macro';
+import { useState, useEffect } from 'react';
+import { Routes, Route, NavLink } from 'react-router-dom';
 import Heading from './components/Heading';
 import Selection from './components/Selection';
 import Dashboard from './pages/Dashboard';
 import Detail from './pages/Detail';
-import useLocalStorage from './hooks/useLocalStorage';
-import { useState, useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import AddIssue from './pages/AddIssue';
 
 export default function App() {
   const [selectedProject, setSelectedProject] = useState('');
@@ -25,6 +27,7 @@ export default function App() {
         element={
           <>
             <Heading>DASHBOARD</Heading>
+            <AddButton to={'add'}>+</AddButton>
             <Selection
               selectedProject={selectedProject}
               setSelectedProject={setSelectedProject}
@@ -54,6 +57,15 @@ export default function App() {
           }
         />
       ))}
+      <Route
+        path={'add'}
+        element={
+          <>
+            <Heading>ADD AN ISSUE</Heading>
+            <AddIssue />
+          </>
+        }
+      />
     </Routes>
   );
 
@@ -127,3 +139,25 @@ export default function App() {
     setSavedIssues(nextIssues);
   }
 }
+
+const AddButton = styled(NavLink)`
+  display: grid;
+  place-items: center;
+  position: absolute;
+  top: 6px;
+  right: -8px;
+  transform: translate(-50%);
+  font-size: 28px;
+  background-color: coral;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+
+  &:link,
+  &:visited,
+  &:hover,
+  &:active {
+    text-decoration: none;
+    color: inherit;
+  }
+`;
