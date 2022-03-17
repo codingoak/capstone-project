@@ -22,7 +22,7 @@ export default function Navigation() {
           />
         </svg>
       </Link>
-      <Link to={'addissue'}>
+      <Link to={'addform'}>
         <svg
           width="30"
           height="30"

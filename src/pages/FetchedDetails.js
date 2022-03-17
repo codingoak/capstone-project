@@ -8,8 +8,7 @@ export default function Detail({ savedIssue }) {
         <svg
           width="38"
           height="38"
-          fill="#0085dc"
-          stroke="#fff"
+          fill="var(--bg-color-action)"
           viewBox="0 0 16 16"
           title="back"
         >
@@ -17,49 +16,49 @@ export default function Detail({ savedIssue }) {
         </svg>
       </NavLink>
       <dl>
-        <dt>Number:</dt>
-        <dd>{savedIssue.number}</dd>
-        <dt>Issue ID:</dt>
-        <dd>{savedIssue.id}</dd>
-        <dt>User:</dt>
-        <dd>{savedIssue.user.login}</dd>
-        <dt>Avatar:</dt>
-        <dd>
+        <DT>Number:</DT>
+        <DD>{savedIssue.number}</DD>
+        <DT>Issue ID:</DT>
+        <DD>{savedIssue.id}</DD>
+        <DT>User:</DT>
+        <DD>{savedIssue.user.login}</DD>
+        <DT>Avatar:</DT>
+        <DD>
           <img
             src={savedIssue.user.avatar_url}
             alt="avatar"
             width="100"
             height="100"
           />
-        </dd>
-        <dt>Title:</dt>
-        <dd>{savedIssue.title}</dd>
-        <dt>Body:</dt>
-        <dd>{savedIssue.body}</dd>
-        <dt>Created at:</dt>
-        <dd>{savedIssue.created_at}</dd>
-        <dt>Updated at:</dt>
-        <dd>{savedIssue.updated_at}</dd>
-        <dt>State:</dt>
-        <dd>{savedIssue.state}</dd>
-        <dt>Milestone:</dt>
-        <dd>{savedIssue.milestone}</dd>
-        <dt>Labels:</dt>
+        </DD>
+        <DT>Title:</DT>
+        <DD>{savedIssue.title}</DD>
+        <DT>Body:</DT>
+        <DD>{savedIssue.body}</DD>
+        <DT>Created at:</DT>
+        <DD>{savedIssue.created_at}</DD>
+        <DT>Updated at:</DT>
+        <DD>{savedIssue.updated_at}</DD>
+        <DT>State:</DT>
+        <DD>{savedIssue.state}</DD>
+        <DT>Milestone:</DT>
+        <DD>{savedIssue.milestone}</DD>
+        <DT>Labels:</DT>
         {savedIssue.labels?.map(label => (
-          <dd key={savedIssue + label.name}>{label.name}</dd>
+          <DD key={savedIssue + label.name}>{label.name}</DD>
         ))}
-        <dt>Comments:</dt>
-        <dd>
+        <DT>Comments:</DT>
+        <DD>
           {savedIssue.comments === 0
             ? 'No comments available'
             : savedIssue.comments}
-        </dd>
-        <dt>URL:</dt>
-        <dd>
+        </DD>
+        <DT>URL:</DT>
+        <DD>
           <a href={savedIssue.html_url} target="_blank" rel="noreferrer">
             {savedIssue.html_url}
           </a>
-        </dd>
+        </DD>
       </dl>
     </Wrapper>
   );
@@ -67,4 +66,12 @@ export default function Detail({ savedIssue }) {
 
 const Wrapper = styled.main`
   padding: 0 10px;
+`;
+
+const DT = styled.dt`
+  margin-top: 10px;
+  font-weight: bold;
+`;
+const DD = styled.dd`
+  margin: 0 15px;
 `;

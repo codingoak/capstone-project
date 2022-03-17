@@ -2,7 +2,7 @@ import styled from 'styled-components/macro';
 import { NavLink } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
-export default function AddIssue({ handleMyIssues }) {
+export default function AddForm({ handleMyIssues }) {
   const {
     register,
     handleSubmit,
@@ -12,16 +12,6 @@ export default function AddIssue({ handleMyIssues }) {
       user: 'codingoak',
     },
   });
-
-  function onSubmit(data) {
-    handleMyIssues({
-      user: data.user,
-      title: data.title,
-      body: data.body,
-      milestone: data.milestone,
-      labels: data.labels,
-    });
-  }
 
   return (
     <>
@@ -76,6 +66,16 @@ export default function AddIssue({ handleMyIssues }) {
       </Container>
     </>
   );
+
+  function onSubmit(data) {
+    handleMyIssues({
+      user: data.user,
+      title: data.title,
+      body: data.body,
+      milestone: data.milestone,
+      labels: data.labels,
+    });
+  }
 }
 
 const Container = styled.form`

@@ -1,9 +1,15 @@
-import { render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
-import Detail from './Detail';
+import FetchedDetails from './FetchedDetails';
 
-describe('Detail', () => {
-  const savedIssue = {
+export default {
+  title: 'FetchedDetails',
+  component: FetchedDetails,
+};
+
+const Template = args => <FetchedDetails {...args} />;
+
+export const Default = Template.bind({});
+Default.args = {
+  savedIssue: {
     number: 4458,
     id: 1168898651,
     user: {
@@ -22,45 +28,5 @@ describe('Detail', () => {
     comments: 2,
     comments_url:
       'https://api.github.com/repos/reactjs/reactjs.org/issues/4458/comments',
-  };
-
-  it('renders the number', () => {
-    render(
-      <MemoryRouter>
-        <Detail savedIssue={savedIssue} />
-      </MemoryRouter>
-    );
-    const number = screen.getByText(4458);
-    expect(number).toBeInTheDocument();
-  });
-
-  it('renders the username', () => {
-    render(
-      <MemoryRouter>
-        <Detail savedIssue={savedIssue} />
-      </MemoryRouter>
-    );
-    const userName = screen.getByText('codingoak');
-    expect(userName).toBeInTheDocument();
-  });
-
-  it('renders the title', () => {
-    render(
-      <MemoryRouter>
-        <Detail savedIssue={savedIssue} />
-      </MemoryRouter>
-    );
-    const title = screen.getByText('This is an issue title');
-    expect(title).toBeInTheDocument();
-  });
-
-  it('renders the state', () => {
-    render(
-      <MemoryRouter>
-        <Detail savedIssue={savedIssue} />
-      </MemoryRouter>
-    );
-    const state = screen.getByText('open');
-    expect(state).toBeInTheDocument();
-  });
-});
+  },
+};

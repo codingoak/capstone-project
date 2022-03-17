@@ -6,11 +6,11 @@ import { nanoid } from 'nanoid';
 import Heading from './components/Heading';
 import Selection from './components/Selection';
 import Dashboard from './pages/Dashboard';
-import Detail from './pages/Detail';
+import FetchedDetails from './pages/FetchedDetails';
 import MyIssues from './pages/MyIssues';
-import AddIssue from './pages/AddIssue';
+import AddForm from './pages/AddForm';
 import Navigation from './components/Navigation';
-import MyIssuesDetail from './pages/MyIssuesDetail.js';
+import MyIssueDetails from './pages/MyIssueDetails';
 
 export default function App() {
   const [selectedProject, setSelectedProject] = useState('');
@@ -57,7 +57,7 @@ export default function App() {
             element={
               <>
                 <Heading title="DETAIL" />
-                <Detail savedIssue={savedIssue} />
+                <FetchedDetails savedIssue={savedIssue} />
               </>
             }
           />
@@ -72,11 +72,11 @@ export default function App() {
           }
         />
         <Route
-          path="addissue"
+          path="addform"
           element={
             <>
               <Heading title={'ADD AN ISSUE'} />
-              <AddIssue handleMyIssues={handleMyIssues} />
+              <AddForm handleMyIssues={handleMyIssues} />
             </>
           }
         />
@@ -87,7 +87,7 @@ export default function App() {
             element={
               <>
                 <Heading title="DETAIL" />
-                <MyIssuesDetail myIssue={myIssue} />
+                <MyIssueDetails myIssue={myIssue} />
               </>
             }
           />
@@ -189,7 +189,6 @@ export default function App() {
 
     setMyIssues([
       {
-        // ...data,
         user,
         title,
         body,

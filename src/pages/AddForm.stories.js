@@ -1,11 +1,11 @@
-import AddIssue from './AddIssue';
+import AddForm from './AddForm';
 
 export default {
-  title: 'AddIssue',
-  component: AddIssue,
+  title: 'AddForm',
+  component: AddForm,
 };
 
-const Template = args => <AddIssue {...args} />;
+const Template = args => <AddForm {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
