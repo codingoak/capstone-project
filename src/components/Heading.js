@@ -1,9 +1,9 @@
 import styled from 'styled-components/macro';
 
-export default function Heading({ children }) {
+export default function Heading({ title }) {
   return (
     <>
-      <Header>{children}</Header>
+      <Header>{title}</Header>
     </>
   );
 }

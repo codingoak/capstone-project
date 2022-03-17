@@ -16,7 +16,7 @@ export default function Issues({ savedIssues, togglePin }) {
 
         return (
           <Wrapper
-            key={savedIssue.id}
+            key={savedIssue.id + savedIssue.title}
             title={savedIssue.title}
             state={savedIssue.state}
           >
@@ -29,7 +29,7 @@ export default function Issues({ savedIssues, togglePin }) {
                 togglePin(savedIssue.id, savedIssues);
               }}
             >
-              {savedIssue.isPinned ? (
+              {isPinned ? (
                 <svg
                   width="16"
                   height="16"

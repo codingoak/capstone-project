@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 export default function Detail({ savedIssue }) {
   return (
     <Wrapper>
-      <Navlink to="/">
+      <NavLink to="/">
         <svg
           width="38"
           height="38"
@@ -15,7 +15,7 @@ export default function Detail({ savedIssue }) {
         >
           <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z" />
         </svg>
-      </Navlink>
+      </NavLink>
       <dl>
         <dt>Number:</dt>
         <dd>{savedIssue.number}</dd>
@@ -46,7 +46,7 @@ export default function Detail({ savedIssue }) {
         <dd>{savedIssue.milestone}</dd>
         <dt>Labels:</dt>
         {savedIssue.labels?.map(label => (
-          <dd key={savedIssue.id + savedIssue.created_at}>{label.name}</dd>
+          <dd key={savedIssue + label.name}>{label.name}</dd>
         ))}
         <dt>Comments:</dt>
         <dd>
@@ -54,24 +54,17 @@ export default function Detail({ savedIssue }) {
             ? 'No comments available'
             : savedIssue.comments}
         </dd>
+        <dt>URL:</dt>
+        <dd>
+          <a href={savedIssue.html_url} target="_blank" rel="noreferrer">
+            {savedIssue.html_url}
+          </a>
+        </dd>
       </dl>
-      <dt>URL:</dt>
-      <dd>
-        <a href={savedIssue.html_url} target="_blank" rel="noreferrer">
-          {savedIssue.html_url}
-        </a>
-      </dd>
     </Wrapper>
   );
 }
 
 const Wrapper = styled.main`
   padding: 0 10px;
-`;
-
-const Navlink = styled(NavLink)`
-  color: blue;
-  text-decoration: none;
-  font-size: 24px;
-  font-weight: bold;
 `;

@@ -6,7 +6,6 @@ export default function AddIssue({ handleMyIssues }) {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -23,8 +22,6 @@ export default function AddIssue({ handleMyIssues }) {
       labels: data.labels,
     });
   }
-
-  console.log(watch('example')); // watch input value by passing the name of it
 
   return (
     <>
