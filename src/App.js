@@ -10,6 +10,7 @@ import Detail from './pages/Detail';
 import MyIssues from './pages/MyIssues';
 import AddIssue from './pages/AddIssue';
 import Navigation from './components/Navigation';
+import MyIssuesDetail from './pages/MyIssuesDetail.js';
 
 export default function App() {
   const [selectedProject, setSelectedProject] = useState('');
@@ -31,8 +32,7 @@ export default function App() {
           path="/"
           element={
             <>
-              <Heading>DASHBOARD</Heading>
-
+              <Heading title="DASHBOARD" />
               <Selection
                 selectedProject={selectedProject}
                 setSelectedProject={setSelectedProject}
@@ -56,7 +56,7 @@ export default function App() {
             path={`${savedIssue.id}`}
             element={
               <>
-                <Heading>DETAIL</Heading>
+                <Heading title="DETAIL" />
                 <Detail savedIssue={savedIssue} />
               </>
             }
@@ -66,7 +66,7 @@ export default function App() {
           path="myissues"
           element={
             <>
-              <Heading>MY ISSUES</Heading>
+              <Heading title="MY ISSUES" />
               <MyIssues myIssues={myIssues} toggleMyPin={toggleMyPin} />
             </>
           }
@@ -75,11 +75,23 @@ export default function App() {
           path="addissue"
           element={
             <>
-              <Heading>ADD AN ISSUE</Heading>
+              <Heading title={'ADD AN ISSUE'} />
               <AddIssue handleMyIssues={handleMyIssues} />
             </>
           }
         />
+        {myIssues.map(myIssue => (
+          <Route
+            key={myIssue.id}
+            path={`${myIssue.id}`}
+            element={
+              <>
+                <Heading title="DETAIL" />
+                <MyIssuesDetail myIssue={myIssue} />
+              </>
+            }
+          />
+        ))}
       </Routes>
       <Navigation />
     </Container>
@@ -191,7 +203,6 @@ export default function App() {
       ...myIssues,
     ]);
     console.log(myIssues);
-    // navigate('/');
   }
 }
 
