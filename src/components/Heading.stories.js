@@ -9,5 +9,5 @@ const Template = args => <Heading {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
-  children: 'HeaderText',
+  title: 'HEADING',
 };

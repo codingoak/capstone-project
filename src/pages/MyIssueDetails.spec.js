@@ -12,7 +12,7 @@ describe('MyIssueDetails', () => {
     created_at: '2022-03-14T21:01:17Z',
     state: 'open',
     milstone: [],
-    labels: 'beta, CLA signed',
+    labels: ['beta', 'CLA signed'],
   };
 
   it('renders the username', () => {

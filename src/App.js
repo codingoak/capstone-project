@@ -21,7 +21,7 @@ export default function App() {
 
   useEffect(() => {
     loadFromLocal(selectedProject);
-    GetFetch(selectedProject);
+    GetData(selectedProject);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedProject]);
 
@@ -44,7 +44,7 @@ export default function App() {
                   isLoading={isLoading}
                   hasError={hasError}
                   togglePin={togglePin}
-                  GetFetch={GetFetch}
+                  GetData={GetData}
                 />
               )}
             </>
@@ -105,7 +105,7 @@ export default function App() {
     }
   }
 
-  async function GetFetch(url) {
+  async function GetData(url) {
     setIsLoading(true);
     setHasError(false);
 
@@ -183,10 +183,11 @@ export default function App() {
     setMyIssues(nextIssues);
   }
 
-  function handleMyIssues({ user, title, body, milestone, labels }) {
+  function handleMyIssues({ user, title, body, milestone, labels, isPinned }) {
     const id = nanoid();
     const date = new Date().toLocaleString();
 
+    console.log('app.js', labels);
     setMyIssues([
       {
         user,
@@ -195,9 +196,9 @@ export default function App() {
         milestone,
         labels,
         id,
+        isPinned,
         state: 'open',
         created_at: date,
-        isPinned: false,
       },
       ...myIssues,
     ]);

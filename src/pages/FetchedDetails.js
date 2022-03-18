@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 export default function Detail({ savedIssue }) {
   return (
     <Wrapper>
-      <NavLink to="/">
+      <Navlink to="/">
         <svg
           width="38"
           height="38"
@@ -14,7 +14,7 @@ export default function Detail({ savedIssue }) {
         >
           <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z" />
         </svg>
-      </NavLink>
+      </Navlink>
       <dl>
         <DT>Number:</DT>
         <DD>{savedIssue.number}</DD>
@@ -66,6 +66,17 @@ export default function Detail({ savedIssue }) {
 
 const Wrapper = styled.main`
   padding: 0 10px;
+  word-break: break-all;
+`;
+
+const Navlink = styled(NavLink)`
+  opacity: 0.8;
+
+  :hover {
+    cursor: pointer;
+    opacity: 1;
+    transition: all 0.15s;
+  }
 `;
 
 const DT = styled.dt`

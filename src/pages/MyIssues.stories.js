@@ -1,4 +1,4 @@
-import MyIssues from './MyIssues'
+import MyIssues from './MyIssues';
 
 export default {
   title: 'MyIssues',
@@ -7,6 +7,18 @@ export default {
 
 const Template = args => <MyIssues {...args} />;
 
-export const Default = Template.bind({});
-Default.args = {};
-    
+export const issueNotPinned = Template.bind({});
+issueNotPinned.args = {
+  myIssues: [
+    { title: 'This is an issue title', state: 'open', isPinned: false },
+    { title: 'Another issue title', state: 'open', isPinned: false },
+  ],
+};
+
+export const issuePinned = Template.bind({});
+issuePinned.args = {
+  myIssues: [
+    { title: 'This is an issue title', state: 'open', isPinned: true },
+    { title: 'Another issue title', state: 'open', isPinned: true },
+  ],
+};

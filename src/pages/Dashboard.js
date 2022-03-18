@@ -1,6 +1,6 @@
 import styled from 'styled-components/macro';
 import { keyframes } from 'styled-components';
-import FetchedIssues from '../components/FetchedIssues';
+import FetchedIssues from './FetchedIssues';
 import Button from '../components/Button';
 
 export default function Dashboard({
@@ -8,7 +8,7 @@ export default function Dashboard({
   isLoading,
   hasError,
   togglePin,
-  GetFetch,
+  GetData,
   selectedProject,
 }) {
   return (
@@ -30,13 +30,13 @@ export default function Dashboard({
           </Circle>
         </LoadingContainer>
       )}
-      {savedIssues && !hasError && (
+      {savedIssues && !isLoading && !hasError && (
         <FetchedIssues savedIssues={savedIssues} togglePin={togglePin} />
       )}
       {hasError && (
         <ErrorContainer>
           <ErrorState>Oops, something went wrong</ErrorState>
-          <Button handleClick={() => GetFetch(selectedProject)}>
+          <Button handleClick={() => GetData(selectedProject)}>
             TRY AGAIN
           </Button>
         </ErrorContainer>
