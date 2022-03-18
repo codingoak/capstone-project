@@ -1,12 +1,12 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import AddForm from './AddForm';
+import CreateIssueForm from './CreateIssueForm';
 
-describe('AddForm', () => {
+describe('CreateIssueForm', () => {
   it('renders the five textfields', () => {
     render(
       <MemoryRouter>
-        <AddForm />
+        <CreateIssueForm />
       </MemoryRouter>
     );
     const textFields = screen.getAllByRole('textbox');
@@ -16,7 +16,7 @@ describe('AddForm', () => {
   it('renders the button', () => {
     render(
       <MemoryRouter>
-        <AddForm />
+        <CreateIssueForm />
       </MemoryRouter>
     );
     const submitButton = screen.getByRole('button', { name: 'SUBMIT' });

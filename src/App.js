@@ -8,7 +8,7 @@ import Selection from './components/Selection';
 import Dashboard from './pages/Dashboard';
 import FetchedDetails from './pages/FetchedDetails';
 import MyIssues from './pages/MyIssues';
-import AddForm from './pages/AddForm';
+import CreateIssueForm from './pages/CreateIssueForm';
 import Navigation from './components/Navigation';
 import MyIssueDetails from './pages/MyIssueDetails';
 
@@ -72,11 +72,11 @@ export default function App() {
           }
         />
         <Route
-          path="addform"
+          path="createissueform"
           element={
             <>
               <Heading title={'ADD AN ISSUE'} />
-              <AddForm handleMyIssues={handleMyIssues} />
+              <CreateIssueForm handleMyIssues={handleMyIssues} />
             </>
           }
         />

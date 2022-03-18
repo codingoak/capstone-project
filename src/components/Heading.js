@@ -14,7 +14,7 @@ const Header = styled.h1`
   position: fixed;
   z-index: 1;
   top: 0;
-  width: 100vw;
+  width: 100%;
   height: 44px;
   margin: 0;
   font-size: 24px;
