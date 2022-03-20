@@ -1,7 +1,6 @@
 import styled from 'styled-components/macro';
 import { keyframes } from 'styled-components';
-import logo from '../images/arrow-clockwise.svg';
-import Issues from '../components/Issues';
+import FetchedIssues from './FetchedIssues';
 import Button from '../components/Button';
 
 export default function Dashboard({
@@ -9,23 +8,35 @@ export default function Dashboard({
   isLoading,
   hasError,
   togglePin,
-  GetFetch,
+  GetData,
   selectedProject,
 }) {
   return (
     <main>
       {isLoading && (
         <LoadingContainer>
-          <Circle src={logo} width="32" height="32" alt="Loading..." />
+          <Circle
+            width="32"
+            height="32"
+            fill="#0b2b40"
+            viewBox="0 0 16 16"
+            title="Loading..."
+          >
+            <path
+              fillRule="evenodd"
+              d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"
+            />
+            <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" />
+          </Circle>
         </LoadingContainer>
       )}
-      {savedIssues && !hasError && (
-        <Issues savedIssues={savedIssues} togglePin={togglePin} />
+      {savedIssues && !isLoading && !hasError && (
+        <FetchedIssues savedIssues={savedIssues} togglePin={togglePin} />
       )}
       {hasError && (
         <ErrorContainer>
           <ErrorState>Oops, something went wrong</ErrorState>
-          <Button handleClick={() => GetFetch(selectedProject)}>
+          <Button handleClick={() => GetData(selectedProject)}>
             TRY AGAIN
           </Button>
         </ErrorContainer>
@@ -46,7 +57,7 @@ const TurnAnimation = keyframes`
   to { transform: rotate(0deg); }
 `;
 
-const Circle = styled.img`
+const Circle = styled.svg`
   width: 32px;
   height: 32px;
 
@@ -61,6 +72,5 @@ const ErrorContainer = styled.div`
 `;
 
 const ErrorState = styled.p`
-  font-size: 16px;
   color: crimson;
 `;

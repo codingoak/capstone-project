@@ -7,10 +7,28 @@ export default {
 
 const Template = args => <Dashboard {...args} />;
 
+export const Loading = Template.bind({});
+Loading.args = {
+  isLoading: true,
+  savedIssues: [
+    { id: 111, title: 'Teststring1', state: 'open', clicked: true },
+    { id: 112, title: 'Teststring2', state: 'close', clicked: false },
+    { id: 113, title: 'Teststring3', state: 'open', clicked: true },
+  ],
+};
+
+export const Error = Template.bind({});
+Error.args = {
+  hasError: true,
+  savedIssues: [
+    { id: 111, title: 'Teststring1', state: 'open', clicked: true },
+    { id: 112, title: 'Teststring2', state: 'close', clicked: false },
+    { id: 113, title: 'Teststring3', state: 'open', clicked: true },
+  ],
+};
+
 export const Default = Template.bind({});
 Default.args = {
-  isLoading: true,
-  hasError: false,
   savedIssues: [
     { id: 111, title: 'Teststring1', state: 'open', clicked: true },
     { id: 112, title: 'Teststring2', state: 'close', clicked: false },

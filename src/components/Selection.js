@@ -44,6 +44,10 @@ export default function Selection({ selectedProject, setSelectedProject }) {
       label: 'ESLint',
       value: 'https://api.github.com/repos/eslint/eslint/issues',
     },
+    {
+      label: 'Test error state',
+      value: 'https://api.gihub.com/repos/eslint/eslint/issues',
+    },
   ];
 
   return (
@@ -60,7 +64,7 @@ export default function Selection({ selectedProject, setSelectedProject }) {
 }
 
 const SelectionContainer = styled.form`
-  margin: 20px 10px 10px;
+  margin: 10px;
   text-align: center;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 `;

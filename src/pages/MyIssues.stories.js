@@ -1,22 +1,24 @@
-import Issues from './Issues';
+import MyIssues from './MyIssues';
 
 export default {
-  title: 'Issues',
-  component: Issues,
+  title: 'MyIssues',
+  component: MyIssues,
 };
 
-const Template = args => <Issues {...args} />;
+const Template = args => <MyIssues {...args} />;
 
 export const issueNotPinned = Template.bind({});
 issueNotPinned.args = {
-  savedIssues: [
+  myIssues: [
     { title: 'This is an issue title', state: 'open', isPinned: false },
+    { title: 'Another issue title', state: 'open', isPinned: false },
   ],
 };
 
 export const issuePinned = Template.bind({});
 issuePinned.args = {
-  savedIssues: [
+  myIssues: [
     { title: 'This is an issue title', state: 'open', isPinned: true },
+    { title: 'Another issue title', state: 'open', isPinned: true },
   ],
 };

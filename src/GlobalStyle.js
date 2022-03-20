@@ -9,17 +9,19 @@ const GlobalStyles = createGlobalStyle`
         --bg-color-main: #EDF8FF;
         --bg-color-light: #d8e4eb;
         --bg-color-dark: #0b2b40;
+        --bg-color-action: #0085dc;
+        --font-color-action: #0085dc;
         --font-color-light:#eee;
-        --font-color-gray:#b8c4cb;
+        --font-color-medium:#7d98aa;
         --font-color-dark: #0b2b40;
-        --border-color: #0b2b40;
+        --border-color-light: #0085dc;
+        --border-color-dark: #0b2b40;
     }
 
   body {
     margin: 0;
     padding: 0;
     font-family: 'Roboto', sans-serif;
-    font-size: 12px;
     color: var(--font-color-dark);
     background-color: var(--bg-color-main);
   }

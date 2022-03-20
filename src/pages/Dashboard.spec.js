@@ -5,8 +5,7 @@ import Dashboard from './Dashboard';
 describe('Dashboard', () => {
   it('renders the loading animation', () => {
     render(<Dashboard isLoading={true} />);
-    const loadingAnimation = screen.getByAltText('Loading...');
-
+    const loadingAnimation = screen.getByTitle('Loading...');
     expect(loadingAnimation).toBeInTheDocument();
   });
 
@@ -21,7 +20,6 @@ describe('Dashboard', () => {
         <Dashboard savedIssues={savedIssues} />
       </MemoryRouter>
     );
-
     const cards = screen.getAllByText(/Teststring/);
     expect(cards).toHaveLength(3);
   });
@@ -33,7 +31,6 @@ describe('Dashboard', () => {
       </MemoryRouter>
     );
     const errorState = screen.getByText(/Oops, something went wrong/i);
-
     expect(errorState).toBeInTheDocument();
   });
 });

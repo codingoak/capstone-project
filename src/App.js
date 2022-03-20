@@ -1,60 +1,100 @@
-import Heading from './components/Heading';
-import Selection from './components/Selection';
-import Dashboard from './pages/Dashboard';
-import Detail from './pages/Detail';
+import styled from 'styled-components/macro';
 import useLocalStorage from './hooks/useLocalStorage';
 import { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
+import { nanoid } from 'nanoid';
+import Heading from './components/Heading';
+import Selection from './components/Selection';
+import Dashboard from './pages/Dashboard';
+import FetchedDetails from './pages/FetchedDetails';
+import MyIssues from './pages/MyIssues';
+import CreateIssueForm from './pages/CreateIssueForm';
+import Navigation from './components/Navigation';
+import MyIssueDetails from './pages/MyIssueDetails';
 
 export default function App() {
   const [selectedProject, setSelectedProject] = useState('');
   const [savedIssues, setSavedIssues] = useLocalStorage(selectedProject, []);
   const [isLoading, setIsLoading] = useState(false);
   const [hasError, setHasError] = useState(false);
+  const [myIssues, setMyIssues] = useLocalStorage('myOwnIssues', []);
 
   useEffect(() => {
     loadFromLocal(selectedProject);
-    GetFetch(selectedProject);
+    GetData(selectedProject);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedProject]);
 
   return (
-    <Routes>
-      <Route
-        path={'/'}
-        element={
-          <>
-            <Heading>DASHBOARD</Heading>
-            <Selection
-              selectedProject={selectedProject}
-              setSelectedProject={setSelectedProject}
-            />
-            {selectedProject && (
-              <Dashboard
-                selectedProject={selectedProject}
-                savedIssues={savedIssues}
-                isLoading={isLoading}
-                hasError={hasError}
-                togglePin={togglePin}
-                GetFetch={GetFetch}
-              />
-            )}
-          </>
-        }
-      />
-      {savedIssues.map(savedIssue => (
+    <Container>
+      <Routes>
         <Route
-          key={savedIssue.id}
-          path={`${savedIssue.id}`}
+          path="/"
           element={
             <>
-              <Heading>DETAIL</Heading>
-              <Detail savedIssue={savedIssue} />
+              <Heading title="DASHBOARD" />
+              <Selection
+                selectedProject={selectedProject}
+                setSelectedProject={setSelectedProject}
+              />
+              {selectedProject && (
+                <Dashboard
+                  selectedProject={selectedProject}
+                  savedIssues={savedIssues}
+                  isLoading={isLoading}
+                  hasError={hasError}
+                  togglePin={togglePin}
+                  GetData={GetData}
+                />
+              )}
             </>
           }
         />
-      ))}
-    </Routes>
+        {savedIssues.map(savedIssue => (
+          <Route
+            key={savedIssue.id}
+            path={`${savedIssue.id}`}
+            element={
+              <>
+                <Heading title="DETAIL" />
+                <FetchedDetails savedIssue={savedIssue} />
+              </>
+            }
+          />
+        ))}
+        <Route
+          path="myissues"
+          element={
+            <>
+              <Heading title="MY ISSUES" />
+              <MyIssues myIssues={myIssues} toggleMyPin={toggleMyPin} />
+            </>
+          }
+        />
+        <Route
+          path="createissueform"
+          element={
+            <>
+              <Heading title={'ADD AN ISSUE'} />
+              <CreateIssueForm handleMyIssues={handleMyIssues} />
+            </>
+          }
+        />
+        {myIssues.map(myIssue => (
+          <Route
+            key={myIssue.id}
+            path={`${myIssue.id}`}
+            element={
+              <>
+                <Heading title="DETAIL" />
+                <MyIssueDetails myIssue={myIssue} />
+              </>
+            }
+          />
+        ))}
+      </Routes>
+      <Navigation />
+    </Container>
   );
 
   function loadFromLocal(key) {
@@ -65,7 +105,7 @@ export default function App() {
     }
   }
 
-  async function GetFetch(url) {
+  async function GetData(url) {
     setIsLoading(true);
     setHasError(false);
 
@@ -126,4 +166,47 @@ export default function App() {
     });
     setSavedIssues(nextIssues);
   }
+
+  function toggleMyPin(buttonId) {
+    const nextIssues = myIssues.map(savedIssue => {
+      if (savedIssue.id === buttonId) {
+        return {
+          ...savedIssue,
+          isPinned: !savedIssue.isPinned,
+        };
+      } else {
+        return {
+          ...savedIssue,
+        };
+      }
+    });
+    setMyIssues(nextIssues);
+  }
+
+  function handleMyIssues({ user, title, body, milestone, labels, isPinned }) {
+    const id = nanoid();
+    const date = new Date().toLocaleString();
+
+    console.log('app.js', labels);
+    setMyIssues([
+      {
+        user,
+        title,
+        body,
+        milestone,
+        labels,
+        id,
+        isPinned,
+        state: 'open',
+        created_at: date,
+      },
+      ...myIssues,
+    ]);
+    console.log(myIssues);
+  }
 }
+
+const Container = styled.div`
+  padding-top: 50px;
+  padding-bottom: 50px;
+`;

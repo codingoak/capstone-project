@@ -5,7 +5,4 @@ export default {
   component: Selection,
 };
 
-const Template = args => <Selection {...args} />;
-
-export const Default = Template.bind({});
-Default.args = {};
+export const SelectionDefault = <Selection />;
