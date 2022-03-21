@@ -18,6 +18,7 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [hasError, setHasError] = useState(false);
   const [myIssues, setMyIssues] = useLocalStorage('myOwnIssues', []);
+  const [avatar, setAvatar] = useState(null);
 
   useEffect(() => {
     loadFromLocal(selectedProject);
@@ -87,7 +88,7 @@ export default function App() {
             element={
               <>
                 <Heading title="DETAIL" />
-                <MyIssueDetails myIssue={myIssue} />
+                <MyIssueDetails myIssue={myIssue} avatar={avatar} />
               </>
             }
           />
@@ -186,11 +187,12 @@ export default function App() {
   function handleMyIssues({ user, title, body, milestone, labels, isPinned }) {
     const id = nanoid();
     const date = new Date().toLocaleString();
+    getAvatar(user);
 
-    console.log('app.js', labels);
     setMyIssues([
       {
         user,
+        avatar: avatar,
         title,
         body,
         milestone,
@@ -202,7 +204,12 @@ export default function App() {
       },
       ...myIssues,
     ]);
-    console.log(myIssues);
+
+    async function getAvatar(username) {
+      const response = await fetch(`https://api.github.com/users/${username}`);
+      const data = await response.json();
+      setAvatar(data.avatar_url);
+    }
   }
 }
 

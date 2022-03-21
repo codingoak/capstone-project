@@ -1,5 +1,5 @@
 import styled from 'styled-components/macro';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
 export default function CreateIssueForm({ handleMyIssues }) {
@@ -28,11 +28,11 @@ export default function CreateIssueForm({ handleMyIssues }) {
   const maxBodyLength = 1000;
   const maxMilestoneLength = 50;
   const maxLabelsLength = 100;
-
   const separatedLabels = labels
     .split(',')
     .map(label => label.trim())
     .filter(tag => tag.length > 0);
+  const navigate = useNavigate();
 
   return (
     <Container
@@ -61,7 +61,7 @@ export default function CreateIssueForm({ handleMyIssues }) {
           minLength: { value: 2, message: 'Name is to short' },
         })}
         id="user"
-        placeholder="Enter your username"
+        placeholder="Enter your (GitHub) username"
         maxLength={maxUserLength}
         required
       />
@@ -129,6 +129,7 @@ export default function CreateIssueForm({ handleMyIssues }) {
   );
 
   function onSubmit(data) {
+    navigate('/myissues');
     handleMyIssues({
       user: data.user,
       title: data.title,
@@ -182,7 +183,7 @@ const InputField = styled.input`
   border-radius: 5px;
 
   ::placeholder {
-    color: var(--font-color-dark);
+    color: var(--font-color-medium);
   }
 `;
 
@@ -193,7 +194,7 @@ const TextArea = styled.textarea`
   border-radius: 5px;
 
   ::placeholder {
-    color: var(--font-color-dark);
+    color: var(--font-color-medium);
   }
 `;
 
