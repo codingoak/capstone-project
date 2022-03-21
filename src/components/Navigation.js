@@ -47,7 +47,7 @@ const Navbar = styled.nav`
 
 const Link = styled(NavLink)`
   box-sizing: content-box;
-  width: 33.3%;
+  width: 33.333%;
   border-radius: 10px 10px 0 0;
   display: grid;
   place-items: center;

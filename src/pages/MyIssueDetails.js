@@ -1,7 +1,7 @@
 import styled from 'styled-components/macro';
 import { NavLink } from 'react-router-dom';
 
-export default function MyIssueDetails({ myIssue }) {
+export default function MyIssueDetails({ myIssue, avatar }) {
   return (
     <Wrapper>
       <Navlink to="/myissues" aria-label="back">
@@ -20,6 +20,10 @@ export default function MyIssueDetails({ myIssue }) {
         <DD>{myIssue.id}</DD>
         <DT>User:</DT>
         <DD>{myIssue.user}</DD>
+        <DT>Avatar:</DT>
+        <DD>
+          <img src={avatar} alt="avatar" width="100" height="100" />
+        </DD>
         <DT>Title:</DT>
         <DD>{myIssue.title}</DD>
         <DT>Body:</DT>
