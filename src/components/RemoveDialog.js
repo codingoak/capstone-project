@@ -1,12 +1,15 @@
 import styled from 'styled-components/macro';
+import { useNavigate } from 'react-router-dom';
 import { ButtonPrimary } from './Button';
 import { ButtonSecondary } from './Button';
 
 export default function RemoveDialog({
   issueId,
   setShowRemoveDialog,
-  handleRemoveIssue,
+  myIssues,
+  setMyIssues,
 }) {
+  const navigate = useNavigate();
   return (
     <Wrapper>
       <ButtonPrimary
@@ -23,9 +26,14 @@ export default function RemoveDialog({
       />
     </Wrapper>
   );
+
+  function handleRemoveIssue(id) {
+    setMyIssues(myIssues.filter(myIssue => myIssue.id !== id));
+    navigate('/myissues');
+  }
 }
 
 const Wrapper = styled.div`
-  display: inherit;
+  display: flex;
   flex-wrap: wrap;
 `;

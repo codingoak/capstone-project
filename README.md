@@ -16,7 +16,7 @@ You can choose between four different projects:
 - Sass
 - ESLint
 
-It is also possible to create and delete your own issue. These appear in a separate list.
+It is also possible to create and delete your own issue, wich appears in a separate list.
 
 <img src="./src/images/startscreen.png" alt="start screen" width="200">
 <img src="./src/images/selection.png" alt="selection" width="200">

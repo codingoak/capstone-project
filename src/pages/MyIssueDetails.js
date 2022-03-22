@@ -1,7 +1,5 @@
 import styled from 'styled-components/macro';
 import { NavLink } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
-
 import { useState } from 'react';
 import { ButtonSecondary } from '../components/Button';
 import RemoveDialog from '../components/RemoveDialog';
@@ -13,7 +11,6 @@ export default function MyIssueDetails({
   setMyIssues,
 }) {
   const [showRemoveDialog, setShowRemoveDialog] = useState(false);
-  const navigate = useNavigate();
 
   return (
     <Wrapper>
@@ -63,24 +60,14 @@ export default function MyIssueDetails({
           <RemoveDialog
             issueId={myIssue.id}
             setShowRemoveDialog={setShowRemoveDialog}
-            handleRemoveIssue={handleRemoveIssue}
+            myIssues={myIssues}
+            setMyIssues={setMyIssues}
           />
         )}
       </RemoveWrapper>
     </Wrapper>
   );
-
-  function handleRemoveIssue(id) {
-    setMyIssues(myIssues.filter(myIssue => myIssue.id !== id));
-    navigate('/myissues');
-  }
 }
-
-const RemoveWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-`;
 
 const Wrapper = styled.main`
   margin: 0 10px;
@@ -103,4 +90,9 @@ const DT = styled.dt`
 `;
 const DD = styled.dd`
   margin: 0 15px;
+`;
+
+const RemoveWrapper = styled.div`
+  display: flex;
+  justify-content: center;
 `;
