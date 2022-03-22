@@ -1,22 +1,19 @@
 import styled from 'styled-components/macro';
 
-export default function StandartButton({ handleClick, children }) {
-  return <StandardButton onClick={handleClick}>{children}</StandardButton>;
-}
-
-const StandardButton = styled.button`
+const Button = styled.button`
   display: flex;
   justify-self: center;
   letter-spacing: 2px;
   font-size: 1.3rem;
   font-weight: bold;
-  color: var(--font-color-light);
-  background-color: var(--bg-color-action);
+  margin: 5px;
   padding: 9px 32px;
+  white-space: nowrap;
   border: none;
   border-radius: 15px;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
     rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  color: var(--font-color-light);
   opacity: 0.8;
 
   :hover {
@@ -30,3 +27,17 @@ const StandardButton = styled.button`
     transform: scale(0.95);
   }
 `;
+
+export default Button;
+
+const ButtonPrimary = styled(Button)`
+  background-color: var(--bg-color-primary);
+`;
+
+export { ButtonPrimary };
+
+const ButtonSecondary = styled(Button)`
+  background-color: var(--bg-color-secondary);
+`;
+
+export { ButtonSecondary };

@@ -8,7 +8,7 @@ export default function Detail({ savedIssue }) {
         <svg
           width="38"
           height="38"
-          fill="var(--bg-color-action)"
+          fill="var(--bg-color-primary)"
           viewBox="0 0 16 16"
         >
           <title>Back</title>

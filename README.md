@@ -16,11 +16,14 @@ You can choose between four different projects:
 - Sass
 - ESLint
 
-<img src="./src/images/StartScreen.png" alt="start screen" width="200">
-<img src="./src/images/Selection.png" alt="selection" width="200">
-<img src="./src/images/Dashboard.png" alt="dashboard" width="200">
-<img src="./src/images/LoadingState.png" alt="loading state" width="200">
-<img src="./src/images/ErrorState.png" alt="error state" width="200">
+It is also possible to create and delete your own issue. These appear in a separate list.
+
+<img src="./src/images/startscreen.png" alt="start screen" width="200">
+<img src="./src/images/selection.png" alt="selection" width="200">
+<img src="./src/images/loadingstate.png" alt="loading state" width="200">
+<img src="./src/images/errorstate.png" alt="error state" width="200">
+<img src="./src/images/dashboard.png" alt="dashboard" width="200">
+<img src="./src/images/form.png" alt="add an issue form" width="200">
 
 ## Tech Stack
 

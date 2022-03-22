@@ -33,4 +33,15 @@ describe('Dashboard', () => {
     const errorState = screen.getByText(/Oops, something went wrong/i);
     expect(errorState).toBeInTheDocument();
   });
+
+  it('renders the button', () => {
+    render(
+      <MemoryRouter>
+        <Dashboard hasError={true} />
+      </MemoryRouter>
+    );
+
+    const button = screen.getByRole('button');
+    expect(button).toBeInTheDocument();
+  });
 });

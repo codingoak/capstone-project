@@ -44,4 +44,14 @@ describe('MyIssueDetails', () => {
     const state = screen.getByText('open');
     expect(state).toBeInTheDocument();
   });
+
+  it('renders the RemoveButton', () => {
+    render(
+      <MemoryRouter>
+        <MyIssueDetails myIssue={myIssue} />
+      </MemoryRouter>
+    );
+    const RemoveButton = screen.getByRole('button');
+    expect(RemoveButton).toBeInTheDocument();
+  });
 });

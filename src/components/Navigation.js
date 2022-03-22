@@ -56,7 +56,7 @@ const Link = styled(NavLink)`
 
   &.active {
     background-color: var(--bg-color-dark);
-    transform: translateY(-6px);
+    transform: translateY(-8px);
   }
 `;
 
