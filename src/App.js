@@ -156,40 +156,49 @@ export default function App() {
           };
         }
       });
+      sortPins(fetchedData);
       setSavedIssues(fetchedData);
     }
   }
 
-  function togglePin(buttonId) {
-    const nextIssues = savedIssues.map(savedIssue => {
-      if (savedIssue.id === buttonId) {
-        return {
-          ...savedIssue,
-          isPinned: !savedIssue.isPinned,
-        };
-      } else {
-        return {
-          ...savedIssue,
-        };
-      }
-    });
+  function togglePin(buttonId, issues) {
+    const nextIssues = checkIsPinned(buttonId, issues);
+    sortPins(nextIssues);
     setSavedIssues(nextIssues);
   }
 
-  function toggleMyPin(buttonId) {
-    const nextIssues = myIssues.map(savedIssue => {
-      if (savedIssue.id === buttonId) {
+  function toggleMyPin(buttonId, issues) {
+    const nextIssues = checkIsPinned(buttonId, issues);
+    sortPins(nextIssues);
+    setMyIssues(nextIssues);
+  }
+
+  function checkIsPinned(buttonId, issues) {
+    const nextIssues = issues.map(issue => {
+      if (issue.id === buttonId) {
         return {
-          ...savedIssue,
-          isPinned: !savedIssue.isPinned,
+          ...issue,
+          isPinned: !issue.isPinned,
         };
       } else {
         return {
-          ...savedIssue,
+          ...issue,
         };
       }
     });
-    setMyIssues(nextIssues);
+    return nextIssues;
+  }
+
+  function sortPins(issues) {
+    issues.sort((a, b) => {
+      if (a.isPinned === true) {
+        return -1;
+      }
+      if (b.isPinned === true) {
+        return +1;
+      }
+      return 0;
+    });
   }
 
   function handleMyIssues({ user, title, body, milestone, labels, isPinned }) {
