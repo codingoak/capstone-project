@@ -22,7 +22,7 @@ export default function MyIssues({ myIssues, toggleMyPin }) {
             <PinButton
               aria-label="PinButton"
               onClick={() => {
-                toggleMyPin(myIssue.id);
+                toggleMyPin(myIssue.id, myIssues);
               }}
             >
               {myIssue.isPinned ? (
