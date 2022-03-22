@@ -5,11 +5,11 @@ import { Routes, Route } from 'react-router-dom';
 import { nanoid } from 'nanoid';
 import Heading from './components/Heading';
 import Selection from './components/Selection';
+import Navigation from './components/Navigation';
 import Dashboard from './pages/Dashboard';
 import FetchedDetails from './pages/FetchedDetails';
 import MyIssues from './pages/MyIssues';
 import CreateIssueForm from './pages/CreateIssueForm';
-import Navigation from './components/Navigation';
 import MyIssueDetails from './pages/MyIssueDetails';
 
 export default function App() {
@@ -38,6 +38,9 @@ export default function App() {
                 selectedProject={selectedProject}
                 setSelectedProject={setSelectedProject}
               />
+              {!selectedProject && (
+                <EmptyState>Select an option from the box above.</EmptyState>
+              )}
               {selectedProject && (
                 <Dashboard
                   selectedProject={selectedProject}
@@ -88,7 +91,12 @@ export default function App() {
             element={
               <>
                 <Heading title="DETAIL" />
-                <MyIssueDetails myIssue={myIssue} avatar={avatar} />
+                <MyIssueDetails
+                  myIssue={myIssue}
+                  avatar={avatar}
+                  myIssues={myIssues}
+                  setMyIssues={setMyIssues}
+                />
               </>
             }
           />
@@ -120,7 +128,7 @@ export default function App() {
           } else {
             findIssuesFromData(loadFromLocal(selectedProject), data);
           }
-          setTimeout(() => setIsLoading(false), 2000);
+          setTimeout(() => setIsLoading(false), 1500);
         } else {
           throw new Error('Response not ok');
         }
@@ -216,4 +224,10 @@ export default function App() {
 const Container = styled.div`
   padding-top: 50px;
   padding-bottom: 50px;
+`;
+
+const EmptyState = styled.p`
+  margin: 10px;
+  text-align: center;
+  margin-top: 50px;
 `;

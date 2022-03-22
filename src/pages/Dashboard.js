@@ -1,7 +1,7 @@
 import styled from 'styled-components/macro';
 import { keyframes } from 'styled-components';
 import FetchedIssues from './FetchedIssues';
-import Button from '../components/Button';
+import { ButtonPrimary } from '../components/Button';
 
 export default function Dashboard({
   savedIssues,
@@ -36,9 +36,10 @@ export default function Dashboard({
       {hasError && (
         <ErrorContainer>
           <ErrorState>Oops, something went wrong</ErrorState>
-          <Button handleClick={() => GetData(selectedProject)}>
-            TRY AGAIN
-          </Button>
+          <ButtonPrimary
+            children={'TRY AGAIN'}
+            onClick={() => GetData(selectedProject)}
+          />
         </ErrorContainer>
       )}
     </main>

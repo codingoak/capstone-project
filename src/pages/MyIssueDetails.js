@@ -1,14 +1,24 @@
 import styled from 'styled-components/macro';
 import { NavLink } from 'react-router-dom';
+import { useState } from 'react';
+import { ButtonSecondary } from '../components/Button';
+import RemoveDialog from '../components/RemoveDialog';
 
-export default function MyIssueDetails({ myIssue, avatar }) {
+export default function MyIssueDetails({
+  myIssue,
+  avatar,
+  myIssues,
+  setMyIssues,
+}) {
+  const [showRemoveDialog, setShowRemoveDialog] = useState(false);
+
   return (
     <Wrapper>
       <Navlink to="/myissues" aria-label="back">
         <svg
           width="38"
           height="38"
-          fill="var(--bg-color-action)"
+          fill="var(--bg-color-primary)"
           viewBox="0 0 16 16"
         >
           <title>Back</title>
@@ -39,6 +49,22 @@ export default function MyIssueDetails({ myIssue, avatar }) {
           <DD key={index + myIssue.id}>{label}</DD>
         ))}
       </dl>
+      <RemoveWrapper>
+        {!showRemoveDialog && (
+          <ButtonSecondary
+            children={'REMOVE'}
+            onClick={() => setShowRemoveDialog(true)}
+          />
+        )}
+        {showRemoveDialog && (
+          <RemoveDialog
+            issueId={myIssue.id}
+            setShowRemoveDialog={setShowRemoveDialog}
+            myIssues={myIssues}
+            setMyIssues={setMyIssues}
+          />
+        )}
+      </RemoveWrapper>
     </Wrapper>
   );
 }
@@ -64,4 +90,9 @@ const DT = styled.dt`
 `;
 const DD = styled.dd`
   margin: 0 15px;
+`;
+
+const RemoveWrapper = styled.div`
+  display: flex;
+  justify-content: center;
 `;

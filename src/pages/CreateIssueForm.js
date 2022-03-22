@@ -1,6 +1,7 @@
 import styled from 'styled-components/macro';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { ButtonPrimary } from '../components/Button';
 
 export default function CreateIssueForm({ handleMyIssues }) {
   const {
@@ -124,7 +125,7 @@ export default function CreateIssueForm({ handleMyIssues }) {
         Pin: <Checkbox {...register('isPinned')} type="checkbox" id="pin" />
       </Label>
 
-      <InputButton type="submit" value="SUBMIT" />
+      <ButtonPrimary type="submit" children="SUBMIT" />
     </Container>
   );
 
@@ -205,30 +206,4 @@ const Checkbox = styled.input`
 const ErrorMessage = styled.span`
   color: crimson;
   font-size: 0.8rem;
-`;
-
-const InputButton = styled.input`
-  margin: 15px;
-  letter-spacing: 2px;
-  font-size: 1.3rem;
-  font-weight: bold;
-  color: var(--font-color-light);
-  background-color: var(--bg-color-action);
-  padding: 9px;
-  border: none;
-  border-radius: 15px;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
-    rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
-  opacity: 0.8;
-
-  :hover {
-    cursor: pointer;
-
-    opacity: 1;
-    transition: all 0.15s;
-  }
-
-  :active {
-    transform: scale(0.95);
-  }
 `;

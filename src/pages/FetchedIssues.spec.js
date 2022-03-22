@@ -62,7 +62,6 @@ describe('FetchedIssues', () => {
       </MemoryRouter>
     );
     const PinButton = screen.getByRole('button');
-
     userEvent.click(PinButton);
     expect(callback).toHaveBeenCalled();
   });
