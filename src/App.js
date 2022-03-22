@@ -38,6 +38,9 @@ export default function App() {
                 selectedProject={selectedProject}
                 setSelectedProject={setSelectedProject}
               />
+              {!selectedProject && (
+                <EmptyState>Select an option from the box above.</EmptyState>
+              )}
               {selectedProject && (
                 <Dashboard
                   selectedProject={selectedProject}
@@ -221,4 +224,10 @@ export default function App() {
 const Container = styled.div`
   padding-top: 50px;
   padding-bottom: 50px;
+`;
+
+const EmptyState = styled.p`
+  margin: 10px;
+  text-align: center;
+  margin-top: 50px;
 `;

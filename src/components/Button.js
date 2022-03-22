@@ -13,7 +13,7 @@ const Button = styled.button`
   border-radius: 15px;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
     rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
-  color: var(--font-color-light);
+  color: var(--font-color-dark);
   opacity: 0.8;
 
   :hover {
@@ -31,12 +31,14 @@ const Button = styled.button`
 export default Button;
 
 const ButtonPrimary = styled(Button)`
+  color: var(--font-color-light);
   background-color: var(--bg-color-primary);
 `;
 
 export { ButtonPrimary };
 
 const ButtonSecondary = styled(Button)`
+  color: var(--font-color-light);
   background-color: var(--bg-color-secondary);
 `;
 
