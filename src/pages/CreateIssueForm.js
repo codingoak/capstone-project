@@ -52,7 +52,7 @@ export default function CreateIssueForm({ handleMyIssues }) {
           <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z" />
         </svg>
       </Navlink>
-      <small>All fields with an asterisk* are mandatory.</small>
+      <Message>All fields with an asterisk* are mandatory.</Message>
       <FlexContainer>
         <Label htmlFor="user">User*:</Label>
         <Counter>{maxUserLength - user.length}</Counter>
@@ -135,7 +135,7 @@ export default function CreateIssueForm({ handleMyIssues }) {
       user: data.user,
       title: data.title,
       body: data.body,
-      milestone: data.milestone,
+      milestone: data.milestone ? data.milestone : 'no milestone',
       labels: separatedLabels,
       isPinned: data.isPinned,
     });
@@ -168,6 +168,10 @@ const Navlink = styled(NavLink)`
     opacity: 1;
     transition: all 0.15s;
   }
+`;
+
+const Message = styled.p`
+  font-size: 0.9rem;
 `;
 
 const Label = styled.label`

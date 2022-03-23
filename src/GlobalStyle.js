@@ -13,7 +13,7 @@ const GlobalStyles = createGlobalStyle`
         --bg-color-secondary: #dc143c;
         --font-color-action: #0085dc;
         --font-color-light:#eee;
-        --font-color-medium:#7d98aa;
+        --font-color-medium:#6a7b87;
         --font-color-dark: #0b2b40;
         --border-color-light: #0085dc;
         --border-color-dark: #0b2b40;

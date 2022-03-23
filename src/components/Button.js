@@ -37,6 +37,15 @@ const ButtonPrimary = styled(Button)`
 
 export { ButtonPrimary };
 
+const ButtonPrimarySmall = styled(ButtonPrimary)`
+  letter-spacing: 1px;
+  font-size: 1rem;
+  font-weight: normal;
+  padding: 5px 13px;
+`;
+
+export { ButtonPrimarySmall };
+
 const ButtonSecondary = styled(Button)`
   color: var(--font-color-light);
   background-color: var(--bg-color-secondary);
