@@ -22,7 +22,7 @@ describe('MyIssueDetails', () => {
       </MemoryRouter>
     );
     const terms = screen.getAllByRole('term');
-    expect(terms).toHaveLength(9);
+    expect(terms).toHaveLength(8);
   });
 
   it('renders the definitions', () => {

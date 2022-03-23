@@ -36,16 +36,20 @@ export default function MyIssueDetails({
       </Message>
 
       <dl>
-        <DT>Issue ID:</DT>
-        <DD>{myIssue.id}</DD>
+        <FlexContainer>
+          <div>
+            <DT>Issue ID:</DT>
+            <DD>{myIssue.id}</DD>
 
-        <DT>User:</DT>
-        <DD>{myIssue.user}</DD>
-
-        <DT>Avatar:</DT>
-        <DD>
-          <img src={avatar} alt="avatar" width="100" height="100" />
-        </DD>
+            <DT>User:</DT>
+            <DD>{myIssue.user}</DD>
+          </div>
+          <div>
+            <DD>
+              <Avatar src={avatar} alt="avatar" width="100" height="100" />
+            </DD>
+          </div>
+        </FlexContainer>
 
         <DT>Title*:</DT>
         <FlexContainer>
@@ -214,17 +218,21 @@ const Message = styled.p`
   font-size: 0.9rem;
 `;
 
+const FlexContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const Avatar = styled.img`
+  border-radius: 5px;
+`;
+
 const DT = styled.dt`
   margin-top: 10px;
   font-weight: bold;
 `;
 const DD = styled.dd`
   margin: 0 15px;
-`;
-
-const FlexContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
 `;
 
 const ButtonContainer = styled.div`
