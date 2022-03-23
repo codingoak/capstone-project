@@ -55,7 +55,7 @@ export default function MyIssueDetails({
         <FlexContainer>
           {editTitle ? (
             <>
-              <input
+              <StyledInput
                 type="text"
                 defaultValue={myIssue.title}
                 onChange={e => (myIssue.title = e.target.value)}
@@ -76,7 +76,7 @@ export default function MyIssueDetails({
         <FlexContainer>
           {editBody ? (
             <>
-              <input
+              <StyledInput
                 type="text"
                 defaultValue={myIssue.body}
                 onChange={e => (myIssue.body = e.target.value)}
@@ -100,7 +100,7 @@ export default function MyIssueDetails({
         <FlexContainer>
           {editState ? (
             <>
-              <input
+              <StyledInput
                 type="text"
                 defaultValue={myIssue.state}
                 onChange={e => (myIssue.state = e.target.value)}
@@ -121,7 +121,7 @@ export default function MyIssueDetails({
         <FlexContainer>
           {editMilestone ? (
             <>
-              <input
+              <StyledInput
                 type="text"
                 defaultValue={myIssue.milestone}
                 onChange={e => (myIssue.milestone = e.target.value)}
@@ -145,7 +145,7 @@ export default function MyIssueDetails({
             <>
               <DT>Labels (separated by comma):</DT>
               <FlexContainer>
-                <input
+                <StyledInput
                   type="text"
                   defaultValue={myIssue.labels}
                   onChange={e =>
@@ -233,6 +233,10 @@ const DT = styled.dt`
 `;
 const DD = styled.dd`
   margin: 0 15px;
+`;
+
+const StyledInput = styled.input`
+  width: 80%;
 `;
 
 const ButtonContainer = styled.div`
