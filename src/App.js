@@ -79,7 +79,7 @@ export default function App() {
           path="createissueform"
           element={
             <>
-              <Heading title={'ADD AN ISSUE'} />
+              <Heading title={'CREATE FORM'} />
               <CreateIssueForm handleMyIssues={handleMyIssues} />
             </>
           }

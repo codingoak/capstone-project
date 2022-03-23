@@ -16,7 +16,7 @@ You can choose between four different projects:
 - Sass
 - ESLint
 
-It is also possible to create and delete your own issue, wich appears in a separate list.
+It is also possible to create, edit and delete your own issue, wich appears in a separate list.
 
 <img src="./src/images/StartScreen.png" alt="start screen" width="200"><img src="./src/images/Selection.png" alt="selection" width="200"><img src="./src/images/LoadingState.png" alt="loading state" width="200"><img src="./src/images/ErrorState.png" alt="error state" width="200"><img src="./src/images/Dashboard.png" alt="dashboard" width="200"><img src="./src/images/form.png" alt="add an issue form" width="200">
 

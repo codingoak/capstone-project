@@ -15,6 +15,26 @@ describe('MyIssueDetails', () => {
     labels: ['beta', 'CLA signed'],
   };
 
+  it('renders the terms', () => {
+    render(
+      <MemoryRouter>
+        <MyIssueDetails myIssue={myIssue} />
+      </MemoryRouter>
+    );
+    const terms = screen.getAllByRole('term');
+    expect(terms).toHaveLength(9);
+  });
+
+  it('renders the definitions', () => {
+    render(
+      <MemoryRouter>
+        <MyIssueDetails myIssue={myIssue} />
+      </MemoryRouter>
+    );
+    const definitions = screen.getAllByRole('definition');
+    expect(definitions).toHaveLength(10);
+  });
+
   it('renders the username', () => {
     render(
       <MemoryRouter>
@@ -51,7 +71,7 @@ describe('MyIssueDetails', () => {
         <MyIssueDetails myIssue={myIssue} />
       </MemoryRouter>
     );
-    const RemoveButton = screen.getByRole('button');
+    const RemoveButton = screen.getByRole('button', { name: 'REMOVE' });
     expect(RemoveButton).toBeInTheDocument();
   });
 });
