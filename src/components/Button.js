@@ -7,7 +7,7 @@ const Button = styled.button`
   font-size: 1.3rem;
   font-weight: bold;
   margin: 5px;
-  padding: 9px 32px;
+  padding: 8px 24px;
   white-space: nowrap;
   border: none;
   border-radius: 15px;
@@ -31,8 +31,11 @@ const Button = styled.button`
 export default Button;
 
 const ButtonPrimary = styled(Button)`
-  color: var(--font-color-light);
-  background-color: var(--bg-color-primary);
+  color: white;
+  background: radial-gradient(
+    var(--bg-color-primary),
+    var(--bg-color-primary-dark)
+  );
 `;
 
 export { ButtonPrimary };
@@ -48,7 +51,10 @@ export { ButtonPrimarySmall };
 
 const ButtonSecondary = styled(Button)`
   color: var(--font-color-light);
-  background-color: var(--bg-color-secondary);
+  background: radial-gradient(
+    var(--bg-color-secondary),
+    var(--bg-color-secondary-dark)
+  );
 `;
 
 export { ButtonSecondary };

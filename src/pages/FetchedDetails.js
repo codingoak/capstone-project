@@ -16,29 +16,40 @@ export default function Detail({ savedIssue }) {
         </svg>
       </Navlink>
       <dl>
-        <DT>Number:</DT>
-        <DD>{savedIssue.number}</DD>
-        <DT>Issue ID:</DT>
-        <DD>{savedIssue.id}</DD>
-        <DT>User:</DT>
-        <DD>{savedIssue.user.login}</DD>
-        <DT>Avatar:</DT>
-        <DD>
-          <img
-            src={savedIssue.user.avatar_url}
-            alt="avatar"
-            width="100"
-            height="100"
-          />
-        </DD>
+        <FlexContainer>
+          <div>
+            <DT>Number:</DT>
+            <DD>{savedIssue.number}</DD>
+            <DT>Issue ID:</DT>
+            <DD>{savedIssue.id}</DD>
+            <DT>User:</DT>
+            <DD>{savedIssue.user.login}</DD>
+          </div>
+          <div>
+            <DD>
+              <Avatar
+                src={savedIssue.user.avatar_url}
+                alt="avatar"
+                width="100"
+                height="100"
+              />
+            </DD>
+          </div>
+        </FlexContainer>
         <DT>Title:</DT>
         <DD>{savedIssue.title}</DD>
         <DT>Body:</DT>
         <DD>{savedIssue.body}</DD>
-        <DT>Created at:</DT>
-        <DD>{savedIssue.created_at}</DD>
-        <DT>Updated at:</DT>
-        <DD>{savedIssue.updated_at}</DD>
+        <FlexContainer>
+          <div>
+            <DT>Created at:</DT>
+            <DD>{savedIssue.created_at}</DD>
+          </div>
+          <div>
+            <DT>Updated at:</DT>
+            <DD>{savedIssue.updated_at}</DD>
+          </div>
+        </FlexContainer>
         <DT>State:</DT>
         <DD>{savedIssue.state}</DD>
         <DT>Milestone:</DT>
@@ -77,6 +88,15 @@ const Navlink = styled(NavLink)`
     opacity: 1;
     transition: all 0.15s;
   }
+`;
+
+const FlexContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const Avatar = styled.img`
+  border-radius: 5px;
 `;
 
 const DT = styled.dt`

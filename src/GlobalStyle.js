@@ -10,7 +10,9 @@ const GlobalStyles = createGlobalStyle`
         --bg-color-light: #d8e4eb;
         --bg-color-dark: #0b2b40;
         --bg-color-primary: #0085dc;
+        --bg-color-primary-dark: #0068ad;
         --bg-color-secondary: #dc143c;
+        --bg-color-secondary-dark: #a80d2c;
         --font-color-action: #0085dc;
         --font-color-light:#eee;
         --font-color-medium:#6a7b87;
