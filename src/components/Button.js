@@ -6,11 +6,11 @@ const Button = styled.button`
   letter-spacing: 1px;
   font-size: 1.2rem;
   font-weight: bold;
-  margin: 5px;
-  padding: 6px 16px;
+  margin: 10px 5px 5px;
+  padding: 10px 24px;
   white-space: nowrap;
   border: none;
-  border-radius: 31px;
+  border-radius: 32px;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
     rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
   color: var(--font-color-dark);
@@ -34,7 +34,7 @@ export default Button;
 
 const ButtonPrimary = styled(Button)`
   color: white;
-  border: 3px solid var(--bg-color-primary-dark);
+  border: 2px solid var(--bg-color-primary-dark);
   background: radial-gradient(
     var(--bg-color-primary),
     var(--bg-color-primary-dark)
@@ -54,7 +54,7 @@ export { ButtonPrimarySmall };
 
 const ButtonSecondary = styled(Button)`
   color: var(--font-color-light);
-  border: 3px solid var(--bg-color-secondary-dark);
+  border: 2px solid var(--bg-color-secondary-dark);
   background: radial-gradient(
     var(--bg-color-secondary),
     var(--bg-color-secondary-dark)

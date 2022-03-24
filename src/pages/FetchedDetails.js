@@ -1,8 +1,13 @@
 import styled from 'styled-components/macro';
 import { NavLink } from 'react-router-dom';
+import { useEffect } from 'react';
 import Heading from '../components/Heading';
 
 export default function Detail({ savedIssue }) {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <>
       <header>
@@ -33,7 +38,7 @@ export default function Detail({ savedIssue }) {
           </DL>
           <Avatar
             src={savedIssue.user.avatar_url}
-            alt="avatar"
+            alt={`Avatar of ${savedIssue.user.login}`}
             width="90"
             height="90"
           />
@@ -102,6 +107,8 @@ const FlexContainer = styled.div`
 `;
 
 const Avatar = styled.img`
+  margin-top: 10px;
+  margin-right: 10px;
   border-radius: 5px;
 `;
 

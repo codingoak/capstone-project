@@ -1,6 +1,6 @@
 import styled from 'styled-components/macro';
 import { NavLink } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ButtonPrimarySmall, ButtonSecondary } from '../components/Button';
 import RemoveDialog from '../components/RemoveDialog';
 
@@ -8,7 +8,7 @@ export default function MyIssueDetails({
   myIssue,
   avatar,
   myIssues,
-  setMyIssues,
+  handleRemoveIssue,
 }) {
   const [showRemoveDialog, setShowRemoveDialog] = useState(false);
   const [editTitle, setEditTitle] = useState(false);
@@ -16,6 +16,10 @@ export default function MyIssueDetails({
   const [editState, setEditState] = useState(false);
   const [editMilestone, setEditMilestone] = useState(false);
   const [editLabels, setEditLabels] = useState(false);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <Wrapper>
@@ -44,7 +48,12 @@ export default function MyIssueDetails({
           <DT>User:</DT>
           <DD>{myIssue.user}</DD>
         </DL>
-        <Avatar src={avatar} alt="Avatar" width="90" height="90" />
+        <Avatar
+          src={avatar}
+          alt={`Avatar of ${myIssue.user}`}
+          width="90"
+          height="90"
+        />
       </FlexContainer>
       <DL>
         <DT id="title">Title*:</DT>
@@ -190,14 +199,18 @@ export default function MyIssueDetails({
         {showRemoveDialog && (
           <RemoveDialog
             issueId={myIssue.id}
-            setShowRemoveDialog={setShowRemoveDialog}
             myIssues={myIssues}
-            setMyIssues={setMyIssues}
+            handleRemoveIssue={handleRemoveIssue}
+            handleShowRemoveDialog={handleShowRemoveDialog}
           />
         )}
       </ButtonContainer>
     </Wrapper>
   );
+
+  function handleShowRemoveDialog() {
+    setShowRemoveDialog(false);
+  }
 }
 
 const Wrapper = styled.main`
@@ -225,6 +238,8 @@ const FlexContainer = styled.div`
 `;
 
 const Avatar = styled.img`
+  margin-right: 10px;
+  border-radius: 5px;
   border-radius: 5px;
 `;
 

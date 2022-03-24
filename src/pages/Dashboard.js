@@ -63,8 +63,6 @@ const TurnAnimation = keyframes`
 const Circle = styled.svg`
   width: 32px;
   height: 32px;
-
-  /* Animation */
   animation: ${TurnAnimation} 1s ease infinite;
 `;
 
