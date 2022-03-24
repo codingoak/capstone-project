@@ -1,77 +1,88 @@
 import styled from 'styled-components/macro';
 import { NavLink } from 'react-router-dom';
+import { useEffect } from 'react';
+import Heading from '../components/Heading';
 
 export default function Detail({ savedIssue }) {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
-    <Wrapper>
-      <Navlink to="/" aria-label="back">
-        <svg
-          width="38"
-          height="38"
-          fill="var(--bg-color-primary)"
-          viewBox="0 0 16 16"
-        >
-          <title>Back</title>
-          <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z" />
-        </svg>
-      </Navlink>
-      <dl>
+    <>
+      <header>
+        <Heading title="DETAIL" />
+      </header>
+      <Wrapper>
+        <Navlink to="/" aria-label="back">
+          <svg
+            role="img"
+            aria-label="Back arrow"
+            width="38"
+            height="38"
+            fill="var(--bg-color-primary)"
+            viewBox="0 0 16 16"
+          >
+            <title>Back</title>
+            <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z" />
+          </svg>
+        </Navlink>
         <FlexContainer>
-          <div>
+          <DL>
             <DT>Number:</DT>
             <DD>{savedIssue.number}</DD>
             <DT>Issue ID:</DT>
             <DD>{savedIssue.id}</DD>
             <DT>User:</DT>
             <DD>{savedIssue.user.login}</DD>
-          </div>
-          <div>
-            <DD>
-              <Avatar
-                src={savedIssue.user.avatar_url}
-                alt="avatar"
-                width="100"
-                height="100"
-              />
-            </DD>
-          </div>
+          </DL>
+          <Avatar
+            src={savedIssue.user.avatar_url}
+            alt={`Avatar of ${savedIssue.user.login}`}
+            width="90"
+            height="90"
+          />
         </FlexContainer>
-        <DT>Title:</DT>
-        <DD>{savedIssue.title}</DD>
-        <DT>Body:</DT>
-        <DD>{savedIssue.body}</DD>
+        <DL>
+          <DT>Title:</DT>
+          <DD>{savedIssue.title}</DD>
+          <DT>Body:</DT>
+          <DD>{savedIssue.body}</DD>
+        </DL>
         <FlexContainer>
-          <div>
+          <dl>
             <DT>Created at:</DT>
             <DD>{savedIssue.created_at}</DD>
-          </div>
-          <div>
+          </dl>
+          <dl>
             <DT>Updated at:</DT>
             <DD>{savedIssue.updated_at}</DD>
-          </div>
+          </dl>
         </FlexContainer>
-        <DT>State:</DT>
-        <DD>{savedIssue.state}</DD>
-        <DT>Milestone:</DT>
-        <DD>{savedIssue.milestone}</DD>
-        <DT>Labels:</DT>
-        {savedIssue.labels?.map(label => (
-          <DD key={savedIssue + label.name}>{label.name}</DD>
-        ))}
-        <DT>Comments:</DT>
-        <DD>
-          {savedIssue.comments === 0
-            ? 'No comments available'
-            : savedIssue.comments}
-        </DD>
-        <DT>URL:</DT>
-        <DD>
-          <a href={savedIssue.html_url} target="_blank" rel="noreferrer">
-            {savedIssue.html_url}
-          </a>
-        </DD>
-      </dl>
-    </Wrapper>
+        <DL>
+          <DT>State:</DT>
+          <DD>{savedIssue.state}</DD>
+          <DT>Milestone:</DT>
+          <DD>{savedIssue.milestone}</DD>
+          <DT>Labels:</DT>
+          {savedIssue.labels?.map(label => (
+            <DD key={savedIssue + label.name}>{label.name}</DD>
+          ))}
+          <DT>Comments:</DT>
+          <DD>
+            {savedIssue.comments === 0
+              ? 'No comments available'
+              : savedIssue.comments}
+          </DD>
+          <DT>URL:</DT>
+          <DD>
+            <a href={savedIssue.html_url} target="_blank" rel="noreferrer">
+              {savedIssue.html_url}
+            </a>
+          </DD>
+        </DL>
+      </Wrapper>
+    </>
   );
 }
 
@@ -96,7 +107,13 @@ const FlexContainer = styled.div`
 `;
 
 const Avatar = styled.img`
+  margin-top: 10px;
+  margin-right: 10px;
   border-radius: 5px;
+`;
+
+const DL = styled.dl`
+  margin: 0;
 `;
 
 const DT = styled.dt`
@@ -104,5 +121,5 @@ const DT = styled.dt`
   font-weight: bold;
 `;
 const DD = styled.dd`
-  margin: 0 15px;
+  margin: 0 10px;
 `;

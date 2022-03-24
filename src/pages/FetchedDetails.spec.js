@@ -3,6 +3,8 @@ import { MemoryRouter } from 'react-router-dom';
 import FetchedDetails from './FetchedDetails';
 
 describe('Fetched issue details', () => {
+  global.scrollTo = jest.fn();
+
   const savedIssue = {
     number: 4458,
     id: 1168898651,

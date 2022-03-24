@@ -1,6 +1,6 @@
 import styled from 'styled-components/macro';
 import { NavLink } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ButtonPrimarySmall, ButtonSecondary } from '../components/Button';
 import RemoveDialog from '../components/RemoveDialog';
 
@@ -8,7 +8,7 @@ export default function MyIssueDetails({
   myIssue,
   avatar,
   myIssues,
-  setMyIssues,
+  handleRemoveIssue,
 }) {
   const [showRemoveDialog, setShowRemoveDialog] = useState(false);
   const [editTitle, setEditTitle] = useState(false);
@@ -17,10 +17,16 @@ export default function MyIssueDetails({
   const [editMilestone, setEditMilestone] = useState(false);
   const [editLabels, setEditLabels] = useState(false);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <Wrapper>
       <Navlink to="/myissues" aria-label="back">
         <svg
+          role="img"
+          aria-label="Back arrow"
           width="38"
           height="38"
           fill="var(--bg-color-primary)"
@@ -35,27 +41,27 @@ export default function MyIssueDetails({
         edit.
       </Message>
 
-      <dl>
-        <FlexContainer>
-          <div>
-            <DT>Issue ID:</DT>
-            <DD>{myIssue.id}</DD>
-
-            <DT>User:</DT>
-            <DD>{myIssue.user}</DD>
-          </div>
-          <div>
-            <DD>
-              <Avatar src={avatar} alt="avatar" width="100" height="100" />
-            </DD>
-          </div>
-        </FlexContainer>
-
-        <DT>Title*:</DT>
+      <FlexContainer>
+        <DL>
+          <DT>Issue ID:</DT>
+          <DD>{myIssue.id}</DD>
+          <DT>User:</DT>
+          <DD>{myIssue.user}</DD>
+        </DL>
+        <Avatar
+          src={avatar}
+          alt={`Avatar of ${myIssue.user}`}
+          width="90"
+          height="90"
+        />
+      </FlexContainer>
+      <DL>
+        <DT id="title">Title*:</DT>
         <FlexContainer>
           {editTitle ? (
             <>
               <StyledInput
+                aria-labelledby="title"
                 type="text"
                 defaultValue={myIssue.title}
                 onChange={e => (myIssue.title = e.target.value)}
@@ -72,11 +78,12 @@ export default function MyIssueDetails({
           )}
         </FlexContainer>
 
-        <DT>Body*:</DT>
+        <DT id="body">Body*:</DT>
         <FlexContainer>
           {editBody ? (
             <>
               <StyledInput
+                aria-labelledby="body"
                 type="text"
                 defaultValue={myIssue.body}
                 onChange={e => (myIssue.body = e.target.value)}
@@ -96,11 +103,12 @@ export default function MyIssueDetails({
         <DT>Created at:</DT>
         <DD>{myIssue.created_at}</DD>
 
-        <DT>State:</DT>
+        <DT id="state">State*:</DT>
         <FlexContainer>
           {editState ? (
             <>
               <StyledInput
+                aria-labelledby="state"
                 type="text"
                 defaultValue={myIssue.state}
                 onChange={e => (myIssue.state = e.target.value)}
@@ -117,11 +125,12 @@ export default function MyIssueDetails({
           )}
         </FlexContainer>
 
-        <DT>Milestone*:</DT>
+        <DT id="milestone">Milestone*:</DT>
         <FlexContainer>
           {editMilestone ? (
             <>
               <StyledInput
+                aria-labelledby="milestone"
                 type="text"
                 defaultValue={myIssue.milestone}
                 onChange={e => (myIssue.milestone = e.target.value)}
@@ -143,9 +152,10 @@ export default function MyIssueDetails({
         <>
           {editLabels ? (
             <>
-              <DT>Labels (separated by comma):</DT>
+              <DT id="labels">Labels (separated by comma)*:</DT>
               <FlexContainer>
                 <StyledInput
+                  aria-labelledby="labels"
                   type="text"
                   defaultValue={myIssue.labels}
                   onChange={e =>
@@ -175,7 +185,7 @@ export default function MyIssueDetails({
             </>
           )}
         </>
-      </dl>
+      </DL>
 
       <ButtonContainer>
         {!showRemoveDialog && (
@@ -189,14 +199,18 @@ export default function MyIssueDetails({
         {showRemoveDialog && (
           <RemoveDialog
             issueId={myIssue.id}
-            setShowRemoveDialog={setShowRemoveDialog}
             myIssues={myIssues}
-            setMyIssues={setMyIssues}
+            handleRemoveIssue={handleRemoveIssue}
+            handleShowRemoveDialog={handleShowRemoveDialog}
           />
         )}
       </ButtonContainer>
     </Wrapper>
   );
+
+  function handleShowRemoveDialog() {
+    setShowRemoveDialog(false);
+  }
 }
 
 const Wrapper = styled.main`
@@ -224,15 +238,22 @@ const FlexContainer = styled.div`
 `;
 
 const Avatar = styled.img`
+  margin-right: 10px;
   border-radius: 5px;
+  border-radius: 5px;
+`;
+
+const DL = styled.dl`
+  margin: 0;
 `;
 
 const DT = styled.dt`
   margin-top: 10px;
   font-weight: bold;
 `;
+
 const DD = styled.dd`
-  margin: 0 15px;
+  margin: 0 10px;
 `;
 
 const StyledInput = styled.input`
