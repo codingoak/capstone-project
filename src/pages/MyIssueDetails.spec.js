@@ -3,6 +3,8 @@ import { MemoryRouter } from 'react-router-dom';
 import MyIssueDetails from './MyIssueDetails';
 
 describe('MyIssueDetails', () => {
+  global.scrollTo = jest.fn();
+
   const myIssue = {
     id: 'WT02NQc8V5tMKCcxnw7sj',
     user: 'codingoak',
