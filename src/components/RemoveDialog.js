@@ -5,9 +5,8 @@ import { ButtonSecondary } from './Button';
 
 export default function RemoveDialog({
   issueId,
-  setShowRemoveDialog,
-  myIssues,
-  setMyIssues,
+  handleShowRemoveDialog,
+  handleRemoveIssue,
 }) {
   const navigate = useNavigate();
   return (
@@ -15,20 +14,20 @@ export default function RemoveDialog({
       <ButtonPrimary
         children={'CANCEL'}
         onClick={() => {
-          setShowRemoveDialog(false);
+          handleShowRemoveDialog();
         }}
       />
       <ButtonSecondary
         children={'REMOVE'}
         onClick={() => {
-          handleRemoveIssue(issueId);
+          removeIssue(issueId);
         }}
       />
     </Wrapper>
   );
 
-  function handleRemoveIssue(id) {
-    setMyIssues(myIssues.filter(myIssue => myIssue.id !== id));
+  function removeIssue(id) {
+    handleRemoveIssue(id);
     navigate('/myissues');
   }
 }

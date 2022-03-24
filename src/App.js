@@ -37,7 +37,7 @@ export default function App() {
                 <Heading title="DASHBOARD" />
                 <Selection
                   selectedProject={selectedProject}
-                  setSelectedProject={setSelectedProject}
+                  handleRepoChange={handleRepoChange}
                 />
               </header>
               {selectedProject ? (
@@ -92,7 +92,7 @@ export default function App() {
                   myIssue={myIssue}
                   avatar={avatar}
                   myIssues={myIssues}
-                  setMyIssues={setMyIssues}
+                  handleRemoveIssue={handleRemoveIssue}
                 />
               </>
             }
@@ -226,6 +226,14 @@ export default function App() {
       const data = await response.json();
       setAvatar(data.avatar_url);
     }
+  }
+
+  function handleRepoChange(e) {
+    setSelectedProject(e.value);
+  }
+
+  function handleRemoveIssue(id) {
+    setMyIssues(myIssues.filter(myIssue => myIssue.id !== id));
   }
 }
 
