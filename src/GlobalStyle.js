@@ -15,7 +15,7 @@ const GlobalStyles = createGlobalStyle`
         --bg-color-secondary-dark: #a80d2c;
         --font-color-action: #0085dc;
         --font-color-light:#eee;
-        --font-color-medium:#6a7b87;
+        --font-color-medium:#4a5b67;
         --font-color-dark: #0b2b40;
         --border-color-light: #0085dc;
         --border-color-dark: #0b2b40;

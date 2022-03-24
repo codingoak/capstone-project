@@ -12,16 +12,18 @@ export default function Dashboard({
   selectedProject,
 }) {
   return (
-    <main>
+    <>
       {isLoading && (
         <LoadingContainer>
           <Circle
+            role="img"
+            aria-label="Rotating circular arrow"
             width="32"
             height="32"
             fill="#0b2b40"
             viewBox="0 0 16 16"
-            title="Loading..."
           >
+            <title>Loading...</title>
             <path
               fillRule="evenodd"
               d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"
@@ -42,11 +44,11 @@ export default function Dashboard({
           />
         </ErrorContainer>
       )}
-    </main>
+    </>
   );
 }
 
-const LoadingContainer = styled.div`
+const LoadingContainer = styled.main`
   margin: 100px;
   text-align: center;
   grid-column: 1/-1;
@@ -66,7 +68,7 @@ const Circle = styled.svg`
   animation: ${TurnAnimation} 1s ease infinite;
 `;
 
-const ErrorContainer = styled.div`
+const ErrorContainer = styled.main`
   display: grid;
   place-items: center;
   height: 70vh;

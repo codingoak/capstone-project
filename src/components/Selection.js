@@ -14,6 +14,7 @@ export default function Selection({ selectedProject, setSelectedProject }) {
         <svg
           xmlns="http://www.w3.org/2000/svg"
           role="img"
+          aria-label="react logo"
           viewBox="0 0 256 228"
           fill="none"
           width="16"
@@ -35,6 +36,7 @@ export default function Selection({ selectedProject, setSelectedProject }) {
         <svg
           xmlns="http://www.w3.org/2000/svg"
           role="img"
+          aria-label="Testing library logo"
           viewBox="0 0 24 24"
           width="16"
           height="16"
@@ -53,6 +55,7 @@ export default function Selection({ selectedProject, setSelectedProject }) {
         <svg
           xmlns="http://www.w3.org/2000/svg"
           role="img"
+          aria-label="Styled-components logo"
           viewBox="0 0 24 24"
           width="16"
           height="16"
@@ -69,6 +72,7 @@ export default function Selection({ selectedProject, setSelectedProject }) {
         <svg
           xmlns="http://www.w3.org/2000/svg"
           role="img"
+          aria-label="Git logo"
           viewBox="0 0 256 256"
           fill="none"
           width="16"
@@ -96,6 +100,7 @@ export default function Selection({ selectedProject, setSelectedProject }) {
         <svg
           xmlns="http://www.w3.org/2000/svg"
           role="img"
+          aria-label="Node.js logo"
           viewBox="0 0 315 315"
           fill="none"
           width="16"
@@ -120,6 +125,7 @@ export default function Selection({ selectedProject, setSelectedProject }) {
         <svg
           xmlns="http://www.w3.org/2000/svg"
           role="img"
+          aria-label="Express logo"
           viewBox="0 0 24 24"
           width="16"
           height="16"
@@ -136,6 +142,7 @@ export default function Selection({ selectedProject, setSelectedProject }) {
         <svg
           xmlns="http://www.w3.org/2000/svg"
           role="img"
+          aria-label="Babel logo"
           viewBox="0 0 132 132"
           fill="none"
           width="16"
@@ -195,6 +202,7 @@ export default function Selection({ selectedProject, setSelectedProject }) {
         <svg
           xmlns="http://www.w3.org/2000/svg"
           role="img"
+          aria-label="Vue.js logo"
           version="1.1"
           viewBox="0 0 261.76 226.69"
           width="16"
@@ -225,6 +233,7 @@ export default function Selection({ selectedProject, setSelectedProject }) {
         <svg
           xmlns="http://www.w3.org/2000/svg"
           role="img"
+          aria-label="Sass logo"
           viewBox="0 0 256 192"
           fill="none"
           width="16"
@@ -245,6 +254,7 @@ export default function Selection({ selectedProject, setSelectedProject }) {
         <svg
           xmlns="http://www.w3.org/2000/svg"
           role="img"
+          aria-label="ESLint logo"
           viewBox="0 0 323.99971 285.09601"
           width="16"
           height="16"
@@ -269,6 +279,7 @@ export default function Selection({ selectedProject, setSelectedProject }) {
         <svg
           xmlns="http://www.w3.org/2000/svg"
           role="img"
+          aria-label="Angular logo"
           viewBox="0 0 256 272"
           fill="none"
           width="16"
@@ -297,7 +308,7 @@ export default function Selection({ selectedProject, setSelectedProject }) {
   ];
 
   return (
-    <SelectionContainer>
+    <SelectionForm aria-label="Select box">
       <Select
         options={options}
         value={options.find(obj => obj.value === selectedProject)}
@@ -310,12 +321,20 @@ export default function Selection({ selectedProject, setSelectedProject }) {
         )}
         aria-label="choose a project"
         name="projects"
+        placeholder="Select a repository..."
+        theme={theme => ({
+          ...theme,
+          colors: {
+            ...theme.colors,
+            neutral50: 'var(--font-color-medium)', // Placeholder color
+          },
+        })}
       />
-    </SelectionContainer>
+    </SelectionForm>
   );
 }
 
-const SelectionContainer = styled.form`
+const SelectionForm = styled.form`
   margin: 10px;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 `;

@@ -33,15 +33,14 @@ export default function App() {
           path="/"
           element={
             <>
-              <Heading title="DASHBOARD" />
-              <Selection
-                selectedProject={selectedProject}
-                setSelectedProject={setSelectedProject}
-              />
-              {!selectedProject && (
-                <EmptyState>Select an option from the box above.</EmptyState>
-              )}
-              {selectedProject && (
+              <header>
+                <Heading title="DASHBOARD" />
+                <Selection
+                  selectedProject={selectedProject}
+                  setSelectedProject={setSelectedProject}
+                />
+              </header>
+              {selectedProject ? (
                 <Dashboard
                   selectedProject={selectedProject}
                   savedIssues={savedIssues}
@@ -50,6 +49,10 @@ export default function App() {
                   togglePin={togglePin}
                   GetData={GetData}
                 />
+              ) : (
+                <main>
+                  <EmptyState>Select an option from the box above.</EmptyState>
+                </main>
               )}
             </>
           }
@@ -58,28 +61,20 @@ export default function App() {
           <Route
             key={savedIssue.id}
             path={`${savedIssue.id}`}
-            element={
-              <>
-                <Heading title="DETAIL" />
-                <FetchedDetails savedIssue={savedIssue} />
-              </>
-            }
+            element={<FetchedDetails savedIssue={savedIssue} />}
           />
         ))}
         <Route
           path="myissues"
-          element={
-            <>
-              <Heading title="MY ISSUES" />
-              <MyIssues myIssues={myIssues} toggleMyPin={toggleMyPin} />
-            </>
-          }
+          element={<MyIssues myIssues={myIssues} toggleMyPin={toggleMyPin} />}
         />
         <Route
           path="createissueform"
           element={
             <>
-              <Heading title={'CREATE FORM'} />
+              <header>
+                <Heading title={'CREATE FORM'} />
+              </header>
               <CreateIssueForm handleMyIssues={handleMyIssues} />
             </>
           }
@@ -90,7 +85,9 @@ export default function App() {
             path={`${myIssue.id}`}
             element={
               <>
-                <Heading title="DETAIL" />
+                <header>
+                  <Heading title="DETAIL" />
+                </header>
                 <MyIssueDetails
                   myIssue={myIssue}
                   avatar={avatar}
@@ -102,7 +99,9 @@ export default function App() {
           />
         ))}
       </Routes>
-      <Navigation />
+      <footer>
+        <Navigation />
+      </footer>
     </Container>
   );
 

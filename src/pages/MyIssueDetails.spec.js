@@ -32,7 +32,7 @@ describe('MyIssueDetails', () => {
       </MemoryRouter>
     );
     const definitions = screen.getAllByRole('definition');
-    expect(definitions).toHaveLength(10);
+    expect(definitions).toHaveLength(9);
   });
 
   it('renders the username', () => {
