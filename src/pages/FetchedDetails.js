@@ -10,15 +10,14 @@ export default function Detail({ savedIssue }) {
 
   return (
     <>
-      <HeadingMain title="DETAIL" />
+      <HeadingMain title="DETAILS" />
       <Wrapper>
         <BackArrow to="/" />
+
         <FlexContainer>
           <DL>
-            <DT>Number:</DT>
-            <DD>{savedIssue.number}</DD>
-            <DT>Issue ID:</DT>
-            <DD>{savedIssue.id}</DD>
+            <DT>User ID:</DT>
+            <DD>{savedIssue.user.id}</DD>
             <DT>User:</DT>
             <DD>{savedIssue.user.login}</DD>
           </DL>
@@ -30,6 +29,10 @@ export default function Detail({ savedIssue }) {
           />
         </FlexContainer>
         <DL>
+          <DT>Number:</DT>
+          <DD>{savedIssue.number}</DD>
+          <DT>Issue ID:</DT>
+          <DD>{savedIssue.id}</DD>
           <DT>Title:</DT>
           <DD>{savedIssue.title}</DD>
           <DT>Body:</DT>

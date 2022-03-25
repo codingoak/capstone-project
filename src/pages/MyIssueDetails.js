@@ -1,5 +1,4 @@
 import styled from 'styled-components/macro';
-import { NavLink } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import HeadingMain from '../components/HeadingMain';
 import BackArrow from '../components/BackArrow';
@@ -65,9 +64,7 @@ export default function MyIssueDetails({
                 />
               </>
             ) : (
-              <>
-                <DD onClick={() => setEditTitle(true)}>{myIssue.title}</DD>
-              </>
+              <DD onClick={() => setEditTitle(true)}>{myIssue.title}</DD>
             )}
           </FlexContainer>
 
@@ -87,9 +84,7 @@ export default function MyIssueDetails({
                 />
               </>
             ) : (
-              <>
-                <DD onClick={() => setEditBody(true)}>{myIssue.body}</DD>
-              </>
+              <DD onClick={() => setEditBody(true)}>{myIssue.body}</DD>
             )}
           </FlexContainer>
 
@@ -112,9 +107,7 @@ export default function MyIssueDetails({
                 />
               </>
             ) : (
-              <>
-                <DD onClick={() => setEditState(true)}>{myIssue.state}</DD>
-              </>
+              <DD onClick={() => setEditState(true)}>{myIssue.state}</DD>
             )}
           </FlexContainer>
 
@@ -134,11 +127,9 @@ export default function MyIssueDetails({
                 />
               </>
             ) : (
-              <>
-                <DD onClick={() => setEditMilestone(true)}>
-                  {myIssue.milestone}
-                </DD>
-              </>
+              <DD onClick={() => setEditMilestone(true)}>
+                {myIssue.milestone}
+              </DD>
             )}
           </FlexContainer>
 
@@ -182,12 +173,10 @@ export default function MyIssueDetails({
 
         <ButtonContainer>
           {!showRemoveDialog && (
-            <>
-              <ButtonSecondary
-                children={'REMOVE'}
-                onClick={() => setShowRemoveDialog(true)}
-              />
-            </>
+            <ButtonSecondary
+              children={'REMOVE'}
+              onClick={() => setShowRemoveDialog(true)}
+            />
           )}
           {showRemoveDialog && (
             <RemoveDialog
@@ -210,15 +199,6 @@ export default function MyIssueDetails({
 const Wrapper = styled.main`
   margin: 0 10px;
   word-break: break-all;
-`;
-
-const Navlink = styled(NavLink)`
-  opacity: 0.8;
-  :hover {
-    cursor: pointer;
-    opacity: 1;
-    transition: all 0.15s;
-  }
 `;
 
 const Message = styled.p`
