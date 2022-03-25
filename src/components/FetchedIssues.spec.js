@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
+
 import FetchedIssues from './FetchedIssues';
 
 describe('FetchedIssues', () => {
@@ -9,7 +9,7 @@ describe('FetchedIssues', () => {
     { id: 112, title: 'Teststring2', state: 'close', isPinned: false },
   ];
 
-  it('renders the heading', () => {
+  it('renders the Heading', () => {
     render(
       <MemoryRouter>
         <FetchedIssues savedIssues={savedIssues} />
@@ -19,50 +19,13 @@ describe('FetchedIssues', () => {
     expect(heading).toBeInTheDocument();
   });
 
-  it('renders issue one', () => {
+  it('renders an issue', () => {
     render(
       <MemoryRouter>
         <FetchedIssues savedIssues={savedIssues} />
       </MemoryRouter>
     );
-    const issueOne = screen.getByText('Teststring1');
-    expect(issueOne).toBeInTheDocument();
-  });
-
-  it('renders issues two', () => {
-    render(
-      <MemoryRouter>
-        <FetchedIssues savedIssues={savedIssues} />
-      </MemoryRouter>
-    );
-    const issueTwo = screen.getByText('close');
-    expect(issueTwo).toBeInTheDocument();
-  });
-
-  it('renders the buttons', () => {
-    render(
-      <MemoryRouter>
-        <FetchedIssues savedIssues={savedIssues} />
-      </MemoryRouter>
-    );
-    const buttons = screen.getAllByRole('button');
-    expect(buttons).toHaveLength(2);
-  });
-
-  it('calls callback from PinButton', () => {
-    const callback = jest.fn();
-    render(
-      <MemoryRouter>
-        <FetchedIssues
-          savedIssues={[
-            { id: 333, title: 'Teststring3', state: 'open', clicked: true },
-          ]}
-          togglePin={callback}
-        />
-      </MemoryRouter>
-    );
-    const PinButton = screen.getByRole('button');
-    userEvent.click(PinButton);
-    expect(callback).toHaveBeenCalled();
+    const issue = screen.getByText(/Teststring2/);
+    expect(issue).toBeInTheDocument();
   });
 });
