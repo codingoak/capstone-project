@@ -4,7 +4,7 @@ import styled from 'styled-components/macro';
 import HeadingIssues from '../components/HeadingIssues';
 import HeadingMain from '../components/HeadingMain';
 
-export default function MyIssues({ myIssues, toggleMyPin }) {
+export default function MyIssues({ myIssues, togglePin }) {
   return (
     <>
       <HeadingMain title="MY ISSUES" />
@@ -28,7 +28,7 @@ export default function MyIssues({ myIssues, toggleMyPin }) {
               <PinButton
                 aria-label="PinButton"
                 onClick={() => {
-                  toggleMyPin(myIssue.id, myIssues);
+                  togglePin(myIssue.id, myIssues);
                 }}
               >
                 {myIssue.isPinned ? (

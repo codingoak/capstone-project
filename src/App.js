@@ -15,11 +15,11 @@ import MyIssueDetails from './pages/MyIssueDetails';
 
 export default function App() {
   const [selectedProject, setSelectedProject] = useState('');
-  const [savedIssues, setSavedIssues] = useLocalStorage(selectedProject, []);
   const [isLoading, setIsLoading] = useState(false);
   const [hasError, setHasError] = useState(false);
-  const [myIssues, setMyIssues] = useLocalStorage('myOwnIssues', []);
   const [avatar, setAvatar] = useState(null);
+  const [savedIssues, setSavedIssues] = useLocalStorage(selectedProject, []);
+  const [myIssues, setMyIssues] = useLocalStorage('myOwnIssues', []);
 
   useEffect(() => {
     loadFromLocal(selectedProject);
@@ -68,7 +68,7 @@ export default function App() {
           element={
             <MyIssues
               myIssues={myIssues}
-              toggleMyPin={toggleMyPin}
+              togglePin={togglePin}
               sortPins={sortPins}
             />
           }
@@ -147,63 +147,22 @@ export default function App() {
     }
   }
 
-  function togglePin(buttonId, issues) {
-    const nextIssues = checkIsPinned(buttonId, issues);
-    sortPins(nextIssues);
-    setSavedIssues(nextIssues);
-  }
-
-  function toggleMyPin(buttonId, issues) {
-    const nextIssues = checkIsPinned(buttonId, issues);
-    sortPins(nextIssues);
-    setMyIssues(nextIssues);
-  }
-
-  function checkIsPinned(buttonId, issues) {
-    const nextIssues = issues.map(issue => {
-      if (issue.id === buttonId) {
-        return {
-          ...issue,
-          isPinned: !issue.isPinned,
-        };
-      } else {
-        return {
-          ...issue,
-        };
-      }
-    });
-    return nextIssues;
-  }
-
-  function sortPins(issues) {
-    issues.sort((a, b) => {
-      if (a.isPinned === true) {
-        return -1;
-      }
-      if (b.isPinned === true) {
-        return +1;
-      }
-      return 0;
-    });
-  }
-
-  function handleMyIssues({ user, title, body, milestone, labels, isPinned }) {
+  function handleMyIssues({ body, isPinned, labels, milestone, title, user }) {
     const id = nanoid();
     const date = new Date().toLocaleString();
     getAvatar(user);
-
     setMyIssues([
       {
-        user,
         avatar: avatar,
-        title,
         body,
-        milestone,
-        labels,
+        created_at: date,
         id,
         isPinned,
+        labels,
+        milestone,
         state: 'open',
-        created_at: date,
+        title,
+        user,
       },
       ...myIssues,
     ]);
@@ -221,5 +180,43 @@ export default function App() {
 
   function handleRemoveIssue(id) {
     setMyIssues(myIssues.filter(myIssue => myIssue.id !== id));
+  }
+
+  function togglePin(buttonId, issues) {
+    const nextIssues = checkIsPinned(buttonId, issues);
+    sortPins(nextIssues);
+    if (issues[0].hasOwnProperty('url')) {
+      setSavedIssues(nextIssues);
+    } else {
+      setMyIssues(nextIssues);
+    }
+
+    function checkIsPinned(buttonId, issues) {
+      const nextIssues = issues.map(issue => {
+        if (issue.id === buttonId) {
+          return {
+            ...issue,
+            isPinned: !issue.isPinned,
+          };
+        } else {
+          return {
+            ...issue,
+          };
+        }
+      });
+      return nextIssues;
+    }
+  }
+
+  function sortPins(issues) {
+    issues.sort((a, b) => {
+      if (a.isPinned === true) {
+        return -1;
+      }
+      if (b.isPinned === true) {
+        return +1;
+      }
+      return 0;
+    });
   }
 }

@@ -179,6 +179,7 @@ const Navlink = styled(NavLink)`
 
 const Message = styled.p`
   font-size: 0.9rem;
+  font-style: italic;
 `;
 
 const Label = styled.label`

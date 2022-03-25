@@ -56,7 +56,7 @@ export default function Dashboard({
 }
 
 const EmptyState = styled.p`
-  margin-top: 50px;
+  padding-top: 70px;
   margin: 10px;
   text-align: center;
 `;
@@ -74,10 +74,9 @@ const TurnAnimation = keyframes`
 `;
 
 const Circle = styled.svg`
-	animation: ${TurnAnimation}
-	height: 32px;
-	width: 32px;
-	1s ease infinite;
+  animation: ${TurnAnimation} 1s ease infinite;
+  height: 32px;
+  width: 32px;
 `;
 
 const ErrorContainer = styled.main`

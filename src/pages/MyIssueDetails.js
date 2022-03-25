@@ -204,6 +204,7 @@ const Wrapper = styled.main`
 
 const Message = styled.p`
   font-size: 0.9rem;
+  font-style: italic;
 `;
 
 const FlexContainer = styled.div`

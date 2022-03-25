@@ -77,7 +77,7 @@ describe('MyIssues', () => {
           myIssues={[
             { id: 333, title: 'Teststring3', state: 'open', clicked: true },
           ]}
-          toggleMyPin={callback}
+          togglePin={callback}
         />
       </MemoryRouter>
     );
