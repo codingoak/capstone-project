@@ -10,6 +10,7 @@ const Template = args => <Dashboard {...args} />;
 export const Loading = Template.bind({});
 Loading.args = {
   isLoading: true,
+  selectedProject: true,
   savedIssues: [
     { id: 111, title: 'Teststring1', state: 'open', clicked: true },
     { id: 112, title: 'Teststring2', state: 'close', clicked: false },
@@ -20,6 +21,7 @@ Loading.args = {
 export const Error = Template.bind({});
 Error.args = {
   hasError: true,
+  selectedProject: true,
   savedIssues: [
     { id: 111, title: 'Teststring1', state: 'open', clicked: true },
     { id: 112, title: 'Teststring2', state: 'close', clicked: false },
@@ -29,6 +31,7 @@ Error.args = {
 
 export const Default = Template.bind({});
 Default.args = {
+  selectedProject: true,
   savedIssues: [
     { id: 111, title: 'Teststring1', state: 'open', clicked: true },
     { id: 112, title: 'Teststring2', state: 'close', clicked: false },

@@ -5,7 +5,4 @@ export default {
   component: CreateIssueForm,
 };
 
-const Template = args => <CreateIssueForm {...args} />;
-
-export const Default = Template.bind({});
-Default.args = {};
+export const Default = () => <CreateIssueForm />;

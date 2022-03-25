@@ -5,9 +5,4 @@ export default {
   component: Heading,
 };
 
-const Template = args => <Heading {...args} />;
-
-export const Default = Template.bind({});
-Default.args = {
-  title: 'HEADING',
-};
+export const Default = () => <Heading title={'HEADING'} />;
