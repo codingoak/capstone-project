@@ -1,8 +1,8 @@
-import styled from 'styled-components/macro';
 import useLocalStorage from './hooks/useLocalStorage';
 import { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { nanoid } from 'nanoid';
+import HeadingMain from './components/HeadingMain';
 import Selection from './components/Selection';
 import Navigation from './components/Navigation';
 import Dashboard from './pages/Dashboard';
@@ -26,16 +26,19 @@ export default function App() {
   }, [selectedProject]);
 
   return (
-    <Container>
+    <>
       <Routes>
         <Route
           path="/"
           element={
             <>
-              <Selection
-                selectedProject={selectedProject}
-                handleRepoChange={handleRepoChange}
-              />
+              <header>
+                <HeadingMain title="DASHBOARD" />
+                <Selection
+                  selectedProject={selectedProject}
+                  handleRepoChange={handleRepoChange}
+                />
+              </header>
               <Dashboard
                 selectedProject={selectedProject}
                 savedIssues={savedIssues}
@@ -84,7 +87,7 @@ export default function App() {
         ))}
       </Routes>
       <Navigation />
-    </Container>
+    </>
   );
 
   function loadFromLocal(key) {
@@ -218,8 +221,3 @@ export default function App() {
     setMyIssues(myIssues.filter(myIssue => myIssue.id !== id));
   }
 }
-
-const Container = styled.div`
-  padding-top: 50px;
-  padding-bottom: 50px;
-`;

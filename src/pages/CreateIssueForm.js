@@ -1,8 +1,7 @@
 import styled from 'styled-components/macro';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import Heading from '../components/Heading';
-
+import HeadingMain from '../components/HeadingMain';
 import { ButtonPrimary } from '../components/Button';
 
 export default function CreateIssueForm({ handleMyIssues }) {
@@ -39,11 +38,9 @@ export default function CreateIssueForm({ handleMyIssues }) {
 
   return (
     <>
-      <header>
-        <Heading title={'CREATE FORM'} />
-      </header>
+      <HeadingMain title={'CREATE FORM'} />
       <main>
-        <Container
+        <StyledForm
           onSubmit={handleSubmit(data => onSubmit(data))}
           autoComplete="off"
         >
@@ -134,7 +131,7 @@ export default function CreateIssueForm({ handleMyIssues }) {
           </Label>
 
           <ButtonPrimary type="submit" children="SUBMIT" />
-        </Container>
+        </StyledForm>
       </main>
     </>
   );
@@ -164,7 +161,7 @@ const Counter = styled.div`
   align-self: flex-end;
 `;
 
-const Container = styled.form`
+const StyledForm = styled.form`
   margin: 0 10px;
   display: grid;
 `;

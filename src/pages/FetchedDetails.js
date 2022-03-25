@@ -1,6 +1,6 @@
 import styled from 'styled-components/macro';
 import { useEffect } from 'react';
-import Heading from '../components/Heading';
+import HeadingMain from '../components/HeadingMain';
 import BackArrow from '../components/BackArrow';
 
 export default function Detail({ savedIssue }) {
@@ -10,9 +10,7 @@ export default function Detail({ savedIssue }) {
 
   return (
     <>
-      <header>
-        <Heading title="DETAIL" />
-      </header>
+      <HeadingMain title="DETAIL" />
       <Wrapper>
         <BackArrow to="/" />
         <FlexContainer>

@@ -1,7 +1,7 @@
 import styled from 'styled-components/macro';
 import { NavLink } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import Heading from '../components/Heading';
+import HeadingMain from '../components/HeadingMain';
 import BackArrow from '../components/BackArrow';
 
 import { ButtonPrimarySmall, ButtonSecondary } from '../components/Button';
@@ -26,9 +26,7 @@ export default function MyIssueDetails({
 
   return (
     <>
-      <header>
-        <Heading title="DETAIL" />
-      </header>
+      <HeadingMain title="DETAIL" />
       <Wrapper>
         <BackArrow to="/myissues" />
         <Message>

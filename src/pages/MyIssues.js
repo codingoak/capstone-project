@@ -1,19 +1,15 @@
 import styled from 'styled-components/macro';
 import { NavLink } from 'react-router-dom';
-import Heading from '../components/Heading';
+import HeadingMain from '../components/HeadingMain';
+import HeadingIssues from '../components/HeadingIssues';
 
 export default function MyIssues({ myIssues, toggleMyPin }) {
   return (
     <>
-      <header>
-        <Heading title="MY ISSUES" />
-      </header>
+      <HeadingMain title="MY ISSUES" />
       <main>
         {myIssues.length > 0 ? (
-          <HeadingWrapper>
-            <HeadingTitle>Title</HeadingTitle>
-            <HeadingState>State</HeadingState>
-          </HeadingWrapper>
+          <HeadingIssues />
         ) : (
           <EmptyState>Create an issue on the add page</EmptyState>
         )}
@@ -66,25 +62,6 @@ export default function MyIssues({ myIssues, toggleMyPin }) {
     </>
   );
 }
-
-const HeadingWrapper = styled.section`
-  margin-bottom: -15px;
-  display: grid;
-  grid-template-columns: 10px 1fr 52px 32px 10px 10px;
-`;
-
-const HeadingTitle = styled.h2`
-  grid-column: 2/3;
-  letter-spacing: 2px;
-  padding-left: 10px;
-  border-bottom: 1px solid var(--border-color-dark);
-`;
-
-const HeadingState = styled.h2`
-  grid-column: 3/6;
-  letter-spacing: 2px;
-  border-bottom: 1px solid var(--border-color-dark);
-`;
 
 const Wrapper = styled.section`
   margin-left: 10px;
