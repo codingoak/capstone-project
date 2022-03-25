@@ -1,4 +1,4 @@
-# Capstone Project: MyTracker
+# Capstone Project: MyTracker (in progress..)
 
 ## Desription
 
