@@ -1,5 +1,7 @@
 import styled from 'styled-components/macro';
 import { keyframes } from 'styled-components';
+import Heading from '../components/Heading';
+
 import FetchedIssues from './FetchedIssues';
 import { ButtonPrimary } from '../components/Button';
 
@@ -13,7 +15,15 @@ export default function Dashboard({
 }) {
   return (
     <>
-      {isLoading && (
+      <header>
+        <Heading title="DASHBOARD" />
+      </header>
+      {!selectedProject && (
+        <main>
+          <EmptyState>Select an option from the box above.</EmptyState>
+        </main>
+      )}
+      {selectedProject && isLoading && (
         <LoadingContainer>
           <Circle
             role="img"
@@ -47,6 +57,12 @@ export default function Dashboard({
     </>
   );
 }
+
+const EmptyState = styled.p`
+  margin: 10px;
+  text-align: center;
+  margin-top: 50px;
+`;
 
 const LoadingContainer = styled.main`
   margin: 100px;

@@ -3,7 +3,6 @@ import useLocalStorage from './hooks/useLocalStorage';
 import { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { nanoid } from 'nanoid';
-import Heading from './components/Heading';
 import Selection from './components/Selection';
 import Navigation from './components/Navigation';
 import Dashboard from './pages/Dashboard';
@@ -33,27 +32,18 @@ export default function App() {
           path="/"
           element={
             <>
-              <header>
-                <Heading title="DASHBOARD" />
-                <Selection
-                  selectedProject={selectedProject}
-                  handleRepoChange={handleRepoChange}
-                />
-              </header>
-              {selectedProject ? (
-                <Dashboard
-                  selectedProject={selectedProject}
-                  savedIssues={savedIssues}
-                  isLoading={isLoading}
-                  hasError={hasError}
-                  togglePin={togglePin}
-                  GetData={GetData}
-                />
-              ) : (
-                <main>
-                  <EmptyState>Select an option from the box above.</EmptyState>
-                </main>
-              )}
+              <Selection
+                selectedProject={selectedProject}
+                handleRepoChange={handleRepoChange}
+              />
+              <Dashboard
+                selectedProject={selectedProject}
+                savedIssues={savedIssues}
+                isLoading={isLoading}
+                hasError={hasError}
+                togglePin={togglePin}
+                GetData={GetData}
+              />
             </>
           }
         />
@@ -65,18 +55,17 @@ export default function App() {
           />
         ))}
         <Route
-          path="myissues"
-          element={<MyIssues myIssues={myIssues} toggleMyPin={toggleMyPin} />}
+          path="createissueform"
+          element={<CreateIssueForm handleMyIssues={handleMyIssues} />}
         />
         <Route
-          path="createissueform"
+          path="myissues"
           element={
-            <>
-              <header>
-                <Heading title={'CREATE FORM'} />
-              </header>
-              <CreateIssueForm handleMyIssues={handleMyIssues} />
-            </>
+            <MyIssues
+              myIssues={myIssues}
+              toggleMyPin={toggleMyPin}
+              sortPins={sortPins}
+            />
           }
         />
         {myIssues.map(myIssue => (
@@ -84,24 +73,17 @@ export default function App() {
             key={myIssue.id}
             path={`${myIssue.id}`}
             element={
-              <>
-                <header>
-                  <Heading title="DETAIL" />
-                </header>
-                <MyIssueDetails
-                  myIssue={myIssue}
-                  avatar={avatar}
-                  myIssues={myIssues}
-                  handleRemoveIssue={handleRemoveIssue}
-                />
-              </>
+              <MyIssueDetails
+                myIssue={myIssue}
+                avatar={avatar}
+                myIssues={myIssues}
+                handleRemoveIssue={handleRemoveIssue}
+              />
             }
           />
         ))}
       </Routes>
-      <footer>
-        <Navigation />
-      </footer>
+      <Navigation />
     </Container>
   );
 
@@ -240,10 +222,4 @@ export default function App() {
 const Container = styled.div`
   padding-top: 50px;
   padding-bottom: 50px;
-`;
-
-const EmptyState = styled.p`
-  margin: 10px;
-  text-align: center;
-  margin-top: 50px;
 `;
