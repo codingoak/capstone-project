@@ -88,9 +88,9 @@ const FlexContainer = styled.div`
 `;
 
 const Avatar = styled.img`
-  margin-top: 10px;
-  margin-right: 10px;
   border-radius: 5px;
+  margin-right: 10px;
+  margin-top: 10px;
 `;
 
 const DL = styled.dl`
@@ -98,8 +98,8 @@ const DL = styled.dl`
 `;
 
 const DT = styled.dt`
-  margin-top: 10px;
   font-weight: bold;
+  margin-top: 10px;
 `;
 const DD = styled.dd`
   margin: 0 10px;

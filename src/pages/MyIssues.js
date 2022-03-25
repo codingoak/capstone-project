@@ -65,12 +65,12 @@ export default function MyIssues({ myIssues, toggleMyPin }) {
 }
 
 const Wrapper = styled.section`
-  margin-left: 10px;
-  margin-right: 10px;
-  display: grid;
   align-items: center;
+  display: grid;
   grid-template-columns: 10px 1fr 52px 42px;
   grid-template-rows: 60px;
+  margin-left: 10px;
+  margin-right: 10px;
   :nth-of-type(2n) {
     background-color: var(--bg-color-light);
     border-radius: 5px;
@@ -78,31 +78,31 @@ const Wrapper = styled.section`
 `;
 
 const EmptyState = styled.p`
-  margin-top: 50px;
   display: grid;
+  margin-top: 50px;
   place-items: center;
 `;
 
 const Link = styled(NavLink)`
-  display: inherit;
   align-items: center;
+  display: inherit;
   grid-column: 1 /4;
   grid-template-columns: 10px 1fr 52px;
   grid-template-rows: 60px;
-  &:link,
-  &:visited,
+  &:active,
   &:hover,
-  &:active {
-    text-decoration: none;
+  &:link,
+  &:visited {
     color: inherit;
+    text-decoration: none;
   }
 `;
 
 const IssueTitle = styled.p`
   grid-column: 2/3;
-  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 const IssueState = styled.div`
@@ -110,11 +110,11 @@ const IssueState = styled.div`
 `;
 
 const PinButton = styled.button`
+  background: none;
+  border-radius: 50%;
+  border: none;
   grid-column: 4/6;
+  height: 42px;
   justify-self: end;
   width: 42px;
-  height: 42px;
-  background: none;
-  border: none;
-  border-radius: 50%;
 `;

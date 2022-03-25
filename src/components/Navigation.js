@@ -56,22 +56,22 @@ export default function Navigation() {
 }
 
 const Navbar = styled.nav`
-  height: 48px;
+  bottom: 0;
+  color: var(--font-color-light);
   display: flex;
+  height: 48px;
   justify-content: space-around;
   position: fixed;
-  bottom: 0;
   width: 100%;
-  color: var(--font-color-light);
 `;
 
 const Link = styled(NavLink)`
-  box-sizing: content-box;
-  width: 33.333%;
+  background: linear-gradient(#144e74, var(--bg-color-dark));
   border-radius: 10px 10px 0 0;
+  box-sizing: content-box;
   display: grid;
   place-items: center;
-  background: linear-gradient(#144e74, var(--bg-color-dark));
+  width: 33.333%;
   z-index: 2;
   &.active {
     background-color: var(--bg-color-dark);
@@ -80,10 +80,10 @@ const Link = styled(NavLink)`
 `;
 
 const Bottom = styled.div`
-  width: 100vw;
+  background: var(--bg-color-dark);
+  bottom: 0px;
   height: 36px;
   position: absolute;
-  bottom: 0px;
-  background: var(--bg-color-dark);
+  width: 100vw;
   z-index: 1;
 `;

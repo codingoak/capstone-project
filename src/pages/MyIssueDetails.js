@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import styled from 'styled-components/macro';
 
@@ -212,9 +212,9 @@ const FlexContainer = styled.div`
 `;
 
 const Avatar = styled.img`
+  border-radius: 5px;
+  border-radius: 5px;
   margin-right: 10px;
-  border-radius: 5px;
-  border-radius: 5px;
 `;
 
 const DL = styled.dl`
@@ -222,8 +222,8 @@ const DL = styled.dl`
 `;
 
 const DT = styled.dt`
-  margin-top: 10px;
   font-weight: bold;
+  margin-top: 10px;
 `;
 
 const DD = styled.dd`
@@ -231,9 +231,9 @@ const DD = styled.dd`
 `;
 
 const StyledInput = styled.input`
-  width: 80%;
-  border: 1px solid var(--border-color-light);
   border-radius: 5px;
+  border: 1px solid var(--border-color-light);
+  width: 80%;
 `;
 
 const ButtonContainer = styled.div`

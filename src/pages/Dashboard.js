@@ -56,16 +56,16 @@ export default function Dashboard({
 }
 
 const EmptyState = styled.p`
+  margin-top: 50px;
   margin: 10px;
   text-align: center;
-  margin-top: 50px;
 `;
 
 const LoadingContainer = styled.main`
-  margin: 100px;
-  text-align: center;
   grid-column: 1/-1;
   height: 70vh;
+  margin: 100px;
+  text-align: center;
 `;
 
 const TurnAnimation = keyframes`
@@ -74,15 +74,16 @@ const TurnAnimation = keyframes`
 `;
 
 const Circle = styled.svg`
-  width: 32px;
-  height: 32px;
-  animation: ${TurnAnimation} 1s ease infinite;
+	animation: ${TurnAnimation}
+	height: 32px;
+	width: 32px;
+	1s ease infinite;
 `;
 
 const ErrorContainer = styled.main`
   display: grid;
-  place-items: center;
   height: 70vh;
+  place-items: center;
 `;
 
 const ErrorState = styled.p`

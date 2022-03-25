@@ -151,20 +151,20 @@ export default function CreateIssueForm({ handleMyIssues }) {
 }
 
 const FlexContainer = styled.div`
-  margin-top: 10px;
   display: flex;
   justify-content: space-between;
+  margin-top: 10px;
 `;
 
 const Counter = styled.div`
-  font-size: 0.9rem;
-  color: var(--font-color-medium);
   align-self: flex-end;
+  color: var(--font-color-medium);
+  font-size: 0.9rem;
 `;
 
 const StyledForm = styled.form`
-  margin: 0 10px;
   display: grid;
+  margin: 0 10px;
 `;
 
 const Navlink = styled(NavLink)`
@@ -188,21 +188,21 @@ const Label = styled.label`
 `;
 
 const InputField = styled.input`
-  font-size: 0.9em;
-  font-family: monospace;
-  height: 2rem;
-  border: 1px solid var(--border-color-light);
   border-radius: 5px;
+  border: 1px solid var(--border-color-light);
+  font-family: monospace;
+  font-size: 0.9em;
+  height: 2rem;
   ::placeholder {
     color: var(--font-color-medium);
   }
 `;
 
 const TextArea = styled.textarea`
-  font-size: 0.9em;
-  font-family: monospace;
-  border: 1px solid var(--border-color-light);
   border-radius: 5px;
+  border: 1px solid var(--border-color-light);
+  font-family: monospace;
+  font-size: 0.9em;
   ::placeholder {
     color: var(--font-color-medium);
   }
