@@ -15,7 +15,6 @@ const Button = styled.button`
     rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
   color: var(--font-color-dark);
   opacity: 0.8;
-
   :hover {
     cursor: pointer;
     opacity: 1;

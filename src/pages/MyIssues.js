@@ -1,7 +1,8 @@
-import styled from 'styled-components/macro';
 import { NavLink } from 'react-router-dom';
-import HeadingMain from '../components/HeadingMain';
+import styled from 'styled-components/macro';
+
 import HeadingIssues from '../components/HeadingIssues';
+import HeadingMain from '../components/HeadingMain';
 
 export default function MyIssues({ myIssues, toggleMyPin }) {
   return (

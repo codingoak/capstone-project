@@ -1,9 +1,10 @@
-import styled from 'styled-components/macro';
 import { useState, useEffect } from 'react';
-import HeadingMain from '../components/HeadingMain';
-import BackArrow from '../components/BackArrow';
 
+import styled from 'styled-components/macro';
+
+import BackArrow from '../components/BackArrow';
 import { ButtonPrimarySmall, ButtonSecondary } from '../components/Button';
+import HeadingMain from '../components/HeadingMain';
 import RemoveDialog from '../components/RemoveDialog';
 
 export default function MyIssueDetails({

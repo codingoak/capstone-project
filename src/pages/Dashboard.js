@@ -1,7 +1,8 @@
 import styled from 'styled-components/macro';
-import { keyframes } from 'styled-components';
-import FetchedIssues from '../components/FetchedIssues';
+import { keyframes } from 'styled-components/macro';
+
 import { ButtonPrimary } from '../components/Button';
+import FetchedIssues from '../components/FetchedIssues';
 
 export default function Dashboard({
   savedIssues,

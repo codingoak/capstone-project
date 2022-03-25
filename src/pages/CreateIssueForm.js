@@ -1,8 +1,9 @@
-import styled from 'styled-components/macro';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import HeadingMain from '../components/HeadingMain';
+import styled from 'styled-components/macro';
+
 import { ButtonPrimary } from '../components/Button';
+import HeadingMain from '../components/HeadingMain';
 
 export default function CreateIssueForm({ handleMyIssues }) {
   const {

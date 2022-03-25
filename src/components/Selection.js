@@ -1,6 +1,7 @@
-import styled from 'styled-components/macro';
 import Select from 'react-select';
-import options from './SelectOptions.js';
+import styled from 'styled-components/macro';
+
+import options from './SelectOptions';
 
 export default function Selection({ selectedProject, handleRepoChange }) {
   const handleChange = e => {

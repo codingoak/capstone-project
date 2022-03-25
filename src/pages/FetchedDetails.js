@@ -1,7 +1,9 @@
-import styled from 'styled-components/macro';
 import { useEffect } from 'react';
-import HeadingMain from '../components/HeadingMain';
+
+import styled from 'styled-components/macro';
+
 import BackArrow from '../components/BackArrow';
+import HeadingMain from '../components/HeadingMain';
 
 export default function Detail({ savedIssue }) {
   useEffect(() => {

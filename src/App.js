@@ -1,14 +1,16 @@
-import useLocalStorage from './hooks/useLocalStorage';
 import { useState, useEffect } from 'react';
+
 import { Routes, Route } from 'react-router-dom';
 import { nanoid } from 'nanoid';
+
+import useLocalStorage from './hooks/useLocalStorage';
 import HeadingMain from './components/HeadingMain';
-import Selection from './components/Selection';
 import Navigation from './components/Navigation';
+import Selection from './components/Selection';
+import CreateIssueForm from './pages/CreateIssueForm';
 import Dashboard from './pages/Dashboard';
 import FetchedDetails from './pages/FetchedDetails';
 import MyIssues from './pages/MyIssues';
-import CreateIssueForm from './pages/CreateIssueForm';
 import MyIssueDetails from './pages/MyIssueDetails';
 
 export default function App() {

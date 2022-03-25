@@ -11,7 +11,6 @@ export default function HeadingMain({ title }) {
 const Header = styled.h1`
   display: grid;
   place-items: center;
-
   top: 0;
   width: 100%;
   height: 44px;

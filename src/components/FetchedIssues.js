@@ -1,5 +1,6 @@
-import styled from 'styled-components/macro';
 import { NavLink } from 'react-router-dom';
+import styled from 'styled-components/macro';
+
 import HeadingIssues from './HeadingIssues';
 
 export default function Issues({ savedIssues, togglePin }) {
@@ -68,7 +69,6 @@ const Wrapper = styled.section`
   align-items: center;
   grid-template-columns: 10px 1fr 52px 42px;
   grid-template-rows: 60px;
-
   :nth-of-type(2n) {
     background-color: var(--bg-color-light);
     border-radius: 5px;

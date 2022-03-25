@@ -1,5 +1,5 @@
-import styled from 'styled-components/macro';
 import { NavLink } from 'react-router-dom';
+import styled from 'styled-components/macro';
 
 export default function BackArrow({ to }) {
   return (
