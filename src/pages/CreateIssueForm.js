@@ -211,8 +211,6 @@ const Navlink = styled(NavLink)`
     cursor: pointer;
     opacity: 1;
     transition: all 0.15s;
-  }
-`;
 
 const StyledForm = styled.form`
   display: grid;

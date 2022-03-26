@@ -60,22 +60,6 @@ const Bottom = styled.div`
   bottom: 0px;
   height: 36px;
   position: absolute;
-  width: 100%;
-  z-index: 1;
-`;
-
-const Link = styled(NavLink)`
-  background: linear-gradient(#144e74, var(--bg-color-dark));
-  border-radius: 10px 10px 0 0;
-  box-sizing: content-box;
-  display: grid;
-  place-items: center;
-  z-index: 2;
-  &.active {
-    background-color: var(--bg-color-dark);
-    transform: translateY(-8px);
-  }
-`;
 
 const Navbar = styled.nav`
   bottom: 0;
@@ -83,7 +67,19 @@ const Navbar = styled.nav`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   height: 48px;
-  justify-content: space-around;
   position: fixed;
   width: 100%;
+  z-index: 1;
+`;
+
+const Link = styled(NavLink)`
+  background: linear-gradient(#144e74, var(--bg-color-dark));
+  border-radius: 10px 10px 0 0;
+  display: grid;
+  place-items: center;
+  z-index: 2;
+  &.active {
+    background-color: var(--bg-color-dark);
+    transform: translateY(-8px);
+  }
 `;
