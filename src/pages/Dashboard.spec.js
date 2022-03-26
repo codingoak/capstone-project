@@ -41,8 +41,17 @@ describe('Dashboard', () => {
         <Dashboard hasError={true} />
       </MemoryRouter>
     );
-
     const button = screen.getByRole('button');
     expect(button).toBeInTheDocument();
+  });
+
+  it('renders the empty state message', () => {
+    render(
+      <MemoryRouter>
+        <Dashboard selectedProject={false} />
+      </MemoryRouter>
+    );
+    const emptyMessage = screen.getByText(/Select an option/);
+    expect(emptyMessage).toBeInTheDocument();
   });
 });

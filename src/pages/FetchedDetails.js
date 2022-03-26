@@ -5,7 +5,7 @@ import styled from 'styled-components/macro';
 import BackArrow from '../components/BackArrow';
 import HeadingMain from '../components/HeadingMain';
 
-export default function Detail({ savedIssue }) {
+export default function Detail({ fetchedIssue }) {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -19,56 +19,56 @@ export default function Detail({ savedIssue }) {
         <FlexContainer>
           <DL>
             <DT>User ID:</DT>
-            <DD>{savedIssue.user.id}</DD>
+            <DD>{fetchedIssue.user.id}</DD>
             <DT>User:</DT>
-            <DD>{savedIssue.user.login}</DD>
+            <DD>{fetchedIssue.user.login}</DD>
           </DL>
           <Avatar
-            src={savedIssue.user.avatar_url}
-            alt={`Avatar of ${savedIssue.user.login}`}
+            src={fetchedIssue.user.avatar_url}
+            alt={`Avatar of ${fetchedIssue.user.login}`}
             width="90"
             height="90"
           />
         </FlexContainer>
         <DL>
           <DT>Number:</DT>
-          <DD>{savedIssue.number}</DD>
+          <DD>{fetchedIssue.number}</DD>
           <DT>Issue ID:</DT>
-          <DD>{savedIssue.id}</DD>
+          <DD>{fetchedIssue.id}</DD>
           <DT>Title:</DT>
-          <DD>{savedIssue.title}</DD>
+          <DD>{fetchedIssue.title}</DD>
           <DT>Body:</DT>
-          <DD>{savedIssue.body}</DD>
+          <DD>{fetchedIssue.body}</DD>
         </DL>
         <FlexContainer>
           <dl>
             <DT>Created at:</DT>
-            <DD>{savedIssue.created_at}</DD>
+            <DD>{fetchedIssue.created_at}</DD>
           </dl>
           <dl>
             <DT>Updated at:</DT>
-            <DD>{savedIssue.updated_at}</DD>
+            <DD>{fetchedIssue.updated_at}</DD>
           </dl>
         </FlexContainer>
         <DL>
           <DT>State:</DT>
-          <DD>{savedIssue.state}</DD>
+          <DD>{fetchedIssue.state}</DD>
           <DT>Milestone:</DT>
-          <DD>{savedIssue.milestone}</DD>
+          <DD>{fetchedIssue.milestone}</DD>
           <DT>Labels:</DT>
-          {savedIssue.labels?.map(label => (
-            <DD key={savedIssue + label.name}>{label.name}</DD>
+          {fetchedIssue.labels?.map(label => (
+            <DD key={fetchedIssue + label.name}>{label.name}</DD>
           ))}
           <DT>Comments:</DT>
           <DD>
-            {savedIssue.comments === 0
+            {fetchedIssue.comments === 0
               ? 'No comments available'
-              : savedIssue.comments}
+              : fetchedIssue.comments}
           </DD>
           <DT>URL:</DT>
           <DD>
-            <a href={savedIssue.html_url} target="_blank" rel="noreferrer">
-              {savedIssue.html_url}
+            <a href={fetchedIssue.html_url} target="_blank" rel="noreferrer">
+              {fetchedIssue.html_url}
             </a>
           </DD>
         </DL>

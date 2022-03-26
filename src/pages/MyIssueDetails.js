@@ -30,8 +30,8 @@ export default function MyIssueDetails({
       <Wrapper>
         <BackArrow to="/myissues" />
         <Message>
-          All fields with an asterisk* can be changed. Click on the values to
-          edit.
+          All fields with an asterisk<Asterisk>*</Asterisk> can be changed.
+          Click on the values to edit.
         </Message>
 
         <FlexContainer>
@@ -49,7 +49,9 @@ export default function MyIssueDetails({
           />
         </FlexContainer>
         <DL>
-          <DT id="title">Title*:</DT>
+          <DT id="title">
+            Title<Asterisk>*</Asterisk>:
+          </DT>
           <FlexContainer>
             {editTitle ? (
               <>
@@ -69,7 +71,9 @@ export default function MyIssueDetails({
             )}
           </FlexContainer>
 
-          <DT id="body">Body*:</DT>
+          <DT id="body">
+            Body<Asterisk>*</Asterisk>:
+          </DT>
           <FlexContainer>
             {editBody ? (
               <>
@@ -92,7 +96,9 @@ export default function MyIssueDetails({
           <DT>Created at:</DT>
           <DD>{myIssue.created_at}</DD>
 
-          <DT id="state">State*:</DT>
+          <DT id="state">
+            State<Asterisk>*</Asterisk>:
+          </DT>
           <FlexContainer>
             {editState ? (
               <>
@@ -112,7 +118,9 @@ export default function MyIssueDetails({
             )}
           </FlexContainer>
 
-          <DT id="milestone">Milestone*:</DT>
+          <DT id="milestone">
+            Milestone<Asterisk>*</Asterisk>:
+          </DT>
           <FlexContainer>
             {editMilestone ? (
               <>
@@ -158,15 +166,21 @@ export default function MyIssueDetails({
               </>
             ) : (
               <>
-                <DT>Labels*:</DT>
-                {myIssue.labels?.map((label, index) => (
-                  <DD
-                    onClick={() => setEditLabels(true)}
-                    key={index + myIssue.id}
-                  >
-                    {label}
-                  </DD>
-                ))}
+                <DT>
+                  Labels<Asterisk>*</Asterisk>:
+                </DT>
+                {myIssue.labels.length > 0 ? (
+                  myIssue.labels.map((label, index) => (
+                    <DD
+                      onClick={() => setEditLabels(true)}
+                      key={index + myIssue.id}
+                    >
+                      {label}
+                    </DD>
+                  ))
+                ) : (
+                  <DD>no labels</DD>
+                )}
               </>
             )}
           </>
@@ -205,11 +219,16 @@ const Wrapper = styled.main`
 const Message = styled.p`
   font-size: 0.9rem;
   font-style: italic;
+  word-break: normal;
 `;
 
 const FlexContainer = styled.div`
   display: flex;
   justify-content: space-between;
+`;
+
+const Asterisk = styled.span`
+  color: crimson;
 `;
 
 const Avatar = styled.img`

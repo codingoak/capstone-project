@@ -58,7 +58,8 @@ export default function Navigation() {
 const Navbar = styled.nav`
   bottom: 0;
   color: var(--font-color-light);
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
   height: 48px;
   justify-content: space-around;
   position: fixed;
@@ -71,7 +72,6 @@ const Link = styled(NavLink)`
   box-sizing: content-box;
   display: grid;
   place-items: center;
-  width: 33.333%;
   z-index: 2;
   &.active {
     background-color: var(--bg-color-dark);
@@ -84,6 +84,6 @@ const Bottom = styled.div`
   bottom: 0px;
   height: 36px;
   position: absolute;
-  width: 100vw;
+  width: 100%;
   z-index: 1;
 `;
