@@ -1,24 +1,25 @@
-import styled from 'styled-components/macro';
-import useLocalStorage from './hooks/useLocalStorage';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+
 import { Routes, Route } from 'react-router-dom';
 import { nanoid } from 'nanoid';
-import Heading from './components/Heading';
-import Selection from './components/Selection';
+
+import useLocalStorage from './hooks/useLocalStorage';
+import HeadingMain from './components/HeadingMain';
 import Navigation from './components/Navigation';
+import Selection from './components/Selection';
+import CreateIssueForm from './pages/CreateIssueForm';
 import Dashboard from './pages/Dashboard';
 import FetchedDetails from './pages/FetchedDetails';
 import MyIssues from './pages/MyIssues';
-import CreateIssueForm from './pages/CreateIssueForm';
 import MyIssueDetails from './pages/MyIssueDetails';
 
 export default function App() {
   const [selectedProject, setSelectedProject] = useState('');
-  const [savedIssues, setSavedIssues] = useLocalStorage(selectedProject, []);
   const [isLoading, setIsLoading] = useState(false);
   const [hasError, setHasError] = useState(false);
-  const [myIssues, setMyIssues] = useLocalStorage('myOwnIssues', []);
   const [avatar, setAvatar] = useState(null);
+  const [savedIssues, setSavedIssues] = useLocalStorage(selectedProject, []);
+  const [myIssues, setMyIssues] = useLocalStorage('myOwnIssues', []);
 
   useEffect(() => {
     loadFromLocal(selectedProject);
@@ -27,33 +28,27 @@ export default function App() {
   }, [selectedProject]);
 
   return (
-    <Container>
+    <>
       <Routes>
         <Route
           path="/"
           element={
             <>
               <header>
-                <Heading title="DASHBOARD" />
+                <HeadingMain title="DASHBOARD" />
                 <Selection
                   selectedProject={selectedProject}
                   handleRepoChange={handleRepoChange}
                 />
               </header>
-              {selectedProject ? (
-                <Dashboard
-                  selectedProject={selectedProject}
-                  savedIssues={savedIssues}
-                  isLoading={isLoading}
-                  hasError={hasError}
-                  togglePin={togglePin}
-                  GetData={GetData}
-                />
-              ) : (
-                <main>
-                  <EmptyState>Select an option from the box above.</EmptyState>
-                </main>
-              )}
+              <Dashboard
+                selectedProject={selectedProject}
+                savedIssues={savedIssues}
+                isLoading={isLoading}
+                hasError={hasError}
+                togglePin={togglePin}
+                GetData={GetData}
+              />
             </>
           }
         />
@@ -65,18 +60,17 @@ export default function App() {
           />
         ))}
         <Route
-          path="myissues"
-          element={<MyIssues myIssues={myIssues} toggleMyPin={toggleMyPin} />}
+          path="createissueform"
+          element={<CreateIssueForm handleMyIssues={handleMyIssues} />}
         />
         <Route
-          path="createissueform"
+          path="myissues"
           element={
-            <>
-              <header>
-                <Heading title={'CREATE FORM'} />
-              </header>
-              <CreateIssueForm handleMyIssues={handleMyIssues} />
-            </>
+            <MyIssues
+              myIssues={myIssues}
+              togglePin={togglePin}
+              sortPins={sortPins}
+            />
           }
         />
         {myIssues.map(myIssue => (
@@ -84,25 +78,18 @@ export default function App() {
             key={myIssue.id}
             path={`${myIssue.id}`}
             element={
-              <>
-                <header>
-                  <Heading title="DETAIL" />
-                </header>
-                <MyIssueDetails
-                  myIssue={myIssue}
-                  avatar={avatar}
-                  myIssues={myIssues}
-                  handleRemoveIssue={handleRemoveIssue}
-                />
-              </>
+              <MyIssueDetails
+                myIssue={myIssue}
+                avatar={avatar}
+                myIssues={myIssues}
+                handleRemoveIssue={handleRemoveIssue}
+              />
             }
           />
         ))}
       </Routes>
-      <footer>
-        <Navigation />
-      </footer>
-    </Container>
+      <Navigation />
+    </>
   );
 
   function loadFromLocal(key) {
@@ -160,63 +147,22 @@ export default function App() {
     }
   }
 
-  function togglePin(buttonId, issues) {
-    const nextIssues = checkIsPinned(buttonId, issues);
-    sortPins(nextIssues);
-    setSavedIssues(nextIssues);
-  }
-
-  function toggleMyPin(buttonId, issues) {
-    const nextIssues = checkIsPinned(buttonId, issues);
-    sortPins(nextIssues);
-    setMyIssues(nextIssues);
-  }
-
-  function checkIsPinned(buttonId, issues) {
-    const nextIssues = issues.map(issue => {
-      if (issue.id === buttonId) {
-        return {
-          ...issue,
-          isPinned: !issue.isPinned,
-        };
-      } else {
-        return {
-          ...issue,
-        };
-      }
-    });
-    return nextIssues;
-  }
-
-  function sortPins(issues) {
-    issues.sort((a, b) => {
-      if (a.isPinned === true) {
-        return -1;
-      }
-      if (b.isPinned === true) {
-        return +1;
-      }
-      return 0;
-    });
-  }
-
-  function handleMyIssues({ user, title, body, milestone, labels, isPinned }) {
+  function handleMyIssues({ body, isPinned, labels, milestone, title, user }) {
     const id = nanoid();
     const date = new Date().toLocaleString();
     getAvatar(user);
-
     setMyIssues([
       {
-        user,
         avatar: avatar,
-        title,
         body,
-        milestone,
-        labels,
+        created_at: date,
         id,
         isPinned,
+        labels,
+        milestone,
         state: 'open',
-        created_at: date,
+        title,
+        user,
       },
       ...myIssues,
     ]);
@@ -235,15 +181,42 @@ export default function App() {
   function handleRemoveIssue(id) {
     setMyIssues(myIssues.filter(myIssue => myIssue.id !== id));
   }
+
+  function togglePin(buttonId, issues) {
+    const nextIssues = checkIsPinned(buttonId, issues);
+    sortPins(nextIssues);
+    if (issues[0].hasOwnProperty('url')) {
+      setSavedIssues(nextIssues);
+    } else {
+      setMyIssues(nextIssues);
+    }
+
+    function checkIsPinned(buttonId, issues) {
+      const nextIssues = issues.map(issue => {
+        if (issue.id === buttonId) {
+          return {
+            ...issue,
+            isPinned: !issue.isPinned,
+          };
+        } else {
+          return {
+            ...issue,
+          };
+        }
+      });
+      return nextIssues;
+    }
+  }
+
+  function sortPins(issues) {
+    issues.sort((a, b) => {
+      if (a.isPinned === true) {
+        return -1;
+      }
+      if (b.isPinned === true) {
+        return +1;
+      }
+      return 0;
+    });
+  }
 }
-
-const Container = styled.div`
-  padding-top: 50px;
-  padding-bottom: 50px;
-`;
-
-const EmptyState = styled.p`
-  margin: 10px;
-  text-align: center;
-  margin-top: 50px;
-`;

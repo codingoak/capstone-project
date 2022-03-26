@@ -1,10 +1,11 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
+
 import Dashboard from './Dashboard';
 
 describe('Dashboard', () => {
   it('renders the loading animation', () => {
-    render(<Dashboard isLoading={true} />);
+    render(<Dashboard selectedProject={true} isLoading={true} />);
     const loadingAnimation = screen.getByTitle('Loading...');
     expect(loadingAnimation).toBeInTheDocument();
   });

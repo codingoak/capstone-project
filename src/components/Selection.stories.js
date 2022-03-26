@@ -5,4 +5,4 @@ export default {
   component: Selection,
 };
 
-export const SelectionDefault = <Selection />;
+export const Default = () => <Selection />;

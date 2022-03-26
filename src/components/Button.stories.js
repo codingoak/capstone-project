@@ -1,13 +1,14 @@
 import Button from './Button';
 import { ButtonPrimary } from './Button';
+import { ButtonPrimarySmall } from './Button';
 import { ButtonSecondary } from './Button';
 
 export default {
   title: 'Button',
   component: Button,
-  subcomponents: { ButtonPrimary, ButtonSecondary },
+  subcomponents: { ButtonPrimary, ButtonPrimarySmall, ButtonSecondary },
 };
 
-export const Empty = () => <Button>CLICK ME</Button>;
-export const Primary = () => <ButtonPrimary>PRIMARY</ButtonPrimary>;
-export const Secondary = () => <ButtonSecondary>SECONDARY</ButtonSecondary>;
+export const Primary = () => <ButtonPrimary children={'PRIMARY'} />;
+export const PrimarySmall = () => <ButtonPrimarySmall children={'SMALL'} />;
+export const Secondary = () => <ButtonSecondary children={'SECONDARY'} />;

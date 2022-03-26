@@ -5,4 +5,4 @@ export default {
   component: Navigation,
 };
 
-export const NavigationDefault = <Navigation />;
+export const Default = () => <Navigation />;

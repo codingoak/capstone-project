@@ -1,7 +1,9 @@
-import styled from 'styled-components/macro';
-import { NavLink } from 'react-router-dom';
 import { useEffect } from 'react';
-import Heading from '../components/Heading';
+
+import styled from 'styled-components/macro';
+
+import BackArrow from '../components/BackArrow';
+import HeadingMain from '../components/HeadingMain';
 
 export default function Detail({ savedIssue }) {
   useEffect(() => {
@@ -10,29 +12,14 @@ export default function Detail({ savedIssue }) {
 
   return (
     <>
-      <header>
-        <Heading title="DETAIL" />
-      </header>
+      <HeadingMain title="DETAILS" />
       <Wrapper>
-        <Navlink to="/" aria-label="back">
-          <svg
-            role="img"
-            aria-label="Back arrow"
-            width="38"
-            height="38"
-            fill="var(--bg-color-primary)"
-            viewBox="0 0 16 16"
-          >
-            <title>Back</title>
-            <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z" />
-          </svg>
-        </Navlink>
+        <BackArrow to="/" />
+
         <FlexContainer>
           <DL>
-            <DT>Number:</DT>
-            <DD>{savedIssue.number}</DD>
-            <DT>Issue ID:</DT>
-            <DD>{savedIssue.id}</DD>
+            <DT>User ID:</DT>
+            <DD>{savedIssue.user.id}</DD>
             <DT>User:</DT>
             <DD>{savedIssue.user.login}</DD>
           </DL>
@@ -44,6 +31,10 @@ export default function Detail({ savedIssue }) {
           />
         </FlexContainer>
         <DL>
+          <DT>Number:</DT>
+          <DD>{savedIssue.number}</DD>
+          <DT>Issue ID:</DT>
+          <DD>{savedIssue.id}</DD>
           <DT>Title:</DT>
           <DD>{savedIssue.title}</DD>
           <DT>Body:</DT>
@@ -91,25 +82,15 @@ const Wrapper = styled.main`
   word-break: break-all;
 `;
 
-const Navlink = styled(NavLink)`
-  opacity: 0.8;
-
-  :hover {
-    cursor: pointer;
-    opacity: 1;
-    transition: all 0.15s;
-  }
-`;
-
 const FlexContainer = styled.div`
   display: flex;
   justify-content: space-between;
 `;
 
 const Avatar = styled.img`
-  margin-top: 10px;
-  margin-right: 10px;
   border-radius: 5px;
+  margin-right: 10px;
+  margin-top: 10px;
 `;
 
 const DL = styled.dl`
@@ -117,8 +98,8 @@ const DL = styled.dl`
 `;
 
 const DT = styled.dt`
-  margin-top: 10px;
   font-weight: bold;
+  margin-top: 10px;
 `;
 const DD = styled.dd`
   margin: 0 10px;
