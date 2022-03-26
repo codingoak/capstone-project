@@ -192,7 +192,7 @@ const InputField = styled.input`
   border-radius: 5px;
   border: 1px solid var(--border-color-light);
   font-family: monospace;
-  font-size: 0.9em;
+  font-size: 0.9rem;
   height: 2rem;
   ::placeholder {
     color: var(--font-color-medium);

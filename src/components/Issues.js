@@ -55,8 +55,7 @@ const Wrapper = styled.section`
   display: grid;
   grid-template-columns: 10px 1fr 52px 42px;
   grid-template-rows: 60px;
-  margin-left: 10px;
-  margin-right: 10px;
+  margin: 0 10px;
   :nth-of-type(2n) {
     background-color: var(--bg-color-light);
     border-radius: 5px;
