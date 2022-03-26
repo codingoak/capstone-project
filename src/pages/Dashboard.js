@@ -5,7 +5,7 @@ import { ButtonPrimary } from '../components/Button';
 import FetchedIssues from '../components/FetchedIssues';
 
 export default function Dashboard({
-  fetchedIssues,
+  comparedIssues,
   isLoading,
   hasError,
   togglePin,
@@ -39,8 +39,9 @@ export default function Dashboard({
           </LoadingContainer>
         )
       )}
-      {fetchedIssues && !isLoading && !hasError && (
-        <FetchedIssues fetchedIssues={fetchedIssues} togglePin={togglePin} />
+
+      {comparedIssues && !isLoading && !hasError && (
+        <FetchedIssues comparedIssues={comparedIssues} togglePin={togglePin} />
       )}
       {hasError && (
         <ErrorContainer>

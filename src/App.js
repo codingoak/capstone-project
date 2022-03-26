@@ -14,19 +14,15 @@ import MyIssues from './pages/MyIssues';
 import MyIssueDetails from './pages/MyIssueDetails';
 
 export default function App() {
-  const [selectedProject, setSelectedProject] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [hasError, setHasError] = useState(false);
   const [avatar, setAvatar] = useState(null);
-  // const [savedIssues, setSavedIssues] = useLocalStorage(selectedProject, []);
-  const [myIssues, setMyIssues] = useLocalStorage('myOwnIssues', []);
-  const [fetchedIssues, setFetchedIssues] = useState('');
-  const [pinnedIssues, setPinnedIssues] = useLocalStorage(selectedProject, []);
-  const pinned = [];
+  const [hasError, setHasError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [comparedIssues, setComparedIssues] = useState('');
+  const [selectedProject, setSelectedProject] = useState('');
+  const [pinnedIssues, setPinnedIssues] = useLocalStorage(selectedProject, []);
+  const [myIssues, setMyIssues] = useLocalStorage('myOwnIssues', []);
 
   useEffect(() => {
-    loadFromLocal(selectedProject);
     GetData(selectedProject);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedProject]);
@@ -47,8 +43,7 @@ export default function App() {
               </header>
               <Dashboard
                 selectedProject={selectedProject}
-                fetchedIssues={fetchedIssues}
-                // savedIssues={savedIssues}
+                comparedIssues={comparedIssues}
                 isLoading={isLoading}
                 hasError={hasError}
                 togglePin={togglePin}
@@ -57,12 +52,12 @@ export default function App() {
             </>
           }
         />
-        {fetchedIssues &&
-          fetchedIssues.map(fetchedIssue => (
+        {comparedIssues &&
+          comparedIssues.map(comparedIssue => (
             <Route
-              key={fetchedIssue.id}
-              path={`${fetchedIssue.id}`}
-              element={<FetchedDetails fetchedIssue={fetchedIssue} />}
+              key={comparedIssue.id}
+              path={`${comparedIssue.id}`}
+              element={<FetchedDetails comparedIssue={comparedIssue} />}
             />
           ))}
         <Route
@@ -86,6 +81,7 @@ export default function App() {
             element={
               <MyIssueDetails
                 myIssue={myIssue}
+                pinnedIssues={pinnedIssues}
                 avatar={avatar}
                 myIssues={myIssues}
                 handleRemoveIssue={handleRemoveIssue}
@@ -116,7 +112,7 @@ export default function App() {
         if (response.ok) {
           setTimeout(() => setIsLoading(false), 1500);
           const data = await response.json();
-          setFetchedIssues(data);
+          compareIssues(data);
         } else {
           throw new Error('Response not ok');
         }
@@ -128,48 +124,15 @@ export default function App() {
     }
   }
 
-  function togglePin(buttonId, issues) {
-    const nextIssues = checkIsPinned(buttonId, issues);
-    sortPins(nextIssues);
-    if (issues[0].hasOwnProperty('url')) {
-      setFetchedIssues(nextIssues);
-    } else {
-      setMyIssues(nextIssues);
-    }
-  }
+  function compareIssues(data) {
+    const compared = data.map(fetchedIssue => {
+      setPinnedIssues(loadFromLocal(selectedProject));
 
-  function checkIsPinned(buttonId, issues) {
-    const nextIssues = issues.map(issue => {
-      if (issue.id === buttonId) {
-        setPinnedIssues(issue);
-        return {
-          ...issue,
-          isPinned: !issue.isPinned,
-        };
-      } else {
-        return {
-          ...issue,
-        };
-      }
-    });
-    savePinnedIssues(nextIssues);
-    return nextIssues;
-  }
-
-  function savePinnedIssues(issues) {
-    issues.forEach(issue => {
-      if (issue.isPinned) {
-        pinned.push(issue);
-      }
-    });
-    compareIssues(pinned);
-  }
-
-  function compareIssues(pinnedIssues) {
-    const compared = fetchedIssues.map(fetchedIssue => {
-      const foundIssue = pinnedIssues.find(
-        pinnedIssue => pinnedIssue.id === fetchedIssue.id
-      );
+      const foundIssue = loadFromLocal(selectedProject)
+        ? loadFromLocal(selectedProject).find(
+            pinnedIssue => pinnedIssue.id === fetchedIssue.id
+          )
+        : null;
       if (foundIssue) {
         return {
           ...fetchedIssue,
@@ -182,7 +145,46 @@ export default function App() {
         };
       }
     });
+    sortPins(compared);
     setComparedIssues(compared);
+  }
+
+  function togglePin(prevId, issues) {
+    const nextIssues = checkIsPinned(prevId, issues);
+    sortPins(nextIssues);
+    if (issues[0].hasOwnProperty('url')) {
+      setComparedIssues(nextIssues);
+    } else {
+      setMyIssues(nextIssues);
+    }
+    savePinnedIssues(nextIssues);
+  }
+
+  function checkIsPinned(prevId, issues) {
+    const nextIssues = issues.map(issue => {
+      if (issue.id === prevId) {
+        return {
+          ...issue,
+          isPinned: !issue.isPinned,
+        };
+      } else {
+        return {
+          ...issue,
+        };
+      }
+    });
+    return nextIssues;
+  }
+
+  function savePinnedIssues(issues) {
+    const pinned = [];
+
+    issues.forEach(issue => {
+      if (issue.isPinned) {
+        pinned.push(issue);
+      }
+    });
+    setPinnedIssues(pinned);
   }
 
   function sortPins(issues) {
@@ -231,77 +233,4 @@ export default function App() {
   function handleRemoveIssue(id) {
     setMyIssues(myIssues.filter(myIssue => myIssue.id !== id));
   }
-
-  // async function GetData(url) {
-  //   setIsLoading(true);
-  //   setHasError(false);
-
-  //   if (selectedProject) {
-  //     try {
-  //       const response = await fetch(url);
-  //       if (response.ok) {
-  //         const data = await response.json();
-  //         if (loadFromLocal(selectedProject)) {
-  //           findIssuesFromData(loadFromLocal(selectedProject), data);
-  //         } else {
-  //           findIssuesFromData(savedIssues, data);
-  //         }
-  //         setTimeout(() => setIsLoading(false), 1500);
-  //       } else {
-  //         throw new Error('Response not ok');
-  //       }
-  //     } catch (error) {
-  //       console.error(error);
-  //       setIsLoading(false);
-  //       setHasError(true);
-  //     }
-  //   }
-
-  //   function findIssuesFromData(prevData, data) {
-  //     const fetchedData = data.map(issue => {
-  //       const foundIssue = prevData.find(
-  //         prevIssue => prevIssue.id === issue.id
-  //       );
-  //       if (foundIssue) {
-  //         return {
-  //           ...issue,
-  //           isPinned: foundIssue.isPinned,
-  //         };
-  //       } else {
-  //         return {
-  //           ...issue,
-  //           isPinned: false,
-  //         };
-  //       }
-  //     });
-  //     sortPins(fetchedData);
-  //     setSavedIssues(fetchedData);
-  //   }
-  // }
-
-  // function togglePin(buttonId, issues) {
-  //   const nextIssues = checkIsPinned(buttonId, issues);
-  //   sortPins(nextIssues);
-  //   if (issues[0].hasOwnProperty('url')) {
-  //     setSavedIssues(nextIssues);
-  //   } else {
-  //     setMyIssues(nextIssues);
-  //   }
-
-  //   function checkIsPinned(buttonId, issues) {
-  //     const nextIssues = issues.map(issue => {
-  //       if (issue.id === buttonId) {
-  //         return {
-  //           ...issue,
-  //           isPinned: !issue.isPinned,
-  //         };
-  //       } else {
-  //         return {
-  //           ...issue,
-  //         };
-  //       }
-  //     });
-  //     return nextIssues;
-  //   }
-  // }
 }
