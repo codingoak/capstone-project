@@ -14,13 +14,13 @@ import MyIssues from './pages/MyIssues';
 import MyIssueDetails from './pages/MyIssueDetails';
 
 export default function App() {
-  const [avatar, setAvatar] = useState(null);
   const [hasError, setHasError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [comparedIssues, setComparedIssues] = useState('');
   const [selectedProject, setSelectedProject] = useState('');
   const [pinnedIssues, setPinnedIssues] = useLocalStorage(selectedProject, []);
   const [myIssues, setMyIssues] = useLocalStorage('myOwnIssues', []);
+  const [avatarUrl, setAvatarUrl] = useLocalStorage('user', []);
 
   useEffect(() => {
     GetData(selectedProject);
@@ -82,7 +82,7 @@ export default function App() {
               <MyIssueDetails
                 myIssue={myIssue}
                 pinnedIssues={pinnedIssues}
-                avatar={avatar}
+                avatarUrl={avatarUrl}
                 myIssues={myIssues}
                 handleRemoveIssue={handleRemoveIssue}
               />
@@ -205,7 +205,7 @@ export default function App() {
     getAvatar(user);
     setMyIssues([
       {
-        avatar: avatar,
+        avatar: avatarUrl,
         body,
         created_at: date,
         id,
@@ -222,7 +222,7 @@ export default function App() {
     async function getAvatar(username) {
       const response = await fetch(`https://api.github.com/users/${username}`);
       const data = await response.json();
-      setAvatar(data.avatar_url);
+      setAvatarUrl(data.avatar_url);
     }
   }
 

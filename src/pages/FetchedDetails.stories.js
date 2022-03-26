@@ -9,7 +9,7 @@ const Template = args => <FetchedDetails {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
-  savedIssue: {
+  comparedIssue: {
     number: 4458,
     id: 1168898651,
     user: {

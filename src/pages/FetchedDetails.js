@@ -77,9 +77,10 @@ export default function Detail({ comparedIssue }) {
   );
 }
 
-const Wrapper = styled.main`
-  padding: 0 10px;
-  word-break: break-all;
+const Avatar = styled.img`
+  border-radius: 5px;
+  margin-right: 10px;
+  margin-top: 10px;
 `;
 
 const FlexContainer = styled.div`
@@ -87,10 +88,8 @@ const FlexContainer = styled.div`
   justify-content: space-between;
 `;
 
-const Avatar = styled.img`
-  border-radius: 5px;
-  margin-right: 10px;
-  margin-top: 10px;
+const DD = styled.dd`
+  margin: 0 10px;
 `;
 
 const DL = styled.dl`
@@ -101,6 +100,8 @@ const DT = styled.dt`
   font-weight: bold;
   margin-top: 10px;
 `;
-const DD = styled.dd`
-  margin: 0 10px;
+
+const Wrapper = styled.main`
+  padding: 0 10px;
+  word-break: break-all;
 `;
