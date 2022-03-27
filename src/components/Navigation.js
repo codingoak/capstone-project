@@ -62,7 +62,7 @@ const Bottom = styled.div`
   position: absolute;
   width: 100%;
   z-index: 1;
-`; 
+`;
 
 const Link = styled(NavLink)`
   background: linear-gradient(#144e74, var(--bg-color-dark));

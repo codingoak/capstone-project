@@ -92,7 +92,7 @@ const Wrapper = styled.section`
   grid-template-columns: 10px 1fr 52px 42px;
   grid-template-rows: 60px;
   margin: 0 10px;
-  :nth-of-type(2n) {
+  :nth-of-type(odd) {
     background-color: var(--bg-color-light);
     border-radius: 5px;
   }
