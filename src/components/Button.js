@@ -63,7 +63,6 @@ const ButtonSecondary = styled(Button)`
 export { ButtonSecondary };
 
 const ButtonSecondarySmall = styled(ButtonPrimarySmall)`
-  background: radial-gradient(forestgreen, darkgreen);
   border: 2px solid transparent;
 `;
 

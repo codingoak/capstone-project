@@ -1,7 +1,5 @@
 import Button from './Button';
-import { ButtonPrimary } from './Button';
-import { ButtonPrimarySmall } from './Button';
-import { ButtonSecondary } from './Button';
+import { ButtonPrimary, ButtonPrimarySmall, ButtonSecondary } from './Button';
 
 export default {
   title: 'Button',

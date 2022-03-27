@@ -99,14 +99,6 @@ export default function App() {
     </>
   );
 
-  function loadFromLocal(key) {
-    try {
-      return JSON.parse(localStorage.getItem(key));
-    } catch (error) {
-      console.error('Load from local failed', error);
-    }
-  }
-
   async function getData(url) {
     window.scrollTo(0, 0);
     setIsLoading(true);
@@ -148,15 +140,19 @@ export default function App() {
     setPaginationUrls(urls);
   }
 
+  function loadFromLocal(key) {
+    try {
+      return JSON.parse(localStorage.getItem(key));
+    } catch (error) {
+      console.error('Load from local failed', error);
+    }
+  }
+
   function compareIssues(data) {
     const compared = data.map(fetchedIssue => {
-      setPinnedIssues(loadFromLocal(selectedProject));
-
-      const foundIssue = loadFromLocal(selectedProject)
-        ? loadFromLocal(selectedProject).find(
-            pinnedIssue => pinnedIssue.id === fetchedIssue.id
-          )
-        : null;
+      const foundIssue = loadFromLocal(selectedProject)?.find(
+        savedIssue => savedIssue.id === fetchedIssue.id
+      );
       if (foundIssue) {
         return {
           ...fetchedIssue,
@@ -171,23 +167,12 @@ export default function App() {
     });
     sortPins(compared);
     setComparedIssues(compared);
+    console.log('PINNED FROM compareIssue()', pinnedIssues);
   }
 
   function togglePin(prevId, prevIssues) {
-    const checkedIssues = checkIsPinned(prevId, prevIssues);
-    sortPins(checkedIssues);
-    if (prevIssues[0].hasOwnProperty('url')) {
-      setComparedIssues(checkedIssues);
-    } else {
-      setMyIssues(checkedIssues);
-    }
-    setPinnedIssues(
-      checkedIssues.filter(checkedIssue => checkedIssue.isPinned)
-    );
-  }
-
-  function checkIsPinned(prevId, prevIssues) {
-    const nextIssues = prevIssues.map(prevIssue => {
+    // Check if id matchs
+    const checkedIssues = prevIssues.map(prevIssue => {
       if (prevIssue.id === prevId) {
         return {
           ...prevIssue,
@@ -199,7 +184,22 @@ export default function App() {
         };
       }
     });
-    return nextIssues;
+    sortPins(checkedIssues);
+
+    // set to compared(fetched) or my issues
+    if (prevIssues[0].hasOwnProperty('url')) {
+      setComparedIssues(checkedIssues);
+    } else {
+      setMyIssues(checkedIssues);
+    }
+
+    // filter all pinned issues
+    const filteredIssues = checkedIssues.filter(
+      checkedIssue => checkedIssue.isPinned
+    );
+
+    setPinnedIssues(filteredIssues);
+    console.log('filteredIssues', filteredIssues);
   }
 
   function sortPins(issues) {
