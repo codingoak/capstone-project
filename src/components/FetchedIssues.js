@@ -1,11 +1,11 @@
 import HeadingIssues from './HeadingIssues';
 import Issues from './Issues';
 
-export default function FetchedIssues({ savedIssues, togglePin }) {
+export default function FetchedIssues({ comparedIssues, togglePin }) {
   return (
     <main>
       <HeadingIssues />
-      <Issues issues={savedIssues} togglePin={togglePin} />
+      <Issues issues={comparedIssues} togglePin={togglePin} />
     </main>
   );
 }

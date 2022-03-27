@@ -6,7 +6,7 @@ import FetchedDetails from './FetchedDetails';
 describe('Fetched issue details', () => {
   global.scrollTo = jest.fn();
 
-  const savedIssue = {
+  const comparedIssue = {
     number: 4458,
     id: 1168898651,
     user: {
@@ -30,7 +30,7 @@ describe('Fetched issue details', () => {
   it('renders the number', () => {
     render(
       <MemoryRouter>
-        <FetchedDetails savedIssue={savedIssue} />
+        <FetchedDetails comparedIssue={comparedIssue} />
       </MemoryRouter>
     );
     const number = screen.getByText(4458);
@@ -40,7 +40,7 @@ describe('Fetched issue details', () => {
   it('renders the username', () => {
     render(
       <MemoryRouter>
-        <FetchedDetails savedIssue={savedIssue} />
+        <FetchedDetails comparedIssue={comparedIssue} />
       </MemoryRouter>
     );
     const userName = screen.getByText('codingoak');
@@ -50,7 +50,7 @@ describe('Fetched issue details', () => {
   it('renders the title', () => {
     render(
       <MemoryRouter>
-        <FetchedDetails savedIssue={savedIssue} />
+        <FetchedDetails comparedIssue={comparedIssue} />
       </MemoryRouter>
     );
     const title = screen.getByText('This is an issue title');
@@ -60,7 +60,7 @@ describe('Fetched issue details', () => {
   it('renders the state', () => {
     render(
       <MemoryRouter>
-        <FetchedDetails savedIssue={savedIssue} />
+        <FetchedDetails comparedIssue={comparedIssue} />
       </MemoryRouter>
     );
     const state = screen.getByText('open');

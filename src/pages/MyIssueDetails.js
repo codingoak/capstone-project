@@ -9,7 +9,7 @@ import RemoveDialog from '../components/RemoveDialog';
 
 export default function MyIssueDetails({
   myIssue,
-  avatar,
+  avatarUrl,
   myIssues,
   handleRemoveIssue,
 }) {
@@ -30,8 +30,8 @@ export default function MyIssueDetails({
       <Wrapper>
         <BackArrow to="/myissues" />
         <Message>
-          All fields with an asterisk* can be changed. Click on the values to
-          edit.
+          All fields with an asterisk<Asterisk>*</Asterisk> can be changed.
+          Click on the values to edit.
         </Message>
 
         <FlexContainer>
@@ -42,14 +42,16 @@ export default function MyIssueDetails({
             <DD>{myIssue.user}</DD>
           </DL>
           <Avatar
-            src={avatar}
+            src={avatarUrl}
             alt={`Avatar of ${myIssue.user}`}
             width="90"
             height="90"
           />
         </FlexContainer>
         <DL>
-          <DT id="title">Title*:</DT>
+          <DT id="title">
+            Title<Asterisk>*</Asterisk>:
+          </DT>
           <FlexContainer>
             {editTitle ? (
               <>
@@ -69,7 +71,9 @@ export default function MyIssueDetails({
             )}
           </FlexContainer>
 
-          <DT id="body">Body*:</DT>
+          <DT id="body">
+            Body<Asterisk>*</Asterisk>:
+          </DT>
           <FlexContainer>
             {editBody ? (
               <>
@@ -92,7 +96,9 @@ export default function MyIssueDetails({
           <DT>Created at:</DT>
           <DD>{myIssue.created_at}</DD>
 
-          <DT id="state">State*:</DT>
+          <DT id="state">
+            State<Asterisk>*</Asterisk>:
+          </DT>
           <FlexContainer>
             {editState ? (
               <>
@@ -112,7 +118,9 @@ export default function MyIssueDetails({
             )}
           </FlexContainer>
 
-          <DT id="milestone">Milestone*:</DT>
+          <DT id="milestone">
+            Milestone<Asterisk>*</Asterisk>:
+          </DT>
           <FlexContainer>
             {editMilestone ? (
               <>
@@ -158,15 +166,21 @@ export default function MyIssueDetails({
               </>
             ) : (
               <>
-                <DT>Labels*:</DT>
-                {myIssue.labels?.map((label, index) => (
-                  <DD
-                    onClick={() => setEditLabels(true)}
-                    key={index + myIssue.id}
-                  >
-                    {label}
-                  </DD>
-                ))}
+                <DT>
+                  Labels<Asterisk>*</Asterisk>:
+                </DT>
+                {myIssue.labels.length > 0 ? (
+                  myIssue.labels.map((label, index) => (
+                    <DD
+                      onClick={() => setEditLabels(true)}
+                      key={index + myIssue.id}
+                    >
+                      {label}
+                    </DD>
+                  ))
+                ) : (
+                  <DD>no labels</DD>
+                )}
               </>
             )}
           </>
@@ -197,25 +211,23 @@ export default function MyIssueDetails({
   }
 }
 
-const Wrapper = styled.main`
-  margin: 0 10px;
-  word-break: break-all;
-`;
-
-const Message = styled.p`
-  font-size: 0.9rem;
-  font-style: italic;
-`;
-
-const FlexContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
+const Asterisk = styled.span`
+  color: crimson;
 `;
 
 const Avatar = styled.img`
   border-radius: 5px;
   border-radius: 5px;
   margin-right: 10px;
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+const DD = styled.dd`
+  margin: 0 10px;
 `;
 
 const DL = styled.dl`
@@ -227,8 +239,15 @@ const DT = styled.dt`
   margin-top: 10px;
 `;
 
-const DD = styled.dd`
-  margin: 0 10px;
+const FlexContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const Message = styled.p`
+  font-size: 0.9rem;
+  font-style: italic;
+  word-break: normal;
 `;
 
 const StyledInput = styled.input`
@@ -237,7 +256,7 @@ const StyledInput = styled.input`
   width: 80%;
 `;
 
-const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: center;
+const Wrapper = styled.main`
+  margin: 0 10px;
+  word-break: break-all;
 `;

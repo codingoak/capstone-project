@@ -50,18 +50,6 @@ export default function Issues({ issues, togglePin }) {
   );
 }
 
-const Wrapper = styled.section`
-  align-items: center;
-  display: grid;
-  grid-template-columns: 10px 1fr 52px 42px;
-  grid-template-rows: 60px;
-  margin: 0 10px;
-  :nth-of-type(2n) {
-    background-color: var(--bg-color-light);
-    border-radius: 5px;
-  }
-`;
-
 const Link = styled(NavLink)`
   align-items: center;
   display: inherit;
@@ -77,15 +65,15 @@ const Link = styled(NavLink)`
   }
 `;
 
+const IssueState = styled.div`
+  grid-column: 3;
+`;
+
 const IssueTitle = styled.p`
   grid-column: 2/3;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-`;
-
-const IssueState = styled.div`
-  grid-column: 3;
 `;
 
 const PinButton = styled.button`
@@ -96,4 +84,16 @@ const PinButton = styled.button`
   height: 42px;
   justify-self: end;
   width: 42px;
+`;
+
+const Wrapper = styled.section`
+  align-items: center;
+  display: grid;
+  grid-template-columns: 10px 1fr 52px 42px;
+  grid-template-rows: 60px;
+  margin: 0 10px;
+  :nth-of-type(2n) {
+    background-color: var(--bg-color-light);
+    border-radius: 5px;
+  }
 `;

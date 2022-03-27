@@ -14,15 +14,15 @@ import MyIssues from './pages/MyIssues';
 import MyIssueDetails from './pages/MyIssueDetails';
 
 export default function App() {
-  const [selectedProject, setSelectedProject] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
   const [hasError, setHasError] = useState(false);
-  const [avatar, setAvatar] = useState(null);
-  const [savedIssues, setSavedIssues] = useLocalStorage(selectedProject, []);
+  const [isLoading, setIsLoading] = useState(false);
+  const [comparedIssues, setComparedIssues] = useState('');
+  const [selectedProject, setSelectedProject] = useState('');
+  const [pinnedIssues, setPinnedIssues] = useLocalStorage(selectedProject, []);
   const [myIssues, setMyIssues] = useLocalStorage('myOwnIssues', []);
+  const [avatarUrl, setAvatarUrl] = useLocalStorage('user', []);
 
   useEffect(() => {
-    loadFromLocal(selectedProject);
     GetData(selectedProject);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedProject]);
@@ -43,7 +43,7 @@ export default function App() {
               </header>
               <Dashboard
                 selectedProject={selectedProject}
-                savedIssues={savedIssues}
+                comparedIssues={comparedIssues}
                 isLoading={isLoading}
                 hasError={hasError}
                 togglePin={togglePin}
@@ -52,13 +52,14 @@ export default function App() {
             </>
           }
         />
-        {savedIssues.map(savedIssue => (
-          <Route
-            key={savedIssue.id}
-            path={`${savedIssue.id}`}
-            element={<FetchedDetails savedIssue={savedIssue} />}
-          />
-        ))}
+        {comparedIssues &&
+          comparedIssues.map(comparedIssue => (
+            <Route
+              key={comparedIssue.id}
+              path={`${comparedIssue.id}`}
+              element={<FetchedDetails comparedIssue={comparedIssue} />}
+            />
+          ))}
         <Route
           path="createissueform"
           element={<CreateIssueForm handleMyIssues={handleMyIssues} />}
@@ -80,7 +81,8 @@ export default function App() {
             element={
               <MyIssueDetails
                 myIssue={myIssue}
-                avatar={avatar}
+                pinnedIssues={pinnedIssues}
+                avatarUrl={avatarUrl}
                 myIssues={myIssues}
                 handleRemoveIssue={handleRemoveIssue}
               />
@@ -108,13 +110,9 @@ export default function App() {
       try {
         const response = await fetch(url);
         if (response.ok) {
-          const data = await response.json();
-          if (!loadFromLocal(selectedProject)) {
-            findIssuesFromData(savedIssues, data);
-          } else {
-            findIssuesFromData(loadFromLocal(selectedProject), data);
-          }
           setTimeout(() => setIsLoading(false), 1500);
+          const data = await response.json();
+          compareIssues(data);
         } else {
           throw new Error('Response not ok');
         }
@@ -124,27 +122,81 @@ export default function App() {
         setHasError(true);
       }
     }
+  }
 
-    function findIssuesFromData(prevData, data) {
-      const fetchedData = data.map(issue => {
-        const foundIssue = prevData.find(
-          prevIssue => prevIssue.id === issue.id
-        );
-        if (foundIssue) {
-          return {
-            ...issue,
-            isPinned: foundIssue.isPinned,
-          };
-        } else {
-          return {
-            ...issue,
-            isPinned: false,
-          };
-        }
-      });
-      sortPins(fetchedData);
-      setSavedIssues(fetchedData);
+  function compareIssues(data) {
+    const compared = data.map(fetchedIssue => {
+      setPinnedIssues(loadFromLocal(selectedProject));
+
+      const foundIssue = loadFromLocal(selectedProject)
+        ? loadFromLocal(selectedProject).find(
+            pinnedIssue => pinnedIssue.id === fetchedIssue.id
+          )
+        : null;
+      if (foundIssue) {
+        return {
+          ...fetchedIssue,
+          isPinned: foundIssue.isPinned,
+        };
+      } else {
+        return {
+          ...fetchedIssue,
+          isPinned: false,
+        };
+      }
+    });
+    sortPins(compared);
+    setComparedIssues(compared);
+  }
+
+  function togglePin(prevId, issues) {
+    const nextIssues = checkIsPinned(prevId, issues);
+    sortPins(nextIssues);
+    if (issues[0].hasOwnProperty('url')) {
+      setComparedIssues(nextIssues);
+    } else {
+      setMyIssues(nextIssues);
     }
+    savePinnedIssues(nextIssues);
+  }
+
+  function checkIsPinned(prevId, issues) {
+    const nextIssues = issues.map(issue => {
+      if (issue.id === prevId) {
+        return {
+          ...issue,
+          isPinned: !issue.isPinned,
+        };
+      } else {
+        return {
+          ...issue,
+        };
+      }
+    });
+    return nextIssues;
+  }
+
+  function savePinnedIssues(issues) {
+    const pinned = [];
+
+    issues.forEach(issue => {
+      if (issue.isPinned) {
+        pinned.push(issue);
+      }
+    });
+    setPinnedIssues(pinned);
+  }
+
+  function sortPins(issues) {
+    issues.sort((a, b) => {
+      if (a.isPinned === true) {
+        return -1;
+      }
+      if (b.isPinned === true) {
+        return +1;
+      }
+      return 0;
+    });
   }
 
   function handleMyIssues({ body, isPinned, labels, milestone, title, user }) {
@@ -153,7 +205,7 @@ export default function App() {
     getAvatar(user);
     setMyIssues([
       {
-        avatar: avatar,
+        avatar: avatarUrl,
         body,
         created_at: date,
         id,
@@ -170,7 +222,7 @@ export default function App() {
     async function getAvatar(username) {
       const response = await fetch(`https://api.github.com/users/${username}`);
       const data = await response.json();
-      setAvatar(data.avatar_url);
+      setAvatarUrl(data.avatar_url);
     }
   }
 
@@ -180,43 +232,5 @@ export default function App() {
 
   function handleRemoveIssue(id) {
     setMyIssues(myIssues.filter(myIssue => myIssue.id !== id));
-  }
-
-  function togglePin(buttonId, issues) {
-    const nextIssues = checkIsPinned(buttonId, issues);
-    sortPins(nextIssues);
-    if (issues[0].hasOwnProperty('url')) {
-      setSavedIssues(nextIssues);
-    } else {
-      setMyIssues(nextIssues);
-    }
-
-    function checkIsPinned(buttonId, issues) {
-      const nextIssues = issues.map(issue => {
-        if (issue.id === buttonId) {
-          return {
-            ...issue,
-            isPinned: !issue.isPinned,
-          };
-        } else {
-          return {
-            ...issue,
-          };
-        }
-      });
-      return nextIssues;
-    }
-  }
-
-  function sortPins(issues) {
-    issues.sort((a, b) => {
-      if (a.isPinned === true) {
-        return -1;
-      }
-      if (b.isPinned === true) {
-        return +1;
-      }
-      return 0;
-    });
   }
 }

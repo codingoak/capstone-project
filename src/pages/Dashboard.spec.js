@@ -11,14 +11,14 @@ describe('Dashboard', () => {
   });
 
   it('renders the dashboard', () => {
-    const savedIssues = [
+    const comparedIssues = [
       { id: 111, title: 'Teststring1', state: 'open', clicked: true },
       { id: 112, title: 'Teststring2', state: 'close', clicked: false },
       { id: 113, title: 'Teststring3', state: 'open', clicked: true },
     ];
     render(
       <MemoryRouter>
-        <Dashboard savedIssues={savedIssues} />
+        <Dashboard comparedIssues={comparedIssues} />
       </MemoryRouter>
     );
     const cards = screen.getAllByText(/Teststring/);
@@ -41,8 +41,17 @@ describe('Dashboard', () => {
         <Dashboard hasError={true} />
       </MemoryRouter>
     );
-
     const button = screen.getByRole('button');
     expect(button).toBeInTheDocument();
+  });
+
+  it('renders the empty state message', () => {
+    render(
+      <MemoryRouter>
+        <Dashboard selectedProject={false} />
+      </MemoryRouter>
+    );
+    const emptyMessage = screen.getByText(/Select an option/);
+    expect(emptyMessage).toBeInTheDocument();
   });
 });

@@ -5,7 +5,7 @@ import { ButtonPrimary } from '../components/Button';
 import FetchedIssues from '../components/FetchedIssues';
 
 export default function Dashboard({
-  savedIssues,
+  comparedIssues,
   isLoading,
   hasError,
   togglePin,
@@ -39,8 +39,9 @@ export default function Dashboard({
           </LoadingContainer>
         )
       )}
-      {savedIssues && !isLoading && !hasError && (
-        <FetchedIssues savedIssues={savedIssues} togglePin={togglePin} />
+
+      {comparedIssues && !isLoading && !hasError && (
+        <FetchedIssues comparedIssues={comparedIssues} togglePin={togglePin} />
       )}
       {hasError && (
         <ErrorContainer>
@@ -55,28 +56,21 @@ export default function Dashboard({
   );
 }
 
-const EmptyState = styled.p`
-  padding-top: 70px;
-  margin: 10px;
-  text-align: center;
-`;
-
-const LoadingContainer = styled.main`
-  grid-column: 1/-1;
-  height: 70vh;
-  margin: 100px;
-  text-align: center;
-`;
-
 const TurnAnimation = keyframes`
-  from { transform: rotate(-360deg); }
-  to { transform: rotate(0deg); }
-`;
+    from { transform: rotate(-360deg); }
+    to { transform: rotate(0deg); }
+  `;
 
 const Circle = styled.svg`
   animation: ${TurnAnimation} 1s ease infinite;
   height: 32px;
   width: 32px;
+`;
+
+const EmptyState = styled.p`
+  padding-top: 70px;
+  margin: 10px;
+  text-align: center;
 `;
 
 const ErrorContainer = styled.main`
@@ -87,4 +81,11 @@ const ErrorContainer = styled.main`
 
 const ErrorState = styled.p`
   color: crimson;
+`;
+
+const LoadingContainer = styled.main`
+  grid-column: 1/-1;
+  height: 70vh;
+  margin: 100px;
+  text-align: center;
 `;
