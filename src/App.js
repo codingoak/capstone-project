@@ -12,18 +12,20 @@ import Dashboard from './pages/Dashboard';
 import FetchedDetails from './pages/FetchedDetails';
 import MyIssues from './pages/MyIssues';
 import MyIssueDetails from './pages/MyIssueDetails';
+import Pagination from './components/Pagination';
 
 export default function App() {
+  const [avatarUrl, setAvatarUrl] = useLocalStorage('user', []);
+  const [comparedIssues, setComparedIssues] = useState('');
   const [hasError, setHasError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [comparedIssues, setComparedIssues] = useState('');
+  const [myIssues, setMyIssues] = useLocalStorage('myOwnIssues', []);
+  const [paginationUrls, setPaginationUrls] = useState('');
   const [selectedProject, setSelectedProject] = useState('');
   const [pinnedIssues, setPinnedIssues] = useLocalStorage(selectedProject, []);
-  const [myIssues, setMyIssues] = useLocalStorage('myOwnIssues', []);
-  const [avatarUrl, setAvatarUrl] = useLocalStorage('user', []);
 
   useEffect(() => {
-    GetData(selectedProject);
+    getData(selectedProject);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedProject]);
 
@@ -37,18 +39,21 @@ export default function App() {
               <header>
                 <HeadingMain title="DASHBOARD" />
                 <Selection
-                  selectedProject={selectedProject}
                   handleRepoChange={handleRepoChange}
+                  selectedProject={selectedProject}
                 />
               </header>
               <Dashboard
-                selectedProject={selectedProject}
                 comparedIssues={comparedIssues}
-                isLoading={isLoading}
+                getData={getData}
                 hasError={hasError}
+                isLoading={isLoading}
+                selectedProject={selectedProject}
                 togglePin={togglePin}
-                GetData={GetData}
               />
+              {paginationUrls && !isLoading && !hasError && (
+                <Pagination getData={getData} paginationUrls={paginationUrls} />
+              )}
             </>
           }
         />
@@ -69,8 +74,8 @@ export default function App() {
           element={
             <MyIssues
               myIssues={myIssues}
-              togglePin={togglePin}
               sortPins={sortPins}
+              togglePin={togglePin}
             />
           }
         />
@@ -80,11 +85,11 @@ export default function App() {
             path={`${myIssue.id}`}
             element={
               <MyIssueDetails
-                myIssue={myIssue}
-                pinnedIssues={pinnedIssues}
                 avatarUrl={avatarUrl}
-                myIssues={myIssues}
                 handleRemoveIssue={handleRemoveIssue}
+                myIssue={myIssue}
+                myIssues={myIssues}
+                pinnedIssues={pinnedIssues}
               />
             }
           />
@@ -94,15 +99,8 @@ export default function App() {
     </>
   );
 
-  function loadFromLocal(key) {
-    try {
-      return JSON.parse(localStorage.getItem(key));
-    } catch (error) {
-      console.error('Load from local failed', error);
-    }
-  }
-
-  async function GetData(url) {
+  async function getData(url) {
+    window.scrollTo(0, 0);
     setIsLoading(true);
     setHasError(false);
 
@@ -111,6 +109,7 @@ export default function App() {
         const response = await fetch(url);
         if (response.ok) {
           setTimeout(() => setIsLoading(false), 1500);
+          getDataForPagination(response);
           const data = await response.json();
           compareIssues(data);
         } else {
@@ -124,15 +123,36 @@ export default function App() {
     }
   }
 
+  function getDataForPagination(response) {
+    const link = response.headers.get('Link');
+    const links = link?.split(',');
+    const urls = links?.map(link => {
+      return {
+        url: link.split(';')[0].replace('<', '').replace('>', '').trim(),
+        title: link
+          .split(';')[1]
+          .replace('rel', '')
+          .replace('="', '')
+          .replace('"', '')
+          .trim(),
+      };
+    });
+    setPaginationUrls(urls);
+  }
+
+  function loadFromLocal(key) {
+    try {
+      return JSON.parse(localStorage.getItem(key));
+    } catch (error) {
+      console.error('Load from local failed', error);
+    }
+  }
+
   function compareIssues(data) {
     const compared = data.map(fetchedIssue => {
-      setPinnedIssues(loadFromLocal(selectedProject));
-
-      const foundIssue = loadFromLocal(selectedProject)
-        ? loadFromLocal(selectedProject).find(
-            pinnedIssue => pinnedIssue.id === fetchedIssue.id
-          )
-        : null;
+      const foundIssue = loadFromLocal(selectedProject)?.find(
+        savedIssue => savedIssue.id === fetchedIssue.id
+      );
       if (foundIssue) {
         return {
           ...fetchedIssue,
@@ -149,46 +169,47 @@ export default function App() {
     setComparedIssues(compared);
   }
 
-  function togglePin(prevId, issues) {
-    const nextIssues = checkIsPinned(prevId, issues);
-    sortPins(nextIssues);
-    if (issues[0].hasOwnProperty('url')) {
-      setComparedIssues(nextIssues);
-    } else {
-      setMyIssues(nextIssues);
-    }
-    savePinnedIssues(nextIssues);
-  }
-
-  function checkIsPinned(prevId, issues) {
-    const nextIssues = issues.map(issue => {
-      if (issue.id === prevId) {
+  function togglePin(prevId, prevIssues) {
+    // Check if id matchs
+    const checkedIssues = prevIssues.map(prevIssue => {
+      if (prevIssue.id === prevId) {
         return {
-          ...issue,
-          isPinned: !issue.isPinned,
+          ...prevIssue,
+          isPinned: !prevIssue.isPinned,
         };
       } else {
         return {
-          ...issue,
+          ...prevIssue,
         };
       }
     });
-    return nextIssues;
-  }
+    sortPins(checkedIssues);
 
-  function savePinnedIssues(issues) {
-    const pinned = [];
+    // set to compared(fetched) or my issues
+    if (prevIssues[0].hasOwnProperty('url')) {
+      setComparedIssues(checkedIssues);
+    } else {
+      setMyIssues(checkedIssues);
+    }
 
-    issues.forEach(issue => {
-      if (issue.isPinned) {
-        pinned.push(issue);
-      }
+    // creates an array with all the pinned issues
+    const nextIssues = [...checkedIssues, ...pinnedIssues];
+
+    const uniqueIssues = Array.from(
+      new Set(nextIssues.map(nextIssue => nextIssue.id))
+    ).map(id => {
+      return nextIssues.find(nextIssue => nextIssue.id === id);
     });
-    setPinnedIssues(pinned);
+
+    const uniquePinnedIssues = uniqueIssues.filter(
+      uniqueIssue => uniqueIssue.isPinned
+    );
+
+    setPinnedIssues(uniquePinnedIssues);
   }
 
   function sortPins(issues) {
-    issues.sort((a, b) => {
+    issues.slice().sort((a, b) => {
       if (a.isPinned === true) {
         return -1;
       }

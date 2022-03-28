@@ -1,8 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components/macro';
 
-import { ButtonPrimary } from './Button';
-import { ButtonSecondary } from './Button';
+import { ButtonSecondary, ButtonPrimary } from './Button';
 
 export default function RemoveDialog({
   issueId,

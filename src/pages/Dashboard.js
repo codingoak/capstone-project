@@ -6,11 +6,11 @@ import FetchedIssues from '../components/FetchedIssues';
 
 export default function Dashboard({
   comparedIssues,
-  isLoading,
+  getData,
   hasError,
-  togglePin,
-  GetData,
+  isLoading,
   selectedProject,
+  togglePin,
 }) {
   return (
     <>
@@ -22,12 +22,12 @@ export default function Dashboard({
         isLoading && (
           <LoadingContainer>
             <Circle
-              role="img"
               aria-label="Rotating circular arrow"
-              width="32"
-              height="32"
               fill="#0b2b40"
+              height="32"
+              role="img"
               viewBox="0 0 16 16"
+              width="32"
             >
               <title>Loading...</title>
               <path
@@ -48,7 +48,7 @@ export default function Dashboard({
           <ErrorState>Oops, something went wrong</ErrorState>
           <ButtonPrimary
             children={'TRY AGAIN'}
-            onClick={() => GetData(selectedProject)}
+            onClick={() => getData(selectedProject)}
           />
         </ErrorContainer>
       )}

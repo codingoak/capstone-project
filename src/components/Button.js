@@ -61,3 +61,9 @@ const ButtonSecondary = styled(Button)`
 `;
 
 export { ButtonSecondary };
+
+const ButtonSecondarySmall = styled(ButtonPrimarySmall)`
+  border: 2px solid transparent;
+`;
+
+export { ButtonSecondarySmall };

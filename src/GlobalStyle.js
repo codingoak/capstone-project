@@ -9,8 +9,8 @@ const GlobalStyles = createGlobalStyle`
         --bg-color-dark: #0b2b40;
         --bg-color-light: #d8e4eb;
         --bg-color-main: #EDF8FF;
-        --bg-color-primary: #0085dc;
-        --bg-color-primary-dark: #0068ad;
+        --bg-color-primary: #228B22;
+        --bg-color-primary-dark: #006400;
         --bg-color-secondary: #dc143c;
         --bg-color-secondary-dark: #a80d2c;
         --border-color-dark: #0b2b40;

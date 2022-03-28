@@ -293,10 +293,6 @@ const SelectOptions = [
       </svg>
     ),
   },
-  {
-    label: '- - - Test error state - - -',
-    value: 'https://api.gihub.com/repos/eslint/eslint/issues',
-  },
 ];
 
 export default SelectOptions;
