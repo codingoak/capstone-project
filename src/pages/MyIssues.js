@@ -12,7 +12,7 @@ export default function MyIssues({ myIssues, togglePin }) {
         {myIssues.length > 0 ? (
           <HeadingIssues />
         ) : (
-          <EmptyState>Create an issue on the add page</EmptyState>
+          <EmptyState>Create an issue with the create form</EmptyState>
         )}
         <Issues issues={myIssues} togglePin={togglePin} />
       </main>
@@ -22,6 +22,6 @@ export default function MyIssues({ myIssues, togglePin }) {
 
 const EmptyState = styled.p`
   display: grid;
-  margin-top: 50px;
+  margin-top: 75px;
   place-items: center;
 `;

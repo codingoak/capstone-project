@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import { NavLink } from 'react-router-dom';
 
 import styled from 'styled-components/macro';
@@ -7,7 +8,14 @@ export default function Issues({ issues, togglePin }) {
     <>
       {issues?.map(issue => {
         return (
-          <Wrapper key={issue.id} title={issue.title} state={issue.state}>
+          <Wrapper
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.25 }}
+            initial={{ opacity: 0 }}
+            key={issue.id}
+            title={issue.title}
+            state={issue.state}
+          >
             <Link to={`/${issue.id}`}>
               <IssueTitle>{issue.title}</IssueTitle>
               <IssueState>{issue.state}</IssueState>
@@ -86,7 +94,7 @@ const PinButton = styled.button`
   width: 42px;
 `;
 
-const Wrapper = styled.section`
+const Wrapper = styled(motion.section)`
   align-items: center;
   display: grid;
   grid-template-columns: 10px 1fr 52px 42px;
