@@ -209,7 +209,7 @@ export default function App() {
   }
 
   function sortPins(issues) {
-    issues.slice().sort((a, b) => {
+    issues.sort((a, b) => {
       if (a.isPinned === true) {
         return -1;
       }
