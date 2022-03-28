@@ -1,10 +1,15 @@
+import { motion } from 'framer-motion';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components/macro';
 
 export default function Navigation() {
   return (
     <footer>
-      <Navbar>
+      <Navbar
+        animate={{ y: 1 }}
+        transition={{ duration: 0.5 }}
+        initial={{ y: 48 }}
+      >
         <Link to="/" aria-label="Home">
           <svg
             role="img"
@@ -76,7 +81,7 @@ const Link = styled(NavLink)`
   }
 `;
 
-const Navbar = styled.nav`
+const Navbar = styled(motion.nav)`
   bottom: 0;
   color: var(--font-color-light);
   display: grid;

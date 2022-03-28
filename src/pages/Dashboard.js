@@ -16,7 +16,7 @@ export default function Dashboard({
     <>
       {!selectedProject ? (
         <main>
-          <EmptyState>Select an option from the box above.</EmptyState>
+          <EmptyState>Select an option from the box above</EmptyState>
         </main>
       ) : (
         isLoading && (
