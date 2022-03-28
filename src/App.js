@@ -167,7 +167,6 @@ export default function App() {
     });
     sortPins(compared);
     setComparedIssues(compared);
-    console.log('PINNED FROM compareIssue()', pinnedIssues);
   }
 
   function togglePin(prevId, prevIssues) {
@@ -193,17 +192,24 @@ export default function App() {
       setMyIssues(checkedIssues);
     }
 
-    // filter all pinned issues
-    const filteredIssues = checkedIssues.filter(
-      checkedIssue => checkedIssue.isPinned
+    // creates an array with all the pinned issues
+    const nextIssues = [...checkedIssues, ...pinnedIssues];
+
+    const uniqueIssues = Array.from(
+      new Set(nextIssues.map(nextIssue => nextIssue.id))
+    ).map(id => {
+      return nextIssues.find(nextIssue => nextIssue.id === id);
+    });
+
+    const uniquePinnedIssues = uniqueIssues.filter(
+      uniqueIssue => uniqueIssue.isPinned
     );
 
-    setPinnedIssues(filteredIssues);
-    console.log('filteredIssues', filteredIssues);
+    setPinnedIssues(uniquePinnedIssues);
   }
 
   function sortPins(issues) {
-    issues.sort((a, b) => {
+    issues.slice().sort((a, b) => {
       if (a.isPinned === true) {
         return -1;
       }

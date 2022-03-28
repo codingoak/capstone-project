@@ -136,7 +136,6 @@ export default function CreateIssueForm({ handleMyIssues }) {
 
   function onSubmit(data) {
     navigate('/myissues');
-    console.log(separatedLabels.length);
     handleMyIssues({
       ...data,
       milestone: data.milestone ? data.milestone : 'no milestone',
