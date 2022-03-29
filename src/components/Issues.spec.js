@@ -10,24 +10,14 @@ describe('Issues', () => {
     { id: 112, title: 'Teststring2', state: 'close', isPinned: false },
   ];
 
-  it('renders issue one', () => {
+  it('renders two issues', () => {
     render(
       <MemoryRouter>
         <Issues issues={issues} />
       </MemoryRouter>
     );
-    const issueOne = screen.getByText('Teststring1');
-    expect(issueOne).toBeInTheDocument();
-  });
-
-  it('renders issues two', () => {
-    render(
-      <MemoryRouter>
-        <Issues issues={issues} />
-      </MemoryRouter>
-    );
-    const issueTwo = screen.getByText('close');
-    expect(issueTwo).toBeInTheDocument();
+    const testIssues = screen.getAllByText(/Teststring/i);
+    expect(testIssues).toHaveLength(2);
   });
 
   it('renders the buttons', () => {
@@ -40,20 +30,21 @@ describe('Issues', () => {
     expect(buttons).toHaveLength(2);
   });
 
-  it('calls callback from PinButton', () => {
-    const callback = jest.fn();
+  it('calls togglePin from PinButton', () => {
+    const togglePin = jest.fn();
     render(
       <MemoryRouter>
         <Issues
           issues={[
             { id: 333, title: 'Teststring3', state: 'open', clicked: true },
           ]}
-          togglePin={callback}
+          togglePin={togglePin}
         />
       </MemoryRouter>
     );
     const PinButton = screen.getByRole('button');
     userEvent.click(PinButton);
-    expect(callback).toHaveBeenCalled();
+
+    expect(togglePin).toHaveBeenCalled();
   });
 });

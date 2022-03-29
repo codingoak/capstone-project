@@ -27,8 +27,8 @@ export default function RemoveDialog({
   );
 
   function removeIssue(id) {
-    handleRemoveIssue(id);
     navigate('/myissues');
+    handleRemoveIssue(id);
   }
 }
 

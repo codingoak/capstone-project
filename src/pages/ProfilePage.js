@@ -27,7 +27,6 @@ export default function ProfilePage({ handleLogout, userdata }) {
               <dd>{userdata.bio}</dd>
               <dt>Public repos:</dt>
               <dd>{userdata.public_repos}</dd>
-
               <dt>Followers:</dt>
               <dd>{userdata.followers}</dd>
               <dt>Following:</dt>

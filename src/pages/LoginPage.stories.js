@@ -1,11 +1,11 @@
-import LoginAndProfile from './LoginAndProfile';
+import LoginPage from './LoginPage';
 
 export default {
-  title: 'LoginAndProfile',
-  component: LoginAndProfile,
+  title: 'LoginPage',
+  component: LoginPage,
 };
 
-const Template = args => <LoginAndProfile {...args} />;
+const Template = args => <LoginPage {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {};

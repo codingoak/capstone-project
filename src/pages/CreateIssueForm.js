@@ -49,7 +49,7 @@ export default function CreateIssueForm({ handleMyIssues, username }) {
         >
           <BackArrow to="/dashboard" />
           <Message>
-            All fields with an asterisk<Asterisk>*</Asterisk> are mandatory.
+            All fields with an asterisk<Asterisk>*</Asterisk> are required.
           </Message>
           <FlexContainer>
             <label htmlFor="user">

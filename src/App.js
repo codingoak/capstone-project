@@ -141,12 +141,14 @@ export default function App() {
         };
       }
     });
+
     sortPins(compared);
     setComparedIssues(compared);
   }
 
   async function getData(url) {
     window.scrollTo(0, 0);
+
     setIsLoading(true);
     setHasError(false);
 
