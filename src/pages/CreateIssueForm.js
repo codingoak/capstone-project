@@ -6,7 +6,7 @@ import BackArrow from '../components/BackArrow';
 import { ButtonPrimary } from '../components/Button';
 import HeadingMain from '../components/HeadingMain';
 
-export default function CreateIssueForm({ handleMyIssues }) {
+export default function CreateIssueForm({ handleMyIssues, username }) {
   const {
     register,
     handleSubmit,
@@ -14,7 +14,7 @@ export default function CreateIssueForm({ handleMyIssues }) {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      user: '',
+      user: username,
       title: '',
       body: '',
       milestone: '',
@@ -40,11 +40,12 @@ export default function CreateIssueForm({ handleMyIssues }) {
 
   return (
     <>
-      <HeadingMain title={'CREATE FORM'} />
+      <HeadingMain title={'CREATE FORM'} id="create" />
       <main>
         <StyledForm
           onSubmit={handleSubmit(data => onSubmit(data))}
           autoComplete="off"
+          aria-labelledby="create"
         >
           <BackArrow to="/dashboard" />
           <Message>
@@ -54,7 +55,7 @@ export default function CreateIssueForm({ handleMyIssues }) {
             <label htmlFor="user">
               User<Asterisk>*</Asterisk>:
             </label>
-            <Counter>{maxUserLength - user.length}</Counter>
+            <Counter>{maxUserLength - user?.length}</Counter>
           </FlexContainer>
           <input
             {...register('user', {
@@ -169,7 +170,7 @@ const Message = styled.p`
 
 const StyledForm = styled.form`
   display: grid;
-  margin: 0 10px;
+  margin: 0 20px;
 
   input {
     border-radius: 5px;
@@ -184,6 +185,10 @@ const StyledForm = styled.form`
 
   input:last-of-type {
     margin-bottom: 20px;
+  }
+
+  label {
+    font-weight: bold;
   }
 
   label:not(:first-of-type) {

@@ -41,14 +41,14 @@ export default function Detail({ comparedIssue }) {
           <DD>{comparedIssue.body}</DD>
         </DL>
         <FlexContainer>
-          <dl>
+          <DL>
             <DT>Created at:</DT>
             <DD>{comparedIssue.created_at}</DD>
-          </dl>
-          <dl>
+          </DL>
+          <DL>
             <DT>Updated at:</DT>
             <DD>{comparedIssue.updated_at}</DD>
-          </dl>
+          </DL>
         </FlexContainer>
         <DL>
           <DT>State:</DT>
@@ -79,13 +79,7 @@ export default function Detail({ comparedIssue }) {
 
 const Avatar = styled.img`
   border-radius: 5px;
-  margin-right: 10px;
-  margin-top: 10px;
-`;
-
-const FlexContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
+  margin: 10px 20px 0 0;
 `;
 
 const DD = styled.dd`
@@ -101,7 +95,13 @@ const DT = styled.dt`
   margin-top: 10px;
 `;
 
+const FlexContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+`;
+
 const Wrapper = styled.main`
-  padding: 0 10px;
+  padding: 0 20px;
   word-break: break-all;
 `;

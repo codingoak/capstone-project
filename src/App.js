@@ -11,16 +11,11 @@ import Selection from './components/Selection';
 import CreateIssueForm from './pages/CreateIssueForm';
 import Dashboard from './pages/Dashboard';
 import FetchedDetails from './pages/FetchedDetails';
-import GitHubRedirectPage from './pages/GitHubRedirectPage';
-import LoginPage from './pages/LoginPage';
 import MyIssues from './pages/MyIssues';
 import MyIssueDetails from './pages/MyIssueDetails';
-// import Navbar from './pages/Navbar';
-import ProfilePage from './pages/ProfilePage';
-import WelcomePage from './pages/WelcomePage';
+import LoginAndProfile from './pages/LoginAndProfile';
 
 export default function App() {
-  const [avatarUrl, setAvatarUrl] = useLocalStorage('user', []);
   const [comparedIssues, setComparedIssues] = useState('');
   const [hasError, setHasError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -28,55 +23,30 @@ export default function App() {
   const [paginationUrls, setPaginationUrls] = useState('');
   const [selectedProject, setSelectedProject] = useState('');
   const [pinnedIssues, setPinnedIssues] = useLocalStorage(selectedProject, []);
-  const [token, setToken] = useState();
+  const [userdata, setUserdata] = useLocalStorage('userdata', []);
+  const [userDataStatus, setUserDataStatus] = useState('');
+  const [username, setUsername] = useState('');
   const navigate = useNavigate();
-  const goBack = () => navigate(-1);
-
-  function loginWithUsernameAndPassword(credentials) {
-    fetch('/api/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(credentials),
-    })
-      .then(response => response.json)
-      .then(setToken)
-      .then(goBack);
-  }
-
-  function loginWithGithubCode(code) {
-    fetch('/api/github-login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ code }),
-    })
-      .then(res => res.json())
-      .then(data => console.log({ data }));
-  }
 
   useEffect(() => {
     getData(selectedProject);
-    console.log(token);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedProject, token]);
+  }, [selectedProject]);
 
   return (
     <>
-      {/* <Navbar isAuthorized={token} onLogout={logout} /> */}
       <Routes>
-        <Route path="/" element={<WelcomePage />} />
         <Route
-          path="/login"
-          element={<LoginPage onLogin={loginWithUsernameAndPassword} />}
+          path="/"
+          element={
+            <LoginAndProfile
+              handleLogin={handleLogin}
+              handleLogout={handleLogout}
+              userdata={userdata}
+              userDataStatus={userDataStatus}
+            />
+          }
         />
-        <Route
-          path="/oauth/redirect"
-          element={<GitHubRedirectPage onLogin={loginWithGithubCode} />}
-        />
-        <Route path="/profile" element={<ProfilePage />} />
         <Route
           path="/dashboard"
           element={
@@ -112,7 +82,12 @@ export default function App() {
           ))}
         <Route
           path="createissueform"
-          element={<CreateIssueForm handleMyIssues={handleMyIssues} />}
+          element={
+            <CreateIssueForm
+              handleMyIssues={handleMyIssues}
+              username={username}
+            />
+          }
         />
         <Route
           path="myissues"
@@ -130,11 +105,11 @@ export default function App() {
             path={`${myIssue.id}`}
             element={
               <MyIssueDetails
-                avatarUrl={avatarUrl}
                 handleRemoveIssue={handleRemoveIssue}
                 myIssue={myIssue}
                 myIssues={myIssues}
                 pinnedIssues={pinnedIssues}
+                avatar={userdata?.avatar_url}
               />
             }
           />
@@ -143,6 +118,27 @@ export default function App() {
       <Navigation />
     </>
   );
+
+  function compareIssues(data) {
+    const compared = data.map(fetchedIssue => {
+      const foundIssue = loadFromLocal(selectedProject)?.find(
+        savedIssue => savedIssue.id === fetchedIssue.id
+      );
+      if (foundIssue) {
+        return {
+          ...fetchedIssue,
+          isPinned: foundIssue.isPinned,
+        };
+      } else {
+        return {
+          ...fetchedIssue,
+          isPinned: false,
+        };
+      }
+    });
+    sortPins(compared);
+    setComparedIssues(compared);
+  }
 
   async function getData(url) {
     window.scrollTo(0, 0);
@@ -185,6 +181,54 @@ export default function App() {
     setPaginationUrls(urls);
   }
 
+  function handleLogout() {
+    navigate('/');
+    setUsername('');
+    setUserdata('');
+  }
+
+  function handleLogin(data) {
+    setUsername(data.username);
+    getUserdata(data.username);
+
+    async function getUserdata(username) {
+      const response = await fetch(`https://api.github.com/users/${username}`);
+      const data = await response.json();
+      setUserDataStatus(response.status);
+      setUserdata(data);
+      navigate('/');
+    }
+  }
+
+  function handleMyIssues({ body, isPinned, labels, milestone, title, user }) {
+    const id = nanoid();
+    const date = new Date().toLocaleString();
+
+    setMyIssues([
+      {
+        user,
+        avatar: userdata.avatar_url,
+        body,
+        created_at: date,
+        id,
+        isPinned,
+        labels,
+        milestone,
+        state: 'open',
+        title,
+      },
+      ...myIssues,
+    ]);
+  }
+
+  function handleRemoveIssue(id) {
+    setMyIssues(myIssues.filter(myIssue => myIssue.id !== id));
+  }
+
+  function handleRepoChange(e) {
+    setSelectedProject(e.value);
+  }
+
   function loadFromLocal(key) {
     try {
       return JSON.parse(localStorage.getItem(key));
@@ -193,25 +237,16 @@ export default function App() {
     }
   }
 
-  function compareIssues(data) {
-    const compared = data.map(fetchedIssue => {
-      const foundIssue = loadFromLocal(selectedProject)?.find(
-        savedIssue => savedIssue.id === fetchedIssue.id
-      );
-      if (foundIssue) {
-        return {
-          ...fetchedIssue,
-          isPinned: foundIssue.isPinned,
-        };
-      } else {
-        return {
-          ...fetchedIssue,
-          isPinned: false,
-        };
+  function sortPins(issues) {
+    issues.sort((a, b) => {
+      if (a.isPinned === true) {
+        return -1;
       }
+      if (b.isPinned === true) {
+        return +1;
+      }
+      return 0;
     });
-    sortPins(compared);
-    setComparedIssues(compared);
   }
 
   function togglePin(prevId, prevIssues) {
@@ -251,52 +286,5 @@ export default function App() {
     );
 
     setPinnedIssues(uniquePinnedIssues);
-  }
-
-  function sortPins(issues) {
-    issues.sort((a, b) => {
-      if (a.isPinned === true) {
-        return -1;
-      }
-      if (b.isPinned === true) {
-        return +1;
-      }
-      return 0;
-    });
-  }
-
-  function handleMyIssues({ body, isPinned, labels, milestone, title, user }) {
-    const id = nanoid();
-    const date = new Date().toLocaleString();
-    getAvatar(user);
-    setMyIssues([
-      {
-        avatar: avatarUrl,
-        body,
-        created_at: date,
-        id,
-        isPinned,
-        labels,
-        milestone,
-        state: 'open',
-        title,
-        user,
-      },
-      ...myIssues,
-    ]);
-
-    async function getAvatar(username) {
-      const response = await fetch(`https://api.github.com/users/${username}`);
-      const data = await response.json();
-      setAvatarUrl(data.avatar_url);
-    }
-  }
-
-  function handleRepoChange(e) {
-    setSelectedProject(e.value);
-  }
-
-  function handleRemoveIssue(id) {
-    setMyIssues(myIssues.filter(myIssue => myIssue.id !== id));
   }
 }
