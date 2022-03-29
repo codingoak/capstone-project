@@ -10,7 +10,7 @@ export default function Navigation() {
         transition={{ duration: 0.5 }}
         initial={{ y: 48 }}
       >
-        <Link to="/" aria-label="Home">
+        <Link to="/dashboard" aria-label="Home">
           <svg
             role="img"
             width="34"

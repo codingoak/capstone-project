@@ -14,7 +14,7 @@ export default function Detail({ comparedIssue }) {
     <>
       <HeadingMain title="DETAILS" />
       <Wrapper>
-        <BackArrow to="/" />
+        <BackArrow to="/dashboard" />
 
         <FlexContainer>
           <DL>

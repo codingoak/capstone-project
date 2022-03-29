@@ -1,18 +1,23 @@
 import { useEffect, useState } from 'react';
 
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import { nanoid } from 'nanoid';
 
 import useLocalStorage from './hooks/useLocalStorage';
 import HeadingMain from './components/HeadingMain';
 import Navigation from './components/Navigation';
+import Pagination from './components/Pagination';
 import Selection from './components/Selection';
 import CreateIssueForm from './pages/CreateIssueForm';
 import Dashboard from './pages/Dashboard';
 import FetchedDetails from './pages/FetchedDetails';
+import GitHubRedirectPage from './pages/GitHubRedirectPage';
+import LoginPage from './pages/LoginPage';
 import MyIssues from './pages/MyIssues';
 import MyIssueDetails from './pages/MyIssueDetails';
-import Pagination from './components/Pagination';
+// import Navbar from './pages/Navbar';
+import ProfilePage from './pages/ProfilePage';
+import WelcomePage from './pages/WelcomePage';
 
 export default function App() {
   const [avatarUrl, setAvatarUrl] = useLocalStorage('user', []);
@@ -23,17 +28,57 @@ export default function App() {
   const [paginationUrls, setPaginationUrls] = useState('');
   const [selectedProject, setSelectedProject] = useState('');
   const [pinnedIssues, setPinnedIssues] = useLocalStorage(selectedProject, []);
+  const [token, setToken] = useState();
+  const navigate = useNavigate();
+  const goBack = () => navigate(-1);
+
+  function loginWithUsernameAndPassword(credentials) {
+    fetch('/api/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(credentials),
+    })
+      .then(response => response.json)
+      .then(setToken)
+      .then(goBack);
+  }
+
+  function loginWithGithubCode(code) {
+    fetch('/api/github-login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ code }),
+    })
+      .then(res => res.json())
+      .then(data => console.log({ data }));
+  }
 
   useEffect(() => {
     getData(selectedProject);
+    console.log(token);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedProject]);
+  }, [selectedProject, token]);
 
   return (
     <>
+      {/* <Navbar isAuthorized={token} onLogout={logout} /> */}
       <Routes>
+        <Route path="/" element={<WelcomePage />} />
         <Route
-          path="/"
+          path="/login"
+          element={<LoginPage onLogin={loginWithUsernameAndPassword} />}
+        />
+        <Route
+          path="/oauth/redirect"
+          element={<GitHubRedirectPage onLogin={loginWithGithubCode} />}
+        />
+        <Route path="/profile" element={<ProfilePage />} />
+        <Route
+          path="/dashboard"
           element={
             <>
               <header>

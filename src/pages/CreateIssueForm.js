@@ -46,17 +46,17 @@ export default function CreateIssueForm({ handleMyIssues }) {
           onSubmit={handleSubmit(data => onSubmit(data))}
           autoComplete="off"
         >
-          <BackArrow to="/" />
+          <BackArrow to="/dashboard" />
           <Message>
             All fields with an asterisk<Asterisk>*</Asterisk> are mandatory.
           </Message>
           <FlexContainer>
-            <Label htmlFor="user">
+            <label htmlFor="user">
               User<Asterisk>*</Asterisk>:
-            </Label>
+            </label>
             <Counter>{maxUserLength - user.length}</Counter>
           </FlexContainer>
-          <InputField
+          <input
             {...register('user', {
               minLength: { value: 2, message: 'Name is to short' },
             })}
@@ -68,12 +68,12 @@ export default function CreateIssueForm({ handleMyIssues }) {
           <ErrorMessage>{errors.user?.message}</ErrorMessage>
 
           <FlexContainer>
-            <Label htmlFor="title">
+            <label htmlFor="title">
               Title<Asterisk>*</Asterisk>:
-            </Label>
+            </label>
             <Counter>{maxTitleLength - title.length}</Counter>
           </FlexContainer>
-          <InputField
+          <input
             {...register('title', {
               minLength: { value: 2, message: 'Title is to short' },
             })}
@@ -85,12 +85,12 @@ export default function CreateIssueForm({ handleMyIssues }) {
           <ErrorMessage>{errors.title?.message}</ErrorMessage>
 
           <FlexContainer>
-            <Label htmlFor="body">
+            <label htmlFor="body">
               Body<Asterisk>*</Asterisk>:
-            </Label>
+            </label>
             <Counter>{maxBodyLength - body.length}</Counter>
           </FlexContainer>
-          <TextArea
+          <textarea
             {...register('body', {
               minLength: { value: 5, message: 'Body is to short' },
             })}
@@ -103,10 +103,10 @@ export default function CreateIssueForm({ handleMyIssues }) {
           <ErrorMessage>{errors.body?.message}</ErrorMessage>
 
           <FlexContainer>
-            <Label htmlFor="milestone">Milestone:</Label>
+            <label htmlFor="milestone">Milestone:</label>
             <Counter>{maxMilestoneLength - milestone.length}</Counter>
           </FlexContainer>
-          <InputField
+          <input
             {...register('milestone')}
             id="milestone"
             placeholder="Enter a milestone"
@@ -114,19 +114,15 @@ export default function CreateIssueForm({ handleMyIssues }) {
           />
 
           <FlexContainer>
-            <Label htmlFor="labels">Labels:</Label>
+            <label htmlFor="labels">Labels:</label>
             <Counter>{maxLabelsLength - labels.length}</Counter>
           </FlexContainer>
-          <InputField
+          <input
             {...register('labels')}
             id="labels"
             placeholder="Enter labels separated by commas"
             maxLength={maxLabelsLength}
           />
-
-          <Label htmlFor="pin">
-            Pin: <Checkbox {...register('isPinned')} type="checkbox" id="pin" />
-          </Label>
 
           <ButtonPrimary type="submit" children="SUBMIT" />
         </StyledForm>
@@ -149,10 +145,6 @@ const Asterisk = styled.span`
   color: crimson;
 `;
 
-const Checkbox = styled.input`
-  margin-top: 10px;
-`;
-
 const Counter = styled.div`
   align-self: flex-end;
   color: var(--font-color-medium);
@@ -170,23 +162,6 @@ const FlexContainer = styled.div`
   margin-top: 10px;
 `;
 
-const InputField = styled.input`
-  border-radius: 5px;
-  border: 1px solid var(--border-color-light);
-  font-family: monospace;
-  font-size: 0.9rem;
-  height: 2rem;
-  ::placeholder {
-    color: var(--font-color-medium);
-  }
-`;
-
-const Label = styled.label`
-  :not(:first-of-type) {
-    margin-top: 10px;
-  }
-`;
-
 const Message = styled.p`
   font-size: 0.9rem;
   font-style: italic;
@@ -195,14 +170,33 @@ const Message = styled.p`
 const StyledForm = styled.form`
   display: grid;
   margin: 0 10px;
-`;
 
-const TextArea = styled.textarea`
-  border-radius: 5px;
-  border: 1px solid var(--border-color-light);
-  font-family: monospace;
-  font-size: 0.9rem;
-  ::placeholder {
-    color: var(--font-color-medium);
+  input {
+    border-radius: 5px;
+    border: 1px solid var(--border-color-light);
+    font-family: monospace;
+    font-size: 0.9rem;
+    height: 2rem;
+    ::placeholder {
+      color: var(--font-color-medium);
+    }
+  }
+
+  input:last-of-type {
+    margin-bottom: 20px;
+  }
+
+  label:not(:first-of-type) {
+    margin-top: 10px;
+  }
+
+  textarea {
+    border-radius: 5px;
+    border: 1px solid var(--border-color-light);
+    font-family: monospace;
+    font-size: 0.9rem;
+    ::placeholder {
+      color: var(--font-color-medium);
+    }
   }
 `;

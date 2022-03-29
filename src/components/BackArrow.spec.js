@@ -7,7 +7,7 @@ describe('BackArrow', () => {
   it('renders the navlink with the title', () => {
     render(
       <MemoryRouter>
-        <BackArrow to="/" />
+        <BackArrow to="/dashboard" />
       </MemoryRouter>
     );
     expect(screen.getByTitle('Back')).toBeInTheDocument();
