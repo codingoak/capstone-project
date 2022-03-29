@@ -11,9 +11,10 @@ import Selection from './components/Selection';
 import CreateIssueForm from './pages/CreateIssueForm';
 import Dashboard from './pages/Dashboard';
 import FetchedDetails from './pages/FetchedDetails';
+import LoginPage from './pages/LoginPage';
 import MyIssues from './pages/MyIssues';
 import MyIssueDetails from './pages/MyIssueDetails';
-import LoginAndProfile from './pages/LoginAndProfile';
+import ProfilePage from './pages/ProfilePage';
 
 export default function App() {
   const [comparedIssues, setComparedIssues] = useState('');
@@ -39,12 +40,16 @@ export default function App() {
         <Route
           path="/"
           element={
-            <LoginAndProfile
+            <LoginPage
               handleLogin={handleLogin}
-              handleLogout={handleLogout}
-              userdata={userdata}
               userDataStatus={userDataStatus}
             />
+          }
+        />
+        <Route
+          path="/profilpage"
+          element={
+            <ProfilePage handleLogout={handleLogout} userdata={userdata} />
           }
         />
         <Route
@@ -158,6 +163,7 @@ export default function App() {
         }
       } catch (error) {
         console.error(error);
+
         setIsLoading(false);
         setHasError(true);
       }
@@ -178,6 +184,7 @@ export default function App() {
           .trim(),
       };
     });
+
     setPaginationUrls(urls);
   }
 
@@ -194,9 +201,13 @@ export default function App() {
     async function getUserdata(username) {
       const response = await fetch(`https://api.github.com/users/${username}`);
       const data = await response.json();
+
       setUserDataStatus(response.status);
       setUserdata(data);
-      navigate('/');
+
+      if (response.status === 200) {
+        navigate('/profilpage');
+      }
     }
   }
 

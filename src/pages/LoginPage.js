@@ -1,53 +1,13 @@
-import { motion } from 'framer-motion';
 import styled from 'styled-components/macro';
 import { useForm } from 'react-hook-form';
 
-import { ButtonPrimary, ButtonSecondary } from '../components/Button';
+import { ButtonPrimary } from '../components/Button';
 import HeadingMain from '../components/HeadingMain';
 
-export default function LoginAndProfile({
-  handleLogin,
-  handleLogout,
-  userdata,
-  userDataStatus,
-}) {
+export default function LoginPage({ handleLogin, userDataStatus }) {
   const { register, handleSubmit } = useForm();
 
-  return userdata.login ? (
-    <>
-      <HeadingMain title="PROFILE" />
-      {userdata.avatar_url && (
-        <>
-          <ProfilHead>
-            <Avatar
-              src={userdata.avatar_url}
-              alt={`GitHub avatar`}
-              width="170"
-              height="170"
-            />
-            <h2>{userdata.name}</h2>
-            <h3>{userdata.login}</h3>
-          </ProfilHead>
-          <ProfileBody>
-            <GridContainer>
-              <dt>Location:</dt>
-              <dd>{userdata.location}</dd>
-              <dt>Bio:</dt>
-              <dd>{userdata.bio}</dd>
-              <dt>Public repos:</dt>
-              <dd>{userdata.public_repos}</dd>
-
-              <dt>Followers:</dt>
-              <dd>{userdata.followers}</dd>
-              <dt>Following:</dt>
-              <dd>{userdata.following}</dd>
-            </GridContainer>
-            <ButtonSecondary children={'LOGOUT'} onClick={handleLogout} />
-          </ProfileBody>
-        </>
-      )}
-    </>
-  ) : (
+  return (
     <>
       <HeadingMain title={'WELCOME TO'} />
       <StyledMain>
@@ -101,16 +61,6 @@ export default function LoginAndProfile({
   }
 }
 
-const Avatar = styled.img`
-  margin: 10px 0 10px;
-  border-radius: 50%;
-`;
-
-const GridContainer = styled.dl`
-  display: grid;
-  grid-template-columns: 40% 60%;
-`;
-
 const Logo = styled.div`
   align-items: center;
   display: flex;
@@ -119,39 +69,6 @@ const Logo = styled.div`
 
   h2 {
     font-size: 2rem;
-  }
-`;
-
-const ProfileBody = styled.div`
-  margin: 15px 20px 0;
-
-  dd {
-    margin: 10px 0 0;
-  }
-
-  dt {
-    font-weight: bold;
-    margin-top: 10px;
-    min-width: 150px;
-  }
-
-  button {
-    margin: 10px auto;
-  }
-`;
-
-const ProfilHead = styled.div`
-  display: grid;
-  place-items: center;
-
-  h2,
-  h3 {
-    margin: 0;
-    padding: 0;
-  }
-
-  h3 {
-    font-weight: normal;
   }
 `;
 
