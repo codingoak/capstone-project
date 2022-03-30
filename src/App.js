@@ -4,10 +4,8 @@ import { Routes, Route, useNavigate } from 'react-router-dom';
 import { nanoid } from 'nanoid';
 
 import useLocalStorage from './hooks/useLocalStorage';
-import HeadingMain from './components/HeadingMain';
 import Navigation from './components/Navigation';
 import Pagination from './components/Pagination';
-import Selection from './components/Selection';
 import CreateIssueForm from './pages/CreateIssueForm';
 import Dashboard from './pages/Dashboard';
 import FetchedDetails from './pages/FetchedDetails';
@@ -46,26 +44,15 @@ export default function App() {
             />
           }
         />
-        <Route
-          path="/profilepage"
-          element={
-            <ProfilePage handleLogout={handleLogout} userdata={userdata} />
-          }
-        />
+
         <Route
           path="/dashboard"
           element={
             <>
-              <header>
-                <HeadingMain title="DASHBOARD" />
-                <Selection
-                  handleRepoChange={handleRepoChange}
-                  selectedProject={selectedProject}
-                />
-              </header>
               <Dashboard
                 comparedIssues={comparedIssues}
                 getData={getData}
+                handleRepoChange={handleRepoChange}
                 hasError={hasError}
                 isLoading={isLoading}
                 selectedProject={selectedProject}
@@ -75,6 +62,13 @@ export default function App() {
                 <Pagination getData={getData} paginationUrls={paginationUrls} />
               )}
             </>
+          }
+        />
+
+        <Route
+          path="/profilepage"
+          element={
+            <ProfilePage handleLogout={handleLogout} userdata={userdata} />
           }
         />
         {comparedIssues &&
@@ -155,8 +149,8 @@ export default function App() {
     if (selectedProject) {
       try {
         const response = await fetch(url);
+
         if (response.ok) {
-          setTimeout(() => setIsLoading(false), 1500);
           getDataForPagination(response);
           const data = await response.json();
           compareIssues(data);
@@ -165,10 +159,9 @@ export default function App() {
         }
       } catch (error) {
         console.error(error);
-
-        setIsLoading(false);
         setHasError(true);
       }
+      setIsLoading(false);
     }
   }
 

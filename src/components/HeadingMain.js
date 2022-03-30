@@ -25,7 +25,7 @@ const Header = styled(motion.h1)`
   font-size: 24px;
   height: 44px;
   letter-spacing: 3px;
-  margin: 0 0 20px 0;
+  margin: 0;
   place-items: center;
   top: 0;
   width: 100%;
