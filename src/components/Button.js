@@ -27,11 +27,7 @@ const Button = styled.button`
     opacity: 1;
     transition: all 0.15s;
   }
-
-  &:active,
-  &:hover,
-  &:link,
-  &:visited {
+  :link {
     text-decoration: none;
   }
 `;

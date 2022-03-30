@@ -40,7 +40,7 @@ export default function ProfilePage({ handleLogout, userdata }) {
         <FlexContainer>
           <p>No profile</p>
 
-          <ButtonPrimary as={NavLink} to="/" children={'Login first'} />
+          <ButtonPrimary as={NavLink} to="/" children={'LOGIN FIRST'} />
         </FlexContainer>
       )}
     </>
