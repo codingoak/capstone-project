@@ -4,10 +4,6 @@ import styled from 'styled-components/macro';
 import options from './SelectOptions';
 
 export default function Selection({ selectedProject, handleRepoChange }) {
-  const handleChange = e => {
-    handleRepoChange(e);
-  };
-
   return (
     <SelectionForm aria-label="Select box">
       <Select
@@ -33,9 +29,13 @@ export default function Selection({ selectedProject, handleRepoChange }) {
       />
     </SelectionForm>
   );
+
+  function handleChange(e) {
+    handleRepoChange(e);
+  }
 }
 
 const SelectionForm = styled.form`
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-  margin: 10px;
+  margin: 20px 20px 10px;
 `;

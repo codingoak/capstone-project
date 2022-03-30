@@ -8,8 +8,8 @@ import HeadingMain from '../components/HeadingMain';
 import RemoveDialog from '../components/RemoveDialog';
 
 export default function MyIssueDetails({
+  avatar,
   myIssue,
-  avatarUrl,
   myIssues,
   handleRemoveIssue,
 }) {
@@ -41,12 +41,14 @@ export default function MyIssueDetails({
             <DT>User:</DT>
             <DD>{myIssue.user}</DD>
           </DL>
-          <Avatar
-            src={avatarUrl}
-            alt={`Avatar of ${myIssue.user}`}
-            width="90"
-            height="90"
-          />
+          {avatar ? (
+            <Avatar
+              src={avatar}
+              alt={`Avatar of ${myIssue.user}`}
+              width="90"
+              height="90"
+            />
+          ) : null}
         </FlexContainer>
         <DL>
           <DT id="title">
@@ -217,8 +219,7 @@ const Asterisk = styled.span`
 
 const Avatar = styled.img`
   border-radius: 5px;
-  border-radius: 5px;
-  margin-right: 10px;
+  margin-right: 20px;
 `;
 
 const ButtonContainer = styled.div`

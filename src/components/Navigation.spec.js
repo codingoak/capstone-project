@@ -4,14 +4,14 @@ import { MemoryRouter } from 'react-router-dom';
 import Navigation from './Navigation';
 
 describe('Navigation', () => {
-  it('renders three links', () => {
+  it('renders four links', () => {
     render(
       <MemoryRouter>
         <Navigation />
       </MemoryRouter>
     );
     const links = screen.getAllByRole('link');
-    expect(links).toHaveLength(3);
+    expect(links).toHaveLength(4);
   });
 
   it('renders the link with the aria-label Home', () => {
@@ -20,8 +20,8 @@ describe('Navigation', () => {
         <Navigation />
       </MemoryRouter>
     );
-    const linkHome = screen.getByRole('link', { name: 'Home' });
-    expect(linkHome).toBeInTheDocument();
+    const linkGithub = screen.getByRole('link', { name: 'GitHub issues' });
+    expect(linkGithub).toBeInTheDocument();
   });
 
   it('renders the link with the aria-label Create Issue', () => {

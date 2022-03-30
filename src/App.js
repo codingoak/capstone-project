@@ -1,21 +1,22 @@
 import { useEffect, useState } from 'react';
 
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import { nanoid } from 'nanoid';
 
 import useLocalStorage from './hooks/useLocalStorage';
 import HeadingMain from './components/HeadingMain';
 import Navigation from './components/Navigation';
+import Pagination from './components/Pagination';
 import Selection from './components/Selection';
 import CreateIssueForm from './pages/CreateIssueForm';
 import Dashboard from './pages/Dashboard';
 import FetchedDetails from './pages/FetchedDetails';
+import LoginPage from './pages/LoginPage';
 import MyIssues from './pages/MyIssues';
 import MyIssueDetails from './pages/MyIssueDetails';
-import Pagination from './components/Pagination';
+import ProfilePage from './pages/ProfilePage';
 
 export default function App() {
-  const [avatarUrl, setAvatarUrl] = useLocalStorage('user', []);
   const [comparedIssues, setComparedIssues] = useState('');
   const [hasError, setHasError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -23,6 +24,10 @@ export default function App() {
   const [paginationUrls, setPaginationUrls] = useState('');
   const [selectedProject, setSelectedProject] = useState('');
   const [pinnedIssues, setPinnedIssues] = useLocalStorage(selectedProject, []);
+  const [userdata, setUserdata] = useLocalStorage('userdata', []);
+  const [userDataStatus, setUserDataStatus] = useState('');
+  const [username, setUsername] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     getData(selectedProject);
@@ -34,6 +39,21 @@ export default function App() {
       <Routes>
         <Route
           path="/"
+          element={
+            <LoginPage
+              handleLogin={handleLogin}
+              userDataStatus={userDataStatus}
+            />
+          }
+        />
+        <Route
+          path="/profilepage"
+          element={
+            <ProfilePage handleLogout={handleLogout} userdata={userdata} />
+          }
+        />
+        <Route
+          path="/dashboard"
           element={
             <>
               <header>
@@ -67,7 +87,12 @@ export default function App() {
           ))}
         <Route
           path="createissueform"
-          element={<CreateIssueForm handleMyIssues={handleMyIssues} />}
+          element={
+            <CreateIssueForm
+              handleMyIssues={handleMyIssues}
+              username={username}
+            />
+          }
         />
         <Route
           path="myissues"
@@ -85,11 +110,11 @@ export default function App() {
             path={`${myIssue.id}`}
             element={
               <MyIssueDetails
-                avatarUrl={avatarUrl}
                 handleRemoveIssue={handleRemoveIssue}
                 myIssue={myIssue}
                 myIssues={myIssues}
                 pinnedIssues={pinnedIssues}
+                avatar={userdata?.avatar_url}
               />
             }
           />
@@ -99,8 +124,31 @@ export default function App() {
     </>
   );
 
+  function compareIssues(data) {
+    const compared = data.map(fetchedIssue => {
+      const foundIssue = loadFromLocal(selectedProject)?.find(
+        savedIssue => savedIssue.id === fetchedIssue.id
+      );
+      if (foundIssue) {
+        return {
+          ...fetchedIssue,
+          isPinned: foundIssue.isPinned,
+        };
+      } else {
+        return {
+          ...fetchedIssue,
+          isPinned: false,
+        };
+      }
+    });
+
+    sortPins(compared);
+    setComparedIssues(compared);
+  }
+
   async function getData(url) {
     window.scrollTo(0, 0);
+
     setIsLoading(true);
     setHasError(false);
 
@@ -117,6 +165,7 @@ export default function App() {
         }
       } catch (error) {
         console.error(error);
+
         setIsLoading(false);
         setHasError(true);
       }
@@ -137,7 +186,60 @@ export default function App() {
           .trim(),
       };
     });
+
     setPaginationUrls(urls);
+  }
+
+  function handleLogout() {
+    navigate('/');
+    setUsername('');
+    setUserdata('');
+  }
+
+  function handleLogin(data) {
+    setUsername(data.username);
+    getUserdata(data.username);
+
+    async function getUserdata(username) {
+      const response = await fetch(`https://api.github.com/users/${username}`);
+      const data = await response.json();
+
+      setUserDataStatus(response.status);
+      setUserdata(data);
+
+      if (response.status === 200) {
+        navigate('/profilepage');
+      }
+    }
+  }
+
+  function handleMyIssues({ body, isPinned, labels, milestone, title, user }) {
+    const id = nanoid();
+    const date = new Date().toLocaleString();
+
+    setMyIssues([
+      {
+        user,
+        avatar: userdata.avatar_url,
+        body,
+        created_at: date,
+        id,
+        isPinned,
+        labels,
+        milestone,
+        state: 'open',
+        title,
+      },
+      ...myIssues,
+    ]);
+  }
+
+  function handleRemoveIssue(id) {
+    setMyIssues(myIssues.filter(myIssue => myIssue.id !== id));
+  }
+
+  function handleRepoChange(e) {
+    setSelectedProject(e.value);
   }
 
   function loadFromLocal(key) {
@@ -148,25 +250,16 @@ export default function App() {
     }
   }
 
-  function compareIssues(data) {
-    const compared = data.map(fetchedIssue => {
-      const foundIssue = loadFromLocal(selectedProject)?.find(
-        savedIssue => savedIssue.id === fetchedIssue.id
-      );
-      if (foundIssue) {
-        return {
-          ...fetchedIssue,
-          isPinned: foundIssue.isPinned,
-        };
-      } else {
-        return {
-          ...fetchedIssue,
-          isPinned: false,
-        };
+  function sortPins(issues) {
+    issues.sort((a, b) => {
+      if (a.isPinned === true) {
+        return -1;
       }
+      if (b.isPinned === true) {
+        return +1;
+      }
+      return 0;
     });
-    sortPins(compared);
-    setComparedIssues(compared);
   }
 
   function togglePin(prevId, prevIssues) {
@@ -206,52 +299,5 @@ export default function App() {
     );
 
     setPinnedIssues(uniquePinnedIssues);
-  }
-
-  function sortPins(issues) {
-    issues.sort((a, b) => {
-      if (a.isPinned === true) {
-        return -1;
-      }
-      if (b.isPinned === true) {
-        return +1;
-      }
-      return 0;
-    });
-  }
-
-  function handleMyIssues({ body, isPinned, labels, milestone, title, user }) {
-    const id = nanoid();
-    const date = new Date().toLocaleString();
-    getAvatar(user);
-    setMyIssues([
-      {
-        avatar: avatarUrl,
-        body,
-        created_at: date,
-        id,
-        isPinned,
-        labels,
-        milestone,
-        state: 'open',
-        title,
-        user,
-      },
-      ...myIssues,
-    ]);
-
-    async function getAvatar(username) {
-      const response = await fetch(`https://api.github.com/users/${username}`);
-      const data = await response.json();
-      setAvatarUrl(data.avatar_url);
-    }
-  }
-
-  function handleRepoChange(e) {
-    setSelectedProject(e.value);
-  }
-
-  function handleRemoveIssue(id) {
-    setMyIssues(myIssues.filter(myIssue => myIssue.id !== id));
   }
 }
