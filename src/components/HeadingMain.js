@@ -18,6 +18,7 @@ export default function HeadingMain({ title }) {
 const StyledHeader = styled.header`
   background: linear-gradient(var(--bg-color-dark), #144e74);
   color: var(--font-color-light);
+  margin-bottom: 10px;
 `;
 
 const Header = styled(motion.h1)`

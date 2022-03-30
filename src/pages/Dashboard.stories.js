@@ -8,6 +8,7 @@ export default {
 const Template = args => <Dashboard {...args} />;
 
 export const Loading = Template.bind({});
+
 const validUrl = 'https://api.github.com/repos/reactjs/reactjs.org/issues';
 
 Loading.args = {
@@ -36,7 +37,7 @@ Error.args = {
 
 export const Default = Template.bind({});
 Default.args = {
-  selectedProject: true,
+  selectedProject: validUrl,
   comparedIssues: [
     { id: 111, title: 'Teststring1', state: 'open', clicked: true },
     { id: 112, title: 'Teststring2', state: 'close', clicked: false },

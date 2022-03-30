@@ -13,94 +13,158 @@ export default function Detail({ comparedIssue }) {
   return (
     <>
       <HeadingMain title="DETAILS" />
+      <Back>
+        <BackArrow to="/dashboard" />
+      </Back>
       <Wrapper>
-        <BackArrow to="/" />
-        <FlexContainer>
-          <DL>
-            <DT>User ID:</DT>
-            <DD>{comparedIssue.user.id}</DD>
-            <DT>User:</DT>
-            <DD>{comparedIssue.user.login}</DD>
-          </DL>
-          <Avatar
-            src={comparedIssue.user.avatar_url}
-            alt={`Avatar of ${comparedIssue.user.login}`}
-            width="90"
-            height="90"
-          />
-        </FlexContainer>
-        <DL>
-          <DT>Number:</DT>
-          <DD>{comparedIssue.number}</DD>
-          <DT>Issue ID:</DT>
-          <DD>{comparedIssue.id}</DD>
-          <DT>Title:</DT>
-          <DD>{comparedIssue.title}</DD>
-          <DT>Body:</DT>
-          <DD>{comparedIssue.body}</DD>
-        </DL>
-        <FlexContainer>
-          <DL>
-            <DT>Created at:</DT>
-            <DD>{comparedIssue.created_at}</DD>
-          </DL>
-          <DL>
-            <DT>Updated at:</DT>
-            <DD>{comparedIssue.updated_at}</DD>
-          </DL>
-        </FlexContainer>
-        <DL>
-          <DT>State:</DT>
-          <DD>{comparedIssue.state}</DD>
-          <DT>Milestone:</DT>
-          <DD>{comparedIssue.milestone}</DD>
-          <DT>Labels:</DT>
-          {comparedIssue.labels?.map(label => (
-            <DD key={comparedIssue + label.name}>{label.name}</DD>
-          ))}
-          <DT>Comments:</DT>
-          <DD>
-            {comparedIssue.comments === 0
-              ? 'No comments available'
-              : comparedIssue.comments}
-          </DD>
-          <DT>URL:</DT>
-          <DD>
+        <Top>
+          <ProfilHead>
+            <Avatar
+              src={comparedIssue.user.avatar_url}
+              alt={`Avatar of ${comparedIssue.user.login}`}
+              width="110"
+              height="110"
+            />
+            <div>
+              <h2>{comparedIssue.user.login}</h2>
+              <h3>ID: {comparedIssue.user.id}</h3>
+            </div>
+          </ProfilHead>
+
+          <ProfileBody>
+            <dt>Issue ID:</dt>
+            <dd>{comparedIssue.id}</dd>
+            <dt>State:</dt>
+            <dd>{comparedIssue.state}</dd>
+            <dt>Comments:</dt>
+            <dd>
+              {comparedIssue.comments === 0
+                ? 'No comments'
+                : comparedIssue.comments}
+            </dd>
+          </ProfileBody>
+        </Top>
+
+        <Bottom>
+          <Title>
+            <dt>Title:</dt>
+            <dd>{comparedIssue.title}</dd>
+          </Title>
+
+          <Bio>
+            <dt>Body:</dt>
+            <dd>{comparedIssue.body}</dd>
+          </Bio>
+
+          <More>
+            {comparedIssue.milestone ? (
+              <dl>
+                <dt>Milestone:</dt>
+                <dd>{comparedIssue.milestone}</dd>
+              </dl>
+            ) : null}
+            {comparedIssue.labels.length > 0 ? (
+              <dl>
+                <dt>Labels:</dt>
+                {comparedIssue.labels.map(label => (
+                  <dd key={comparedIssue + label.name}>{label.name}</dd>
+                ))}
+              </dl>
+            ) : null}
+            <dl>
+              <dt>Created at:</dt>
+              <dd>{comparedIssue.created_at}</dd>
+            </dl>
+            <dl>
+              <dt>Updated at:</dt>
+              <dd>{comparedIssue.updated_at}</dd>
+            </dl>
             <a href={comparedIssue.html_url} target="_blank" rel="noreferrer">
-              {comparedIssue.html_url}
+              Link to Issue Nr: {comparedIssue.number} on GitHub
             </a>
-          </DD>
-        </DL>
+          </More>
+        </Bottom>
       </Wrapper>
     </>
   );
 }
 
 const Avatar = styled.img`
-  border-radius: 5px;
-  margin: 10px 20px 0 0;
+  border-radius: 50%;
+  margin-top: 15px;
 `;
 
-const DD = styled.dd`
-  margin: 0 10px;
+const Back = styled.div`
+  margin: 20px 30px;
 `;
 
-const DL = styled.dl`
-  margin: 0;
+const Bio = styled.dl`
+  background-color: var(--bg-color-light);
+  border-radius: 10px;
+  padding: 15px;
 `;
 
-const DT = styled.dt`
-  font-weight: bold;
-  margin-top: 10px;
+const Bottom = styled.div`
+  margin: 20px;
+
+  dt {
+    font-weight: bold;
+  }
+
+  dd {
+    margin: 0px;
+  }
 `;
 
-const FlexContainer = styled.div`
+const Title = styled.dl`
+  margin: 0 15px;
+`;
+
+const ProfileBody = styled.dl`
+  border-left: 1px solid var(--border-color-dark);
+  margin-bottom: 0;
+  padding: 1px 15px;
+
+  dd {
+    margin-left: 5px;
+  }
+
+  dt {
+    font-weight: bold;
+    margin: 12px 0;
+    margin-bottom: 0px;
+  }
+`;
+
+const ProfilHead = styled.div`
+  padding: 1px 20px;
+
+  h2,
+  h3 {
+    font-size: 1.3rem;
+    margin: 0;
+    padding: 0;
+  }
+
+  h3 {
+    font-size: 1rem;
+    font-weight: normal;
+  }
+
+  p {
+    margin: 5px 0;
+  }
+`;
+
+const More = styled.div`
+  margin-left: 15px; ;
+`;
+
+const Top = styled.div`
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: center;
 `;
 
 const Wrapper = styled.main`
-  padding: 0 20px;
   word-break: break-all;
 `;

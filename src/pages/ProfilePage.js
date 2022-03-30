@@ -8,83 +8,117 @@ export default function ProfilePage({ handleLogout, userdata }) {
   return (
     <>
       <HeadingMain title="PROFILE" />
-      {userdata.avatar_url ? (
-        <>
-          <ProfilHead>
-            <Avatar
-              src={userdata.avatar_url}
-              alt={`GitHub avatar`}
-              width="170"
-              height="170"
-            />
-            <h2>{userdata.name}</h2>
-            <h3>{userdata.login}</h3>
-          </ProfilHead>
-          <ProfileBody>
-            <GridContainer>
-              <dt>Location:</dt>
-              <dd>{userdata.location}</dd>
-              <dt>Bio:</dt>
-              <dd>{userdata.bio}</dd>
-              <dt>Public repos:</dt>
-              <dd>{userdata.public_repos}</dd>
-              <dt>Followers:</dt>
-              <dd>{userdata.followers}</dd>
-              <dt>Following:</dt>
-              <dd>{userdata.following}</dd>
-            </GridContainer>
-            <ButtonSecondary children={'LOGOUT'} onClick={handleLogout} />
-          </ProfileBody>
-        </>
-      ) : (
-        <FlexContainer>
-          <p>No profile</p>
+      <>
+        {userdata.avatar_url ? (
+          <main>
+            <Top>
+              <ProfilHead>
+                <Avatar
+                  src={userdata.avatar_url}
+                  alt={`GitHub avatar`}
+                  width="130"
+                  height="130"
+                />
+                <div>
+                  <h2>{userdata.name}</h2>
+                  <h3>{userdata.login}</h3>
+                </div>
+              </ProfilHead>
 
-          <ButtonPrimary as={NavLink} to="/" children={'LOGIN FIRST'} />
-        </FlexContainer>
-      )}
+              <ProfileBody>
+                <dt>Public repos:</dt>
+                <dd>{userdata.public_repos}</dd>
+                <dt>Followers:</dt>
+                <dd>{userdata.followers}</dd>
+                <dt>Following:</dt>
+                <dd>{userdata.following}</dd>
+                <dt>Location:</dt>
+                <dd>{userdata.location}</dd>
+              </ProfileBody>
+            </Top>
+            <Bottom>
+              <Bio>
+                <h2>Bio:</h2>
+                <p>{userdata.bio}</p>
+              </Bio>
+              <ButtonContainer>
+                <ButtonSecondary children={'LOGOUT'} onClick={handleLogout} />
+              </ButtonContainer>
+            </Bottom>
+          </main>
+        ) : (
+          <FlexContainer>
+            <p>
+              <i>No profile.</i>
+            </p>
+            <ButtonPrimary as={NavLink} to="/" children={'LOGIN FIRST'} />
+          </FlexContainer>
+        )}
+      </>
     </>
   );
 }
 
 const Avatar = styled.img`
-  margin: 10px 0 10px;
   border-radius: 50%;
 `;
 
-const FlexContainer = styled.div`
+const Bio = styled.div`
+  h2 {
+    margin: 0 10px;
+  }
+  p {
+    background-color: var(--bg-color-light);
+    border-radius: 10px;
+    margin-top: 5px;
+    padding: 15px;
+  }
+`;
+
+const Bottom = styled.div`
+  margin: 20px;
+
+  dt {
+    font-weight: bold;
+  }
+
+  dd {
+    margin: 0px;
+  }
+`;
+
+const ButtonContainer = styled.div`
+  display: grid;
+  place-items: center;
+`;
+
+const FlexContainer = styled.main`
   margin-top: 100px;
   display: grid;
   place-items: center;
   gap: 100px;
 `;
 
-const GridContainer = styled.dl`
-  display: grid;
-  grid-template-columns: 40% 60%;
-`;
-
-const ProfileBody = styled.div`
-  margin: 15px 20px 0;
+const ProfileBody = styled.dl`
+  margin: 5px 0;
+  border-left: 1px solid var(--border-color-dark);
+  padding: 1px 15px;
 
   dd {
-    margin: 10px 0 0;
+    margin: 0 0 10px 5px;
   }
 
   dt {
     font-weight: bold;
     margin-top: 10px;
-    min-width: 150px;
-  }
-
-  button {
-    margin: 10px auto;
+    margin-bottom: 0px;
   }
 `;
 
 const ProfilHead = styled.div`
   display: grid;
   place-items: center;
+  padding: 1px 15px;
 
   h2,
   h3 {
@@ -95,4 +129,14 @@ const ProfilHead = styled.div`
   h3 {
     font-weight: normal;
   }
+
+  p {
+    margin: 5px 0;
+  }
+`;
+
+const Top = styled.div`
+  display: flex;
+  justify-content: center;
+  padding-top: 20px;
 `;

@@ -26,35 +26,87 @@ export default function MyIssueDetails({
 
   return (
     <>
-      <HeadingMain title="DETAIL" />
-      <Wrapper>
-        <BackArrow to="/myissues" />
-        <Message>
-          All fields with an asterisk<Asterisk>*</Asterisk> can be changed.
-          Click on the values to edit.
-        </Message>
+      <HeadingMain title="DETAILS" />
 
-        <FlexContainer>
-          <DL>
-            <DT>Issue ID:</DT>
-            <DD>{myIssue.id}</DD>
-            <DT>User:</DT>
-            <DD>{myIssue.user}</DD>
-          </DL>
-          {avatar ? (
-            <Avatar
-              src={avatar}
-              alt={`Avatar of ${myIssue.user}`}
-              width="90"
-              height="90"
-            />
-          ) : null}
-        </FlexContainer>
-        <DL>
-          <DT id="title">
-            Title<Asterisk>*</Asterisk>:
-          </DT>
-          <FlexContainer>
+      <Back>
+        <BackArrow to="/myissues" />
+      </Back>
+
+      <Message>
+        <Asterisk>*</Asterisk> Click on the values to edit.
+      </Message>
+
+      <Wrapper>
+        <Top>
+          <ProfilHead>
+            {avatar ? (
+              <Avatar
+                src={avatar}
+                alt={`Avatar of ${myIssue.user}`}
+                width="110"
+                height="110"
+              />
+            ) : null}
+            <div>
+              <h2>{myIssue.user}</h2>
+            </div>
+          </ProfilHead>
+
+          <ProfileBody>
+            <dt id="state">
+              State<Asterisk>*</Asterisk>:
+            </dt>
+            <FlexContainer>
+              {editState ? (
+                <>
+                  <StyledInput
+                    aria-labelledby="state"
+                    type="text"
+                    defaultValue={myIssue.state}
+                    onChange={e => (myIssue.state = e.target.value)}
+                  />
+                  <ButtonPrimarySmall
+                    onClick={() => setEditState(false)}
+                    children={'EDIT'}
+                  />
+                </>
+              ) : (
+                <dd onClick={() => setEditState(true)}>{myIssue.state}</dd>
+              )}
+            </FlexContainer>
+            <dt id="milestone">
+              Milestone<Asterisk>*</Asterisk>:
+            </dt>
+            <FlexContainer>
+              {editMilestone ? (
+                <>
+                  <StyledInput
+                    aria-labelledby="milestone"
+                    type="text"
+                    defaultValue={myIssue.milestone}
+                    onChange={e => (myIssue.milestone = e.target.value)}
+                  />
+                  <ButtonPrimarySmall
+                    onClick={() => setEditMilestone(false)}
+                    children={'EDIT'}
+                  />
+                </>
+              ) : (
+                <dd onClick={() => setEditMilestone(true)}>
+                  {myIssue.milestone}
+                </dd>
+              )}
+            </FlexContainer>
+            <dt>Created at:</dt>
+            <dd>{myIssue.created_at}</dd>
+          </ProfileBody>
+        </Top>
+
+        <Bottom>
+          <Title>
+            <dt id="title">
+              Title<Asterisk>*</Asterisk>:
+            </dt>
             {editTitle ? (
               <>
                 <StyledInput
@@ -69,124 +121,77 @@ export default function MyIssueDetails({
                 />
               </>
             ) : (
-              <DD onClick={() => setEditTitle(true)}>{myIssue.title}</DD>
+              <dd onClick={() => setEditTitle(true)}>{myIssue.title}</dd>
             )}
-          </FlexContainer>
-
-          <DT id="body">
-            Body<Asterisk>*</Asterisk>:
-          </DT>
-          <FlexContainer>
-            {editBody ? (
-              <>
-                <StyledInput
-                  aria-labelledby="body"
-                  type="text"
-                  defaultValue={myIssue.body}
-                  onChange={e => (myIssue.body = e.target.value)}
-                />
-                <ButtonPrimarySmall
-                  onClick={() => setEditBody(false)}
-                  children={'EDIT'}
-                />
-              </>
-            ) : (
-              <DD onClick={() => setEditBody(true)}>{myIssue.body}</DD>
-            )}
-          </FlexContainer>
-
-          <DT>Created at:</DT>
-          <DD>{myIssue.created_at}</DD>
-
-          <DT id="state">
-            State<Asterisk>*</Asterisk>:
-          </DT>
-          <FlexContainer>
-            {editState ? (
-              <>
-                <StyledInput
-                  aria-labelledby="state"
-                  type="text"
-                  defaultValue={myIssue.state}
-                  onChange={e => (myIssue.state = e.target.value)}
-                />
-                <ButtonPrimarySmall
-                  onClick={() => setEditState(false)}
-                  children={'EDIT'}
-                />
-              </>
-            ) : (
-              <DD onClick={() => setEditState(true)}>{myIssue.state}</DD>
-            )}
-          </FlexContainer>
-
-          <DT id="milestone">
-            Milestone<Asterisk>*</Asterisk>:
-          </DT>
-          <FlexContainer>
-            {editMilestone ? (
-              <>
-                <StyledInput
-                  aria-labelledby="milestone"
-                  type="text"
-                  defaultValue={myIssue.milestone}
-                  onChange={e => (myIssue.milestone = e.target.value)}
-                />
-                <ButtonPrimarySmall
-                  onClick={() => setEditMilestone(false)}
-                  children={'EDIT'}
-                />
-              </>
-            ) : (
-              <DD onClick={() => setEditMilestone(true)}>
-                {myIssue.milestone}
-              </DD>
-            )}
-          </FlexContainer>
-
-          <>
-            {editLabels ? (
-              <>
-                <DT id="labels">Labels (separated by comma)*:</DT>
-                <FlexContainer>
+          </Title>
+          <Bio>
+            <dt id="body">
+              Body<Asterisk>*</Asterisk>:
+            </dt>
+            <FlexContainer>
+              {editBody ? (
+                <>
                   <StyledInput
-                    aria-labelledby="labels"
+                    aria-labelledby="body"
                     type="text"
-                    defaultValue={myIssue.labels}
-                    onChange={e =>
-                      (myIssue.labels = e.target.value
-                        .split(',')
-                        .map(label => label.trim())
-                        .filter(tag => tag.length > 0))
-                    }
+                    defaultValue={myIssue.body}
+                    onChange={e => (myIssue.body = e.target.value)}
                   />
                   <ButtonPrimarySmall
-                    onClick={() => setEditLabels(false)}
+                    onClick={() => setEditBody(false)}
                     children={'EDIT'}
                   />
-                </FlexContainer>
-              </>
-            ) : (
-              <>
-                <DT>
-                  Labels<Asterisk>*</Asterisk>:
-                </DT>
-                {myIssue.labels.length > 0 ? (
-                  myIssue.labels.map((label, index) => (
-                    <DD
-                      onClick={() => setEditLabels(true)}
-                      key={index + myIssue.id}
-                    >
-                      {label}
-                    </DD>
-                  ))
-                ) : (
-                  <DD>no labels</DD>
-                )}
-              </>
-            )}
-          </>
-        </DL>
+                </>
+              ) : (
+                <dd onClick={() => setEditBody(true)}>{myIssue.body}</dd>
+              )}
+            </FlexContainer>
+          </Bio>
+
+          <More>
+            <>
+              {editLabels ? (
+                <>
+                  <dt id="labels">
+                    Labels<Asterisk>*</Asterisk>:
+                  </dt>
+                  <FlexContainer>
+                    <StyledInput
+                      aria-labelledby="labels"
+                      type="text"
+                      defaultValue={myIssue.labels}
+                      onChange={e =>
+                        (myIssue.labels = e.target.value
+                          .split(',')
+                          .map(label => label.trim())
+                          .filter(tag => tag.length > 0))
+                      }
+                    />
+                    <ButtonPrimarySmall
+                      onClick={() => setEditLabels(false)}
+                      children={'EDIT'}
+                    />
+                  </FlexContainer>
+                </>
+              ) : (
+                <>
+                  <dt>
+                    Labels<Asterisk>*</Asterisk>:
+                  </dt>
+                  {myIssue.labels.length > 0 ? (
+                    myIssue.labels.map((label, index) => (
+                      <dd key={index + myIssue.id}>{label}</dd>
+                    ))
+                  ) : (
+                    <dd onClick={() => setEditLabels(true)}>no labels</dd>
+                  )}
+                </>
+              )}
+            </>
+            <dt>Issue ID:</dt>
+            <dd>{myIssue.id}</dd>
+          </More>
+        </Bottom>
 
         <ButtonContainer>
           {!showRemoveDialog && (
@@ -218,8 +223,30 @@ const Asterisk = styled.span`
 `;
 
 const Avatar = styled.img`
-  border-radius: 5px;
-  margin-right: 20px;
+  border-radius: 50%;
+  margin-top: 15px;
+`;
+
+const Back = styled.div`
+  margin: 20px 30px 10px;
+`;
+
+const Bio = styled.dl`
+  background-color: var(--bg-color-light);
+  border-radius: 10px;
+  padding: 15px;
+`;
+
+const Bottom = styled.div`
+  margin: 20px;
+
+  dt {
+    font-weight: bold;
+  }
+
+  dd {
+    margin: 0px;
+  }
 `;
 
 const ButtonContainer = styled.div`
@@ -227,37 +254,76 @@ const ButtonContainer = styled.div`
   justify-content: center;
 `;
 
-const DD = styled.dd`
-  margin: 0 10px;
-`;
-
-const DL = styled.dl`
-  margin: 0;
-`;
-
-const DT = styled.dt`
-  font-weight: bold;
-  margin-top: 10px;
-`;
-
 const FlexContainer = styled.div`
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
+  align-items: center;
+`;
+
+const Title = styled.dl`
+  margin: 0 15px;
 `;
 
 const Message = styled.p`
   font-size: 0.9rem;
   font-style: italic;
+  margin: 0 30px;
   word-break: normal;
+`;
+
+const ProfileBody = styled.dl`
+  border-left: 1px solid var(--border-color-dark);
+  margin-bottom: 0;
+  padding: 1px 15px;
+
+  dd {
+    margin-left: 5px;
+  }
+
+  dt {
+    font-weight: bold;
+    margin: 12px 0;
+    margin-bottom: 0px;
+  }
+`;
+
+const ProfilHead = styled.div`
+  display: grid;
+  place-items: center;
+  padding: 1px 20px;
+
+  h2 {
+    font-size: 1.3rem;
+    margin-left: 10px;
+    padding: 0;
+  }
+
+  p {
+    margin: 5px 0;
+  }
+`;
+
+const More = styled.dl`
+  margin-left: 15px;
+
+  dt {
+    margin-top: 10px;
+  }
 `;
 
 const StyledInput = styled.input`
   border-radius: 5px;
   border: 1px solid var(--border-color-light);
-  width: 80%;
+  width: 70%;
+  height: 2rem;
+`;
+
+const Top = styled.div`
+  display: flex;
+  justify-content: center;
 `;
 
 const Wrapper = styled.main`
-  margin: 0 10px;
   word-break: break-all;
 `;

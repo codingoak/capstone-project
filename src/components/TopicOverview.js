@@ -49,11 +49,11 @@ export default function TopicOverview({ selectedProject }) {
 }
 
 const IconContainer = styled.div`
-  margin: 1px 3px 0 0;
+  margin: 1px 5px 0 0;
 `;
 
 const Wrapper = styled.div`
   color: var(--font-color-light);
   display: flex;
-  margin: 12px 12px 3px;
+  margin: 12px 22px 3px;
 `;

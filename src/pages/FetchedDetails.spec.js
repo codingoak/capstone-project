@@ -27,13 +27,13 @@ describe('Fetched issue details', () => {
       'https://api.github.com/repos/reactjs/reactjs.org/issues/4458/comments',
   };
 
-  it('renders the number', () => {
+  it('renders the issue id', () => {
     render(
       <MemoryRouter>
         <FetchedDetails comparedIssue={comparedIssue} />
       </MemoryRouter>
     );
-    const number = screen.getByText(4458);
+    const number = screen.getByText(1168898651);
     expect(number).toBeInTheDocument();
   });
 

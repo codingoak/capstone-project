@@ -47,7 +47,9 @@ export default function Dashboard({
       )}
       {!selectedProject && (
         <main>
-          <EmptyState>Select an option from the box above</EmptyState>
+          <EmptyState>
+            <i>Select an option from the box above.</i>
+          </EmptyState>
         </main>
       )}
       {comparedIssues && !isLoading && !hasError && (
@@ -105,10 +107,10 @@ const LoadingContainer = styled.main`
   text-align: center;
 `;
 
-const TopicContainer = styled.div`
+const TopicContainer = styled.section`
   background: linear-gradient(#144e74, var(--bg-color-dark), #144e74);
   border: 1px solid black;
   border-radius: 5px;
-  margin: -10px 10px 0;
+  margin: 10px 10px 0;
   padding-bottom: 5px;
 `;

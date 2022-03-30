@@ -40,16 +40,18 @@ export default function CreateIssueForm({ handleMyIssues, username }) {
 
   return (
     <>
-      <HeadingMain title={'CREATE FORM'} id="create" />
+      <HeadingMain title={'CREATE FORM'} />
       <main>
         <StyledForm
           onSubmit={handleSubmit(data => onSubmit(data))}
           autoComplete="off"
-          aria-labelledby="create"
         >
-          <BackArrow to="/dashboard" />
+          <h2 className="sr-only">Create an issue form</h2>
+          <Back>
+            <BackArrow to="/dashboard" />
+          </Back>
           <Message>
-            All fields with an asterisk<Asterisk>*</Asterisk> are required.
+            <Asterisk>*</Asterisk> Required fields.
           </Message>
           <FlexContainer>
             <label htmlFor="user">
@@ -146,6 +148,9 @@ const Asterisk = styled.span`
   color: crimson;
 `;
 
+const Back = styled.div`
+  margin-top: 10px;
+`;
 const Counter = styled.div`
   align-self: flex-end;
   color: var(--font-color-medium);
@@ -166,11 +171,12 @@ const FlexContainer = styled.div`
 const Message = styled.p`
   font-size: 0.9rem;
   font-style: italic;
+  margin-bottom: 10px;
 `;
 
 const StyledForm = styled.form`
   display: grid;
-  margin: 0 20px;
+  margin: 0 30px;
 
   input {
     border-radius: 5px;
@@ -180,6 +186,7 @@ const StyledForm = styled.form`
     height: 2rem;
     ::placeholder {
       color: var(--font-color-medium);
+      padding-left: 5px;
     }
   }
 

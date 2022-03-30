@@ -19,7 +19,6 @@ export default function BackArrow({ to }) {
 }
 
 const Navlink = styled(NavLink)`
-  margin-top: 20px;
   opacity: 0.8;
   :hover {
     cursor: pointer;
