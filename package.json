@@ -4,7 +4,6 @@
   "private": true,
   "dependencies": {
     "framer-motion": "^6.2.8",
-    "mongoose": "^6.2.9",
     "nanoid": "^3.3.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -14,7 +13,6 @@
     "react-select": "^5.2.2",
     "styled-components": "^5.3.3",
     "use-immer": "^0.6.0",
-    "vercel": "^24.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

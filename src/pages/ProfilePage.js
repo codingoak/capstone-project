@@ -1,13 +1,14 @@
+import { NavLink } from 'react-router-dom';
 import styled from 'styled-components/macro';
 
-import { ButtonSecondary } from '../components/Button';
+import { ButtonPrimary, ButtonSecondary } from '../components/Button';
 import HeadingMain from '../components/HeadingMain';
 
 export default function ProfilePage({ handleLogout, userdata }) {
   return (
     <>
       <HeadingMain title="PROFILE" />
-      {userdata.avatar_url && (
+      {userdata.avatar_url ? (
         <>
           <ProfilHead>
             <Avatar
@@ -35,6 +36,12 @@ export default function ProfilePage({ handleLogout, userdata }) {
             <ButtonSecondary children={'LOGOUT'} onClick={handleLogout} />
           </ProfileBody>
         </>
+      ) : (
+        <FlexContainer>
+          <p>No profile</p>
+
+          <ButtonPrimary as={NavLink} to="/" children={'Login first'} />
+        </FlexContainer>
       )}
     </>
   );
@@ -43,6 +50,13 @@ export default function ProfilePage({ handleLogout, userdata }) {
 const Avatar = styled.img`
   margin: 10px 0 10px;
   border-radius: 50%;
+`;
+
+const FlexContainer = styled.div`
+  margin-top: 100px;
+  display: grid;
+  place-items: center;
+  gap: 100px;
 `;
 
 const GridContainer = styled.dl`

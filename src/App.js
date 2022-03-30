@@ -47,7 +47,7 @@ export default function App() {
           }
         />
         <Route
-          path="/profilpage"
+          path="/profilepage"
           element={
             <ProfilePage handleLogout={handleLogout} userdata={userdata} />
           }
@@ -208,7 +208,7 @@ export default function App() {
       setUserdata(data);
 
       if (response.status === 200) {
-        navigate('/profilpage');
+        navigate('/profilepage');
       }
     }
   }

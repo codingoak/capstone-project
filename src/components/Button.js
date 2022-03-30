@@ -6,26 +6,33 @@ const Button = styled.button`
   box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
     rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
   color: var(--font-color-dark);
-  display: flex;
+  display: grid;
+  place-items: center;
   font-size: 1.2rem;
   font-weight: bold;
-  justify-self: center;
   letter-spacing: 1px;
   margin: 10px 5px 5px;
   opacity: 0.8;
   padding: 10px 24px;
   white-space: nowrap;
-  :hover {
-    cursor: pointer;
-    opacity: 1;
-    transition: all 0.15s;
-  }
   :active {
     transform: scale(0.95);
   }
   :focus {
     border: 3px solid white;
     opacity: 1;
+  }
+  :hover {
+    cursor: pointer;
+    opacity: 1;
+    transition: all 0.15s;
+  }
+
+  &:active,
+  &:hover,
+  &:link,
+  &:visited {
+    text-decoration: none;
   }
 `;
 

@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { MemoryRouter } from 'react-router-dom';
 
 import ProfilePage from './ProfilePage';
 
@@ -14,7 +14,11 @@ describe('ProfilePage', () => {
   };
 
   it('renders the page', () => {
-    render(<ProfilePage userdata={userdata} />);
+    render(
+      <MemoryRouter>
+        <ProfilePage userdata={userdata} />
+      </MemoryRouter>
+    );
 
     const header = screen.getByText(/Profile/i);
     const location = screen.getByText(/Location:/i);
@@ -32,8 +36,32 @@ describe('ProfilePage', () => {
   });
 
   it('renders the logout button', () => {
-    render(<ProfilePage userdata={userdata} />);
-    const logoutButton = screen.getByRole('button');
+    render(
+      <MemoryRouter>
+        <ProfilePage userdata={userdata} />
+      </MemoryRouter>
+    );
+    const logoutButton = screen.getByRole('button', { name: /Logout/i });
     expect(logoutButton).toBeInTheDocument();
+  });
+
+  it('renders the login first link', () => {
+    render(
+      <MemoryRouter>
+        <ProfilePage userdata={false} />
+      </MemoryRouter>
+    );
+    const loginFirstButton = screen.getByRole('link', { name: /Login first/i });
+    expect(loginFirstButton).toBeInTheDocument();
+  });
+
+  it('renders the login first text', () => {
+    render(
+      <MemoryRouter>
+        <ProfilePage userdata={false} />
+      </MemoryRouter>
+    );
+    const loginFirstText = screen.getByText(/No profile/i);
+    expect(loginFirstText).toBeInTheDocument();
   });
 });
