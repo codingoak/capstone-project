@@ -1,4 +1,4 @@
-import TopicOverview from './TopicOverview'
+import TopicOverview from './TopicOverview';
 
 export default {
   title: 'TopicOverview',
@@ -8,5 +8,9 @@ export default {
 const Template = args => <TopicOverview {...args} />;
 
 export const Default = Template.bind({});
-Default.args = {};
-    
+const selectedProject =
+  'https://api.github.com/repos/reactjs/reactjs.org/issues';
+
+Default.args = {
+  selectedProject: selectedProject,
+};

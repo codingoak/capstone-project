@@ -4,7 +4,9 @@ import styled from 'styled-components/macro';
 
 export default function TopicOverview({ selectedProject }) {
   const [openIssues, setOpenIssues] = useState();
-  const url = selectedProject.replace('/issues', '?q=issues');
+  const str = selectedProject;
+  const regex = /\/issues/;
+  const url = str.replace(regex, '?q=issues');
 
   useEffect(() => {
     getOpenIssues(url);
@@ -27,7 +29,7 @@ export default function TopicOverview({ selectedProject }) {
           <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z" />
         </svg>
       </IconContainer>
-      {openIssues} issues open
+      {openIssues} open issues
     </Wrapper>
   );
 
@@ -51,6 +53,7 @@ const IconContainer = styled.div`
 `;
 
 const Wrapper = styled.div`
+  color: var(--font-color-light);
   display: flex;
-  margin: 12px 20px 0 25px;
+  margin: 12px 12px 3px;
 `;

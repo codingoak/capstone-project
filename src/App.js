@@ -16,8 +16,8 @@ import ProfilePage from './pages/ProfilePage';
 
 export default function App() {
   const [comparedIssues, setComparedIssues] = useState('');
-  const [hasError, setHasError] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [hasError, setHasError] = useState(null);
+  const [isLoading, setIsLoading] = useState(null);
   const [myIssues, setMyIssues] = useLocalStorage('myOwnIssues', []);
   const [paginationUrls, setPaginationUrls] = useState('');
   const [selectedProject, setSelectedProject] = useState('');
@@ -143,11 +143,10 @@ export default function App() {
   async function getData(url) {
     window.scrollTo(0, 0);
 
-    setIsLoading(true);
-    setHasError(false);
-
     if (selectedProject) {
       try {
+        setIsLoading(true);
+        setHasError(false);
         const response = await fetch(url);
 
         if (response.ok) {
@@ -167,6 +166,7 @@ export default function App() {
 
   function getDataForPagination(response) {
     const link = response.headers.get('Link');
+
     const links = link?.split(',');
     const urls = links?.map(link => {
       return {

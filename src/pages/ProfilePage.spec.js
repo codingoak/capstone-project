@@ -21,14 +21,12 @@ describe('ProfilePage', () => {
     );
 
     const header = screen.getByText(/Profile/i);
-    const location = screen.getByText(/Location:/i);
     const bio = screen.getByText(/Bio:/i);
     const repos = screen.getByText(/Repos:/i);
     const followers = screen.getByText(/Followers:/i);
     const following = screen.getByText(/Following:/i);
 
     expect(header).toBeInTheDocument();
-    expect(location).toBeInTheDocument();
     expect(bio).toBeInTheDocument();
     expect(repos).toBeInTheDocument();
     expect(followers).toBeInTheDocument();

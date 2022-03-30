@@ -18,14 +18,14 @@ export default function Dashboard({
 }) {
   return (
     <>
-      <header>
-        <HeadingMain title="DASHBOARD" />
+      <HeadingMain title="DASHBOARD" />
+      <TopicContainer>
         <Selection
           handleRepoChange={handleRepoChange}
           selectedProject={selectedProject}
         />
         {selectedProject && <TopicOverview selectedProject={selectedProject} />}
-      </header>
+      </TopicContainer>
       {isLoading && (
         <LoadingContainer>
           <Circle
@@ -103,4 +103,12 @@ const LoadingContainer = styled.main`
   height: 70vh;
   margin: 100px;
   text-align: center;
+`;
+
+const TopicContainer = styled.div`
+  background: linear-gradient(#144e74, var(--bg-color-dark), #144e74);
+  border: 1px solid black;
+  border-radius: 5px;
+  margin: -10px 10px 0;
+  padding-bottom: 5px;
 `;
