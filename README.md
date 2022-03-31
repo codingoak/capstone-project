@@ -22,15 +22,20 @@ You can choose between four different projects:
 
 ## Tech Stack
 
-- react
-- framer motion
-- nanoid
-- styled-components
+- React
+- React Router
 - react-select
-- react-router
-- react-hook-form
+- React Hooks
+- React-Hook-Form
+- styled-components
+- Storybook
+- Testing-Library
+- Framer Motion
 
 ## Installation
 
 - Clone the repository
 - Install dependencies: `npm i`
+- Run app in dev mode: `npm start`
+- Run tests: `npm run test`
+- Run Storybook: `npm run storybook`
