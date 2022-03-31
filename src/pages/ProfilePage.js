@@ -98,7 +98,7 @@ const Bottom = styled.div`
 
 const ButtonContainer = styled.div`
   display: grid;
-  margin-top: 10px;
+  margin-top: 3px;
   place-items: center;
 `;
 

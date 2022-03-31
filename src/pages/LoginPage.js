@@ -82,7 +82,7 @@ const StyledForm = styled.form`
   gap: 10px;
 
   button {
-    margin-top: 50px;
+    margin-top: 125px;
   }
 
   h2 {
