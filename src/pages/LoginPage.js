@@ -39,6 +39,7 @@ export default function LoginPage({ handleLogin, userDataStatus }) {
             <h2 id="login">Login</h2>
             <input
               {...register('username')}
+              autoComplete="off"
               id="username"
               placeholder="Your GitHub username"
             />
