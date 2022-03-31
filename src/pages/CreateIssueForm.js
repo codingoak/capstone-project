@@ -151,6 +151,7 @@ const Asterisk = styled.span`
 const Back = styled.div`
   margin-top: 10px;
 `;
+
 const Counter = styled.div`
   align-self: flex-end;
   color: var(--font-color-medium);

@@ -1,26 +1,22 @@
 # Capstone Project: MyTracker (in progress..)
 
-## Desription
+> This is my capstone project for the web development bootcamp at [neueFische](https://www.neuefische.de/weiterbildung/web-development)
 
-App for tracking issues. With mytracker, issues can be loaded from selected GitHub repositories. By logging in with a GitHub username, you get the public data on the profile page. The dashboard shows an overview of the open issues that you can scroll through. The issues can be saved by pinning them to local storage and then appear at the top of the respective page. You can also create, edit and delete your own issues, wich appears in a separate list.
+## `About`
 
-You can choose between four different projects:
+App for tracking issues. With My Tracker, issues can be loaded from selected GitHub repositories. The issues can be saved by pinning them to local storage and then appear at the top of the respective page.
 
-- Angular
-- Babel
-- ESLint
-- Express
-- Git
-- Node.js
-- React
-- React Testing Library
-- Sass
-- Styled Components
-- Vue.js
+<img align="right" src="./src/images/app-preview.gif" alt="app preview" width="270">
 
-<img src="./src/images/login.png" alt="login page" width="200"><img src="./src/images/profile.png" alt="profile" width="200"><img src="./src/images/dashboard-empty.png" alt="dashboard-empty" width="200"><img src="./src/images/selection.png" alt="select box" width="200"><img src="./src/images/dashboard-fill.png" alt="dashboard fill" width="200"><img src="./src/images/details1.png" alt="fetched issue details part one" width="200"><img src="./src/images/details2.png" alt="fetched issue details part two" width="200"><img src="./src/images/create.png" alt="create form" width="200"><img src="./src/images/my-issues-empty.png" alt="my-issues empty" width="200">
+## `Features`
 
-## Tech Stack
+- Track issues from GitHub
+- Create and edit your own issues
+- Detailed issue overview
+- Issues are pinnable
+- Simple login with a profile page
+
+## `Tech Stack`
 
 - React
 - React Router
@@ -31,8 +27,10 @@ You can choose between four different projects:
 - Storybook
 - Testing-Library
 - Framer Motion
+- Zustand (in progress)
+- Axios (in porgress)
 
-## Installation
+## `Installation`
 
 - Clone the repository
 - Install dependencies: `npm i`
