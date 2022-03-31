@@ -19,7 +19,7 @@ export default function BackArrow({ to }) {
 }
 
 const Navlink = styled(NavLink)`
-  opacity: 0.8;
+  /* opacity: 0.8; */
   :hover {
     cursor: pointer;
     opacity: 1;

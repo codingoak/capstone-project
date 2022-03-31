@@ -5,7 +5,11 @@ import Dashboard from './Dashboard';
 
 describe('Dashboard', () => {
   it('renders the loading animation', () => {
-    render(<Dashboard selectedProject={true} isLoading={true} />);
+    render(
+      <MemoryRouter>
+        <Dashboard selectedProject={false} isLoading={true} />
+      </MemoryRouter>
+    );
     const loadingAnimation = screen.getByTitle('Loading...');
     expect(loadingAnimation).toBeInTheDocument();
   });

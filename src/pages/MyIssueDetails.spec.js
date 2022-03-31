@@ -25,7 +25,7 @@ describe('MyIssueDetails', () => {
       </MemoryRouter>
     );
     const terms = screen.getAllByRole('term');
-    expect(terms).toHaveLength(8);
+    expect(terms).toHaveLength(7);
   });
 
   it('renders the definitions', () => {
@@ -35,7 +35,7 @@ describe('MyIssueDetails', () => {
       </MemoryRouter>
     );
     const definitions = screen.getAllByRole('definition');
-    expect(definitions).toHaveLength(9);
+    expect(definitions).toHaveLength(8);
   });
 
   it('renders the username', () => {

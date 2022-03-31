@@ -9,7 +9,7 @@ export default function Navigation() {
     <footer>
       <Navbar
         animate={{ y: 1 }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.75 }}
         initial={{ y: 48 }}
       >
         {NavOptions.map(navLink => {

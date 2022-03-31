@@ -12,7 +12,9 @@ export default function MyIssues({ myIssues, togglePin }) {
         {myIssues.length > 0 ? (
           <HeadingIssues />
         ) : (
-          <EmptyState>Create an issue with the create form</EmptyState>
+          <EmptyState>
+            <i>Create an issue with the create form.</i>
+          </EmptyState>
         )}
         <Issues issues={myIssues} togglePin={togglePin} />
       </main>

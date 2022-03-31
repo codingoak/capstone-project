@@ -39,6 +39,7 @@ export default function LoginPage({ handleLogin, userDataStatus }) {
             <h2 id="login">Login</h2>
             <input
               {...register('username')}
+              autoComplete="off"
               id="username"
               placeholder="Your GitHub username"
             />
@@ -51,7 +52,9 @@ export default function LoginPage({ handleLogin, userDataStatus }) {
           {userDataStatus === 404 ? (
             <p>No user found</p>
           ) : (
-            <p>or continue without login</p>
+            <p>
+              <i>or continue without login.</i>
+            </p>
           )}
         </StyledMain>
       </Wrapper>
@@ -79,7 +82,7 @@ const StyledForm = styled.form`
   gap: 10px;
 
   button {
-    margin-top: 50px;
+    margin-top: 125px;
   }
 
   h2 {
@@ -93,6 +96,10 @@ const StyledForm = styled.form`
     height: 2rem;
     width: 200px;
     margin-top: -5px;
+    ::placeholder {
+      color: var(--font-color-medium);
+      padding-left: 5px;
+    }
   }
 
   label:not(:first-of-type) {
