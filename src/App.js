@@ -18,10 +18,10 @@ export default function App() {
   const [comparedIssues, setComparedIssues] = useState('');
   const [hasError, setHasError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
-  const [myIssues, setMyIssues] = useLocalStorage('myOwnIssues', []);
+  const [myIssues, setMyIssues] = useLocalStorage('my-ssues', []);
   const [paginationUrls, setPaginationUrls] = useState('');
   const [selectedProject, setSelectedProject] = useState('');
-  const [pinnedIssues, setPinnedIssues] = useLocalStorage(selectedProject, []);
+  const [pinnedIssues, setPinnedIssues] = useLocalStorage('fetched-issues', []);
   const [userdata, setUserdata] = useLocalStorage('userdata', []);
   const [userDataStatus, setUserDataStatus] = useState('');
   const [username, setUsername] = useState('');
@@ -166,7 +166,6 @@ export default function App() {
 
   function getDataForPagination(response) {
     const link = response.headers.get('Link');
-
     const links = link?.split(',');
     const urls = links?.map(link => {
       return {

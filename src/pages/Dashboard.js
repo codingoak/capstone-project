@@ -112,5 +112,5 @@ const TopicContainer = styled.section`
   border: 1px solid black;
   border-radius: 5px;
   margin: 10px 10px 0;
-  padding-bottom: 5px;
+  padding: 5px 0;
 `;

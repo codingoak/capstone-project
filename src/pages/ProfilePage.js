@@ -41,6 +41,9 @@ export default function ProfilePage({ handleLogout, userdata }) {
                 <h2>Bio:</h2>
                 <p>{userdata.bio}</p>
               </Bio>
+              <a href={userdata.blog} rel="noreferrer" target="_blank">
+                {userdata.blog}
+              </a>
               <ButtonContainer>
                 <ButtonSecondary children={'LOGOUT'} onClick={handleLogout} />
               </ButtonContainer>
@@ -78,6 +81,12 @@ const Bio = styled.div`
 const Bottom = styled.div`
   margin: 20px;
 
+  a {
+    margin: 15px;
+    :visited {
+      color: blue;
+    }
+  }
   dt {
     font-weight: bold;
   }
@@ -89,6 +98,7 @@ const Bottom = styled.div`
 
 const ButtonContainer = styled.div`
   display: grid;
+  margin-top: 10px;
   place-items: center;
 `;
 

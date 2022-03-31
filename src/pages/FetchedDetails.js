@@ -19,7 +19,7 @@ export default function Detail({ comparedIssue }) {
       <Wrapper>
         <Top>
           <ProfilHead>
-            <Avatar
+            <img
               src={comparedIssue.user.avatar_url}
               alt={`Avatar of ${comparedIssue.user.login}`}
               width="110"
@@ -89,11 +89,6 @@ export default function Detail({ comparedIssue }) {
   );
 }
 
-const Avatar = styled.img`
-  border-radius: 50%;
-  margin-top: 15px;
-`;
-
 const Back = styled.div`
   margin: 20px 30px;
 `;
@@ -104,15 +99,15 @@ const Bio = styled.dl`
   padding: 15px;
 `;
 
-const Bottom = styled.div`
+const Bottom = styled.section`
   margin: 20px;
-
-  dt {
-    font-weight: bold;
-  }
 
   dd {
     margin: 0px;
+  }
+
+  dt {
+    font-weight: bold;
   }
 `;
 
@@ -136,7 +131,7 @@ const ProfileBody = styled.dl`
   }
 `;
 
-const ProfilHead = styled.div`
+const ProfilHead = styled.section`
   padding: 1px 20px;
 
   h2,
@@ -151,16 +146,21 @@ const ProfilHead = styled.div`
     font-weight: normal;
   }
 
+  img {
+    border-radius: 50%;
+    margin-top: 15px;
+  }
+
   p {
     margin: 5px 0;
   }
 `;
 
-const More = styled.div`
+const More = styled.section`
   margin-left: 15px; ;
 `;
 
-const Top = styled.div`
+const Top = styled.section`
   display: flex;
   justify-content: center;
 `;

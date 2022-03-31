@@ -29,7 +29,7 @@ export default function CreateIssueForm({ handleMyIssues, username }) {
   const labels = watch('labels');
   const maxTitleLength = 100;
   const maxUserLength = 30;
-  const maxBodyLength = 1000;
+  const maxBodyLength = 2000;
   const maxMilestoneLength = 50;
   const maxLabelsLength = 100;
   const separatedLabels = labels

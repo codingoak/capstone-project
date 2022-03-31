@@ -40,7 +40,7 @@ export default function MyIssueDetails({
         <Top>
           <ProfilHead>
             {avatar ? (
-              <Avatar
+              <img
                 src={avatar}
                 alt={`Avatar of ${myIssue.user}`}
                 width="110"
@@ -222,11 +222,6 @@ const Asterisk = styled.span`
   color: crimson;
 `;
 
-const Avatar = styled.img`
-  border-radius: 50%;
-  margin-top: 15px;
-`;
-
 const Back = styled.div`
   margin: 20px 30px 10px;
 `;
@@ -288,7 +283,7 @@ const ProfileBody = styled.dl`
   }
 `;
 
-const ProfilHead = styled.div`
+const ProfilHead = styled.section`
   display: grid;
   place-items: center;
   padding: 1px 20px;
@@ -297,6 +292,11 @@ const ProfilHead = styled.div`
     font-size: 1.3rem;
     margin-left: 10px;
     padding: 0;
+  }
+
+  img {
+    border-radius: 50%;
+    margin-top: 15px;
   }
 
   p {
@@ -319,7 +319,7 @@ const StyledInput = styled.input`
   height: 2rem;
 `;
 
-const Top = styled.div`
+const Top = styled.section`
   display: flex;
   justify-content: center;
 `;
