@@ -91,8 +91,8 @@ export default function MyIssueDetails({
                     type="text"
                     defaultValue={myIssue.milestone}
                     onChange={e => {
-                      myIssue.milestone = e.target.value;
-                      handleEditIssue(myIssue);
+                      const milestone = e.target.value;
+                      handleEditIssue({ ...myIssue, milestone });
                     }}
                   />
                   <ButtonPrimarySmall
@@ -121,8 +121,8 @@ export default function MyIssueDetails({
                   type="text"
                   defaultValue={myIssue.title}
                   onChange={e => {
-                    myIssue.title = e.target.value;
-                    handleEditIssue(myIssue);
+                    const title = e.target.value;
+                    handleEditIssue({ ...myIssue, title });
                   }}
                 />
                 <ButtonPrimarySmall
@@ -146,8 +146,8 @@ export default function MyIssueDetails({
                     type="text"
                     defaultValue={myIssue.body}
                     onChange={e => {
-                      myIssue.body = e.target.value;
-                      handleEditIssue(myIssue);
+                      const body = e.target.value;
+                      handleEditIssue({ ...myIssue, body });
                     }}
                   />
                   <ButtonPrimarySmall
@@ -174,11 +174,11 @@ export default function MyIssueDetails({
                       type="text"
                       defaultValue={myIssue.labels}
                       onChange={e => {
-                        myIssue.labels = e.target.value
+                        const labels = e.target.value
                           .split(',')
                           .map(label => label.trim())
                           .filter(tag => tag.length > 0);
-                        handleEditIssue(myIssue);
+                        handleEditIssue({ ...myIssue, labels });
                       }}
                     />
                     <ButtonPrimarySmall
@@ -235,10 +235,6 @@ export default function MyIssueDetails({
 
   function handleShowRemoveDialog() {
     setShowRemoveDialog(false);
-  }
-
-  function onEdit() {
-    handleEditIssue(myIssue);
   }
 }
 

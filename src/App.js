@@ -229,7 +229,6 @@ export default function App() {
 
   function handleEditIssue(prevIssue) {
     const date = new Date().toLocaleString();
-    console.log(prevIssue);
     const editedIssues = myIssues.map(myIssue => {
       if (myIssue.id === prevIssue.id) {
         return {
