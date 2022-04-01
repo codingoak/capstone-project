@@ -32,10 +32,10 @@ export default function Detail({ comparedIssue }) {
           </ProfilHead>
 
           <ProfileBody>
-            <dt>Issue ID:</dt>
-            <dd>{comparedIssue.id}</dd>
             <dt>State:</dt>
             <dd>{comparedIssue.state}</dd>
+            <dt>Issue ID:</dt>
+            <dd>{comparedIssue.id}</dd>
             <dt>Comments:</dt>
             <dd>
               {comparedIssue.comments === 0

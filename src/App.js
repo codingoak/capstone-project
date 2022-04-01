@@ -18,7 +18,7 @@ export default function App() {
   const [comparedIssues, setComparedIssues] = useState('');
   const [hasError, setHasError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
-  const [myIssues, setMyIssues] = useLocalStorage('my-ssues', []);
+  const [myIssues, setMyIssues] = useLocalStorage('my-issues', []);
   const [paginationUrls, setPaginationUrls] = useState('');
   const [selectedProject, setSelectedProject] = useState('');
   const [pinnedIssues, setPinnedIssues] = useLocalStorage('fetched-issues', []);
@@ -104,11 +104,12 @@ export default function App() {
             path={`${myIssue.id}`}
             element={
               <MyIssueDetails
+                avatar={userdata?.avatar_url}
+                handleEditIssue={handleEditIssue}
                 handleRemoveIssue={handleRemoveIssue}
                 myIssue={myIssue}
                 myIssues={myIssues}
                 pinnedIssues={pinnedIssues}
-                avatar={userdata?.avatar_url}
               />
             }
           />
@@ -224,6 +225,22 @@ export default function App() {
       },
       ...myIssues,
     ]);
+  }
+
+  function handleEditIssue(prevIssue) {
+    const date = new Date().toLocaleString();
+    const editedIssues = myIssues.map(myIssue => {
+      if (myIssue.id === prevIssue.id) {
+        return {
+          ...prevIssue,
+          updated_at: date,
+        };
+      } else {
+        return myIssue;
+      }
+    });
+
+    setMyIssues(editedIssues);
   }
 
   function handleRemoveIssue(id) {

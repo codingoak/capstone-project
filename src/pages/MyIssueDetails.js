@@ -9,9 +9,10 @@ import RemoveDialog from '../components/RemoveDialog';
 
 export default function MyIssueDetails({
   avatar,
+  handleEditIssue,
+  handleRemoveIssue,
   myIssue,
   myIssues,
-  handleRemoveIssue,
 }) {
   const [showRemoveDialog, setShowRemoveDialog] = useState(false);
   const [editTitle, setEditTitle] = useState(false);
@@ -63,7 +64,10 @@ export default function MyIssueDetails({
                     aria-labelledby="state"
                     type="text"
                     defaultValue={myIssue.state}
-                    onChange={e => (myIssue.state = e.target.value)}
+                    onChange={e => {
+                      myIssue.state = e.target.value;
+                      handleEditIssue(myIssue);
+                    }}
                   />
                   <ButtonPrimarySmall
                     onClick={() => setEditState(false)}
@@ -74,6 +78,8 @@ export default function MyIssueDetails({
                 <dd onClick={() => setEditState(true)}>{myIssue.state}</dd>
               )}
             </FlexContainer>
+            <dt>Issue ID:</dt>
+            <dd>{myIssue.id}</dd>
             <dt id="milestone">
               Milestone<Asterisk>*</Asterisk>:
             </dt>
@@ -84,7 +90,10 @@ export default function MyIssueDetails({
                     aria-labelledby="milestone"
                     type="text"
                     defaultValue={myIssue.milestone}
-                    onChange={e => (myIssue.milestone = e.target.value)}
+                    onChange={e => {
+                      const milestone = e.target.value;
+                      handleEditIssue({ ...myIssue, milestone });
+                    }}
                   />
                   <ButtonPrimarySmall
                     onClick={() => setEditMilestone(false)}
@@ -97,8 +106,6 @@ export default function MyIssueDetails({
                 </dd>
               )}
             </FlexContainer>
-            <dt>Created at:</dt>
-            <dd>{myIssue.created_at}</dd>
           </ProfileBody>
         </Top>
 
@@ -113,7 +120,10 @@ export default function MyIssueDetails({
                   aria-labelledby="title"
                   type="text"
                   defaultValue={myIssue.title}
-                  onChange={e => (myIssue.title = e.target.value)}
+                  onChange={e => {
+                    const title = e.target.value;
+                    handleEditIssue({ ...myIssue, title });
+                  }}
                 />
                 <ButtonPrimarySmall
                   onClick={() => setEditTitle(false)}
@@ -135,7 +145,10 @@ export default function MyIssueDetails({
                     aria-labelledby="body"
                     type="text"
                     defaultValue={myIssue.body}
-                    onChange={e => (myIssue.body = e.target.value)}
+                    onChange={e => {
+                      const body = e.target.value;
+                      handleEditIssue({ ...myIssue, body });
+                    }}
                   />
                   <ButtonPrimarySmall
                     onClick={() => setEditBody(false)}
@@ -160,12 +173,13 @@ export default function MyIssueDetails({
                       aria-labelledby="labels"
                       type="text"
                       defaultValue={myIssue.labels}
-                      onChange={e =>
-                        (myIssue.labels = e.target.value
+                      onChange={e => {
+                        const labels = e.target.value
                           .split(',')
                           .map(label => label.trim())
-                          .filter(tag => tag.length > 0))
-                      }
+                          .filter(tag => tag.length > 0);
+                        handleEditIssue({ ...myIssue, labels });
+                      }}
                     />
                     <ButtonPrimarySmall
                       onClick={() => setEditLabels(false)}
@@ -185,11 +199,17 @@ export default function MyIssueDetails({
                   ) : (
                     <dd onClick={() => setEditLabels(true)}>no labels</dd>
                   )}
+                  <dt>Created at:</dt>
+                  <dd>{myIssue.created_at}</dd>
+                  {myIssue.updated_at ? (
+                    <>
+                      <dt>Updated at:</dt>
+                      <dd>{myIssue.updated_at}</dd>
+                    </>
+                  ) : null}
                 </>
               )}
             </>
-            <dt>Issue ID:</dt>
-            <dd>{myIssue.id}</dd>
           </More>
         </Bottom>
 
