@@ -21,7 +21,7 @@ export default function App() {
   const [myIssues, setMyIssues] = useLocalStorage('my-issues', []);
   const [paginationUrls, setPaginationUrls] = useState('');
   const [selectedProject, setSelectedProject] = useState('');
-  const [pinnedIssues, setPinnedIssues] = useLocalStorage('fetched-issues', []);
+  const [pinnedIssues, setPinnedIssues] = useLocalStorage(selectedProject, []);
   const [userdata, setUserdata] = useLocalStorage('userdata', []);
   const [userDataStatus, setUserDataStatus] = useState('');
   const [username, setUsername] = useState('');
