@@ -1,11 +1,14 @@
 import styled from 'styled-components/macro';
 
 import { ButtonSecondarySmall } from './Button';
+import useStore from '../hooks/useStore';
 
-export default function Pagination({ getData, paginationUrls }) {
+export default function Pagination({ getData }) {
+  const paginationUrls = useStore(state => state.paginationUrls);
+
   return (
     <Wrapper>
-      {paginationUrls.map((paginationUrl, index) => {
+      {paginationUrls?.map((paginationUrl, index) => {
         return (
           <ButtonSecondarySmall
             children={paginationUrl.title}

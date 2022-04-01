@@ -15,10 +15,12 @@ describe('Pagination', () => {
   ];
 
   it('renders buttons', () => {
-    render(<Pagination paginationUrls={paginationUrls} />);
+    render(<Pagination />);
     const buttons = screen.getAllByRole('button');
     expect(buttons).toHaveLength(2);
   });
+
+  screen.debug();
 
   it('renders the button title', () => {
     render(<Pagination paginationUrls={paginationUrls} />);

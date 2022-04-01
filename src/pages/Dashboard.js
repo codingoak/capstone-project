@@ -1,30 +1,39 @@
+import { useEffect } from 'react';
+
 import { keyframes } from 'styled-components/macro';
 import styled from 'styled-components/macro';
 
 import { ButtonPrimary } from '../components/Button';
 import FetchedIssues from '../components/FetchedIssues';
 import HeadingMain from '../components/HeadingMain';
+import Pagination from '../components/Pagination';
+
 import Selection from '../components/Selection';
 import TopicOverview from '../components/TopicOverview';
+import useStore from '../hooks/useStore';
 
-export default function Dashboard({
-  comparedIssues,
-  getData,
-  handleRepoChange,
-  hasError,
-  isLoading,
-  selectedProject,
-  togglePin,
-}) {
+export default function Dashboard({ sortPins, togglePin }) {
+  const comparedIssues = useStore(state => state.comparedIssues);
+  const setComparedIssues = useStore(state => state.setComparedIssues);
+  const hasError = useStore(state => state.hasError);
+  const setHasError = useStore(state => state.setHasError);
+  const isLoading = useStore(state => state.isLoading);
+  const setIsLoading = useStore(state => state.setIsLoading);
+  const paginationUrls = useStore(state => state.paginationUrls);
+  const setPaginationUrls = useStore(state => state.setPaginationUrls);
+  const selectedProject = useStore(state => state.selectedProject);
+
+  useEffect(() => {
+    getData(selectedProject);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedProject]);
+
   return (
     <>
       <HeadingMain title="DASHBOARD" />
       <TopicContainer>
-        <Selection
-          handleRepoChange={handleRepoChange}
-          selectedProject={selectedProject}
-        />
-        {selectedProject && <TopicOverview selectedProject={selectedProject} />}
+        <Selection />
+        {selectedProject && <TopicOverview />}
       </TopicContainer>
       {isLoading && (
         <LoadingContainer>
@@ -58,6 +67,9 @@ export default function Dashboard({
             comparedIssues={comparedIssues}
             togglePin={togglePin}
           />
+          {paginationUrls && !isLoading && !hasError && (
+            <Pagination getData={getData} />
+          )}
         </>
       )}
       {hasError && (
@@ -71,6 +83,78 @@ export default function Dashboard({
       )}
     </>
   );
+
+  function loadFromLocal(key) {
+    try {
+      return JSON.parse(localStorage.getItem(key));
+    } catch (error) {
+      console.error('Load from local failed', error);
+    }
+  }
+
+  function compareIssues(data) {
+    const compared = data.map(fetchedIssue => {
+      const foundIssue = loadFromLocal(selectedProject)?.find(
+        savedIssue => savedIssue.id === fetchedIssue.id
+      );
+      if (foundIssue) {
+        return {
+          ...fetchedIssue,
+          isPinned: foundIssue.isPinned,
+        };
+      } else {
+        return {
+          ...fetchedIssue,
+          isPinned: false,
+        };
+      }
+    });
+
+    sortPins(compared);
+    setComparedIssues(compared);
+  }
+
+  async function getData(url) {
+    window.scrollTo(0, 0);
+
+    if (selectedProject) {
+      try {
+        setIsLoading(true);
+        setHasError(false);
+        const response = await fetch(url);
+
+        if (response.ok) {
+          getDataForPagination(response);
+          const data = await response.json();
+          compareIssues(data);
+        } else {
+          throw new Error('Response not ok');
+        }
+      } catch (error) {
+        console.error(error);
+        setHasError(true);
+      }
+      setIsLoading(false);
+    }
+  }
+
+  function getDataForPagination(response) {
+    const link = response.headers.get('Link');
+    const links = link?.split(',');
+    const urls = links?.map(link => {
+      return {
+        url: link.split(';')[0].replace('<', '').replace('>', '').trim(),
+        title: link
+          .split(';')[1]
+          .replace('rel', '')
+          .replace('="', '')
+          .replace('"', '')
+          .trim(),
+      };
+    });
+
+    setPaginationUrls(urls);
+  }
 }
 
 const TurnAnimation = keyframes`

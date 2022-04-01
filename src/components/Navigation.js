@@ -32,7 +32,7 @@ export default function Navigation() {
 const Bottom = styled.div`
   background: var(--bg-color-dark);
   bottom: 0px;
-  height: 36px;
+  height: 50px;
   position: absolute;
   width: 100%;
   z-index: 1;
@@ -40,7 +40,7 @@ const Bottom = styled.div`
 
 const Link = styled(NavLink)`
   background: linear-gradient(#144e74, var(--bg-color-dark));
-  border-radius: 10px 10px 0 0;
+  border-radius: 11px 11px 0 0;
   display: grid;
   place-items: center;
   z-index: 2;
@@ -55,7 +55,7 @@ const Navbar = styled(motion.nav)`
   color: var(--font-color-light);
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  height: 48px;
+  height: 58px;
   position: fixed;
   width: 100%;
 `;

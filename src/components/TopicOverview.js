@@ -2,11 +2,14 @@ import { useEffect, useState } from 'react';
 
 import styled from 'styled-components/macro';
 
-export default function TopicOverview({ selectedProject }) {
+import useStore from '../hooks/useStore';
+
+export default function TopicOverview() {
   const [openIssues, setOpenIssues] = useState();
+  const selectedProject = useStore(state => state.selectedProject);
   const str = selectedProject;
   const regex = /\/issues/;
-  const url = str.replace(regex, '?q=issues');
+  const url = str?.replace(regex, '?q=issues');
 
   useEffect(() => {
     getOpenIssues(url);

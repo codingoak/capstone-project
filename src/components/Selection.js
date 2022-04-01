@@ -2,14 +2,18 @@ import Select from 'react-select';
 import styled from 'styled-components/macro';
 
 import options from './SelectOptions';
+import useStore from '../hooks/useStore';
 
-export default function Selection({ selectedProject, handleRepoChange }) {
+export default function Selection() {
+  const selectedProject = useStore(state => state.selectedProject);
+  const setSelectedProject = useStore(state => state.setSelectedProject);
+
   return (
     <SelectionForm aria-label="Select box">
       <Select
         options={options}
         value={options.find(obj => obj.value === selectedProject)}
-        onChange={handleChange}
+        onChange={e => setSelectedProject(e.value)}
         aria-label="choose a project"
         name="Repositories"
         placeholder="Select a repository..."
@@ -29,10 +33,6 @@ export default function Selection({ selectedProject, handleRepoChange }) {
       />
     </SelectionForm>
   );
-
-  function handleChange(e) {
-    handleRepoChange(e);
-  }
 }
 
 const SelectionForm = styled.form`

@@ -1,11 +1,7 @@
-import { useEffect, useState } from 'react';
-
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import { nanoid } from 'nanoid';
 
-import useLocalStorage from './hooks/useLocalStorage';
 import Navigation from './components/Navigation';
-import Pagination from './components/Pagination';
 import CreateIssueForm from './pages/CreateIssueForm';
 import Dashboard from './pages/Dashboard';
 import FetchedDetails from './pages/FetchedDetails';
@@ -13,24 +9,20 @@ import LoginPage from './pages/LoginPage';
 import MyIssues from './pages/MyIssues';
 import MyIssueDetails from './pages/MyIssueDetails';
 import ProfilePage from './pages/ProfilePage';
+import useLocalStorage from './hooks/useLocalStorage';
+import useStore from './hooks/useStore';
 
 export default function App() {
-  const [comparedIssues, setComparedIssues] = useState('');
-  const [hasError, setHasError] = useState(null);
-  const [isLoading, setIsLoading] = useState(null);
+  const comparedIssues = useStore(state => state.comparedIssues);
+  const setComparedIssues = useStore(state => state.setComparedIssues);
+  const userDataStatus = useStore(state => state.userDataStatus);
+  const setUserDataStatus = useStore(state => state.setUserDataStatus);
+  const username = useStore(state => state.username);
+  const setUsername = useStore(state => state.setUsername);
   const [myIssues, setMyIssues] = useLocalStorage('my-issues', []);
-  const [paginationUrls, setPaginationUrls] = useState('');
-  const [selectedProject, setSelectedProject] = useState('');
   const [pinnedIssues, setPinnedIssues] = useLocalStorage('fetched-issues', []);
   const [userdata, setUserdata] = useLocalStorage('userdata', []);
-  const [userDataStatus, setUserDataStatus] = useState('');
-  const [username, setUsername] = useState('');
   const navigate = useNavigate();
-
-  useEffect(() => {
-    getData(selectedProject);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedProject]);
 
   return (
     <>
@@ -44,27 +36,14 @@ export default function App() {
             />
           }
         />
-
         <Route
           path="/dashboard"
           element={
             <>
-              <Dashboard
-                comparedIssues={comparedIssues}
-                getData={getData}
-                handleRepoChange={handleRepoChange}
-                hasError={hasError}
-                isLoading={isLoading}
-                selectedProject={selectedProject}
-                togglePin={togglePin}
-              />
-              {paginationUrls && !isLoading && !hasError && (
-                <Pagination getData={getData} paginationUrls={paginationUrls} />
-              )}
+              <Dashboard sortPins={sortPins} togglePin={togglePin} />
             </>
           }
         />
-
         <Route
           path="/profilepage"
           element={
@@ -119,70 +98,6 @@ export default function App() {
     </>
   );
 
-  function compareIssues(data) {
-    const compared = data.map(fetchedIssue => {
-      const foundIssue = loadFromLocal(selectedProject)?.find(
-        savedIssue => savedIssue.id === fetchedIssue.id
-      );
-      if (foundIssue) {
-        return {
-          ...fetchedIssue,
-          isPinned: foundIssue.isPinned,
-        };
-      } else {
-        return {
-          ...fetchedIssue,
-          isPinned: false,
-        };
-      }
-    });
-
-    sortPins(compared);
-    setComparedIssues(compared);
-  }
-
-  async function getData(url) {
-    window.scrollTo(0, 0);
-
-    if (selectedProject) {
-      try {
-        setIsLoading(true);
-        setHasError(false);
-        const response = await fetch(url);
-
-        if (response.ok) {
-          getDataForPagination(response);
-          const data = await response.json();
-          compareIssues(data);
-        } else {
-          throw new Error('Response not ok');
-        }
-      } catch (error) {
-        console.error(error);
-        setHasError(true);
-      }
-      setIsLoading(false);
-    }
-  }
-
-  function getDataForPagination(response) {
-    const link = response.headers.get('Link');
-    const links = link?.split(',');
-    const urls = links?.map(link => {
-      return {
-        url: link.split(';')[0].replace('<', '').replace('>', '').trim(),
-        title: link
-          .split(';')[1]
-          .replace('rel', '')
-          .replace('="', '')
-          .replace('"', '')
-          .trim(),
-      };
-    });
-
-    setPaginationUrls(urls);
-  }
-
   function handleLogout() {
     navigate('/');
     setUsername('');
@@ -229,7 +144,6 @@ export default function App() {
 
   function handleEditIssue(prevIssue) {
     const date = new Date().toLocaleString();
-    console.log(prevIssue);
     const editedIssues = myIssues.map(myIssue => {
       if (myIssue.id === prevIssue.id) {
         return {
@@ -246,18 +160,6 @@ export default function App() {
 
   function handleRemoveIssue(id) {
     setMyIssues(myIssues.filter(myIssue => myIssue.id !== id));
-  }
-
-  function handleRepoChange(e) {
-    setSelectedProject(e.value);
-  }
-
-  function loadFromLocal(key) {
-    try {
-      return JSON.parse(localStorage.getItem(key));
-    } catch (error) {
-      console.error('Load from local failed', error);
-    }
   }
 
   function sortPins(issues) {
@@ -288,7 +190,7 @@ export default function App() {
     });
     sortPins(checkedIssues);
 
-    // set to compared(fetched) or my issues
+    // set to compared(fetched) or set to my issues
     if (prevIssues[0].hasOwnProperty('url')) {
       setComparedIssues(checkedIssues);
     } else {

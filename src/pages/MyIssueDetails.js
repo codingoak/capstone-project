@@ -236,10 +236,6 @@ export default function MyIssueDetails({
   function handleShowRemoveDialog() {
     setShowRemoveDialog(false);
   }
-
-  function onEdit() {
-    handleEditIssue(myIssue);
-  }
 }
 
 const Asterisk = styled.span`
