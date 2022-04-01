@@ -65,8 +65,8 @@ export default function MyIssueDetails({
                     type="text"
                     defaultValue={myIssue.state}
                     onChange={e => {
-                      myIssue.state = e.target.value;
-                      handleEditIssue(myIssue);
+                      const state = e.target.value;
+                      handleEditIssue({ ...myIssue, state });
                     }}
                   />
                   <ButtonPrimarySmall
