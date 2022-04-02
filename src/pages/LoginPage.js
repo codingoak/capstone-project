@@ -1,11 +1,18 @@
 import styled from 'styled-components/macro';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
 import { ButtonPrimary } from '../components/Button';
 import HeadingMain from '../components/HeadingMain';
+import useStore, { useUserdata } from '../hooks/useStore';
 
-export default function LoginPage({ handleLogin, userDataStatus }) {
+export default function LoginPage() {
+  const navigate = useNavigate();
   const { register, handleSubmit } = useForm();
+  const setUsername = useStore(state => state.setUsername);
+  const setUserdata = useUserdata(state => state.setUserdata);
+  const setUserDataStatus = useStore(state => state.setUserDataStatus);
+  const userDataStatus = useStore(state => state.userDataStatus);
 
   return (
     <>
@@ -32,7 +39,7 @@ export default function LoginPage({ handleLogin, userDataStatus }) {
             <h2>TRACKER</h2>
           </Logo>
           <StyledForm
-            onSubmit={handleSubmit(data => onSubmit(data))}
+            onSubmit={handleSubmit(data => handleLogin(data))}
             autocomplete="off"
             aria-labelledby="login"
           >
@@ -46,7 +53,7 @@ export default function LoginPage({ handleLogin, userDataStatus }) {
             <ButtonPrimary
               type="submit"
               children="LOGIN"
-              onClick={() => onSubmit}
+              onClick={() => handleLogin}
             />
           </StyledForm>
           {userDataStatus === 404 ? (
@@ -61,8 +68,21 @@ export default function LoginPage({ handleLogin, userDataStatus }) {
     </>
   );
 
-  function onSubmit(data) {
-    handleLogin(data);
+  function handleLogin(data) {
+    setUsername(data.username);
+    getUserdata(data.username);
+
+    async function getUserdata(username) {
+      const response = await fetch(`https://api.github.com/users/${username}`);
+      const data = await response.json();
+
+      setUserDataStatus(response.status);
+      setUserdata(data);
+
+      if (response.status === 200) {
+        navigate('/profilepage');
+      }
+    }
   }
 }
 

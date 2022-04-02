@@ -1,5 +1,5 @@
 import create from 'zustand';
-// import { persist } from 'zustand/middleware';
+import { persist } from 'zustand/middleware';
 
 const useStore = create(set => ({
   comparedIssues: null,
@@ -11,26 +11,71 @@ const useStore = create(set => ({
   username: '',
 
   setComparedIssues: comparedIssues => {
-    set({ comparedIssues: comparedIssues });
+    set({ comparedIssues });
   },
   setHasError: hasError => {
-    set({ hasError: hasError });
+    set({ hasError });
   },
   setIsLoading: isLoading => {
-    set({ isLoading: isLoading });
+    set({ isLoading });
   },
   setPaginationUrls: paginationUrls => {
-    set({ paginationUrls: paginationUrls });
+    set({ paginationUrls });
   },
   setSelectedProject: selectedProject => {
-    set({ selectedProject: selectedProject });
+    set({ selectedProject });
   },
   setUserDataStatus: userDataStatus => {
-    set({ userDataStatus: userDataStatus });
+    set({ userDataStatus });
   },
   setUsername: username => {
-    set({ username: username });
+    set({ username });
   },
 }));
 
 export default useStore;
+
+export const useMyIssues = create(
+  persist(
+    set => ({
+      myIssues: [],
+
+      setMyIssues: myIssues => {
+        set({ myIssues });
+      },
+    }),
+    {
+      name: 'my-issues',
+    }
+  )
+);
+
+export const usePinnedIssues = create(
+  persist(
+    set => ({
+      pinnedIssues: [],
+
+      setPinnedIssues: pinnedIssues => {
+        set({ pinnedIssues });
+      },
+    }),
+    {
+      name: 'pinned-issues',
+    }
+  )
+);
+
+export const useUserdata = create(
+  persist(
+    set => ({
+      userdata: [],
+
+      setUserdata: userdata => {
+        set({ userdata });
+      },
+    }),
+    {
+      name: 'userdata',
+    }
+  )
+);

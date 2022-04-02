@@ -11,6 +11,7 @@ describe('RemoveDialog', () => {
       </MemoryRouter>
     );
     const buttons = screen.getAllByRole('button');
+
     expect(buttons).toHaveLength(2);
   });
 });

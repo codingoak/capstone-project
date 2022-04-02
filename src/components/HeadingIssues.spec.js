@@ -5,7 +5,11 @@ import HeadingIssues from './HeadingIssues';
 describe('HeadingIssues', () => {
   it('renders the heading with the Title and State', () => {
     render(<HeadingIssues />);
-    expect(screen.getByText(/Title/i)).toBeInTheDocument();
-    expect(screen.getByText(/State/i)).toBeInTheDocument();
+
+    const headerTitle = screen.getByText('Title');
+    const headerState = screen.getByText('State');
+
+    expect(headerTitle).toBeInTheDocument();
+    expect(headerState).toBeInTheDocument();
   });
 });

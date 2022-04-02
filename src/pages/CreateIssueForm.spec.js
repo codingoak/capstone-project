@@ -13,6 +13,7 @@ describe('CreateIssueForm', () => {
       </MemoryRouter>
     );
     const textFields = screen.getAllByRole('textbox');
+
     expect(textFields).toHaveLength(5);
   });
 
@@ -23,6 +24,7 @@ describe('CreateIssueForm', () => {
       </MemoryRouter>
     );
     const submitButton = screen.getByRole('button', { name: 'SUBMIT' });
+
     expect(submitButton).toBeInTheDocument();
   });
 });

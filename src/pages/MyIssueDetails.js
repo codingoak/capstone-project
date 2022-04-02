@@ -6,20 +6,17 @@ import BackArrow from '../components/BackArrow';
 import { ButtonPrimarySmall, ButtonSecondary } from '../components/Button';
 import HeadingMain from '../components/HeadingMain';
 import RemoveDialog from '../components/RemoveDialog';
+import useMyIssues from '../hooks/useStore';
 
-export default function MyIssueDetails({
-  avatar,
-  handleEditIssue,
-  handleRemoveIssue,
-  myIssue,
-  myIssues,
-}) {
+export default function MyIssueDetails({ avatar, myIssue }) {
   const [showRemoveDialog, setShowRemoveDialog] = useState(false);
   const [editTitle, setEditTitle] = useState(false);
   const [editBody, setEditBody] = useState(false);
   const [editState, setEditState] = useState(false);
   const [editMilestone, setEditMilestone] = useState(false);
   const [editLabels, setEditLabels] = useState(false);
+  const myIssues = useMyIssues(state => state.myIssues);
+  const setMyIssues = useMyIssues(state => state.setMyIssues);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -232,6 +229,26 @@ export default function MyIssueDetails({
       </Wrapper>
     </>
   );
+
+  function handleEditIssue(prevIssue) {
+    const date = new Date().toLocaleString();
+    const editedIssues = myIssues.map(myIssue => {
+      if (myIssue.id === prevIssue.id) {
+        return {
+          ...prevIssue,
+          updated_at: date,
+        };
+      } else {
+        return myIssue;
+      }
+    });
+
+    setMyIssues(editedIssues);
+  }
+
+  function handleRemoveIssue(id) {
+    setMyIssues(myIssues.filter(myIssue => myIssue.id !== id));
+  }
 
   function handleShowRemoveDialog() {
     setShowRemoveDialog(false);

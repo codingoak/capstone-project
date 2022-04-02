@@ -60,7 +60,7 @@ export default function Detail({ comparedIssue }) {
             {comparedIssue.milestone ? (
               <dl>
                 <dt>Milestone:</dt>
-                <dd>{comparedIssue.milestone}</dd>
+                <dd>{comparedIssue.milestone.title}</dd>
               </dl>
             ) : null}
             {comparedIssue.labels.length > 0 ? (
@@ -71,6 +71,7 @@ export default function Detail({ comparedIssue }) {
                 ))}
               </dl>
             ) : null}
+
             <dl>
               <dt>Created at:</dt>
               <dd>{comparedIssue.created_at}</dd>

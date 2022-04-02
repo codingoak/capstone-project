@@ -3,13 +3,16 @@ import styled from 'styled-components/macro';
 import HeadingIssues from '../components/HeadingIssues';
 import HeadingMain from '../components/HeadingMain';
 import Issues from '../components/Issues';
+import { useMyIssues } from '../hooks/useStore';
 
-export default function MyIssues({ myIssues, togglePin }) {
+export default function MyIssues({ togglePin }) {
+  const myIssues = useMyIssues(state => state.myIssues);
+
   return (
     <>
       <HeadingMain title="MY ISSUES" />
       <main>
-        {myIssues.length > 0 ? (
+        {myIssues ? (
           <HeadingIssues />
         ) : (
           <EmptyState>

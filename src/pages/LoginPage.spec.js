@@ -1,10 +1,15 @@
 import { render, screen } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 
 import LoginPage from './LoginPage';
 
 describe('LoginPage', () => {
   it('renders the logo', () => {
-    render(<LoginPage />);
+    render(
+      <MemoryRouter>
+        <LoginPage />
+      </MemoryRouter>
+    );
     const logoTextOne = screen.getByRole('heading', { name: 'MY' });
     const logoTextTwo = screen.getByRole('heading', { name: 'TRACKER' });
     const logo = screen.getByRole('img');
@@ -15,15 +20,25 @@ describe('LoginPage', () => {
   });
 
   it('renders the inputfield', () => {
-    render(<LoginPage />);
+    render(
+      <MemoryRouter>
+        <LoginPage />
+      </MemoryRouter>
+    );
+
     const inputField = screen.getByRole('textbox');
 
     expect(inputField).toBeInTheDocument();
   });
 
   it('renders the login button', () => {
-    render(<LoginPage />);
+    render(
+      <MemoryRouter>
+        <LoginPage />
+      </MemoryRouter>
+    );
     const loginButton = screen.getByRole('button');
+
     expect(loginButton).toBeInTheDocument();
   });
 });

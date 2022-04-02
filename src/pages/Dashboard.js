@@ -10,18 +10,19 @@ import Pagination from '../components/Pagination';
 
 import Selection from '../components/Selection';
 import TopicOverview from '../components/TopicOverview';
-import useStore from '../hooks/useStore';
+import useStore, { usePinnedIssues } from '../hooks/useStore';
 
 export default function Dashboard({ sortPins, togglePin }) {
   const comparedIssues = useStore(state => state.comparedIssues);
-  const setComparedIssues = useStore(state => state.setComparedIssues);
   const hasError = useStore(state => state.hasError);
-  const setHasError = useStore(state => state.setHasError);
   const isLoading = useStore(state => state.isLoading);
-  const setIsLoading = useStore(state => state.setIsLoading);
   const paginationUrls = useStore(state => state.paginationUrls);
-  const setPaginationUrls = useStore(state => state.setPaginationUrls);
+  const pinnedIssues = usePinnedIssues(state => state.pinnedIssues);
   const selectedProject = useStore(state => state.selectedProject);
+  const setComparedIssues = useStore(state => state.setComparedIssues);
+  const setHasError = useStore(state => state.setHasError);
+  const setIsLoading = useStore(state => state.setIsLoading);
+  const setPaginationUrls = useStore(state => state.setPaginationUrls);
 
   useEffect(() => {
     getData(selectedProject);
@@ -63,10 +64,7 @@ export default function Dashboard({ sortPins, togglePin }) {
       )}
       {comparedIssues && !isLoading && !hasError && (
         <>
-          <FetchedIssues
-            comparedIssues={comparedIssues}
-            togglePin={togglePin}
-          />
+          <FetchedIssues togglePin={togglePin} />
           {paginationUrls && !isLoading && !hasError && (
             <Pagination getData={getData} />
           )}
@@ -84,17 +82,9 @@ export default function Dashboard({ sortPins, togglePin }) {
     </>
   );
 
-  function loadFromLocal(key) {
-    try {
-      return JSON.parse(localStorage.getItem(key));
-    } catch (error) {
-      console.error('Load from local failed', error);
-    }
-  }
-
   function compareIssues(data) {
     const compared = data.map(fetchedIssue => {
-      const foundIssue = loadFromLocal(selectedProject)?.find(
+      const foundIssue = pinnedIssues?.find(
         savedIssue => savedIssue.id === fetchedIssue.id
       );
       if (foundIssue) {

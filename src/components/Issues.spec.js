@@ -17,6 +17,7 @@ describe('Issues', () => {
       </MemoryRouter>
     );
     const testIssues = screen.getAllByText(/Teststring/i);
+
     expect(testIssues).toHaveLength(2);
   });
 
@@ -27,6 +28,7 @@ describe('Issues', () => {
       </MemoryRouter>
     );
     const buttons = screen.getAllByRole('button');
+
     expect(buttons).toHaveLength(2);
   });
 

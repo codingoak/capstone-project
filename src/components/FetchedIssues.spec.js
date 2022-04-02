@@ -15,17 +15,10 @@ describe('FetchedIssues', () => {
         <FetchedIssues comparedIssues={comparedIssues} />
       </MemoryRouter>
     );
-    const heading = screen.getByText('Title');
-    expect(heading).toBeInTheDocument();
-  });
+    const headerTitle = screen.getByText('Title');
+    const headerState = screen.getByText('State');
 
-  it('renders an issue', () => {
-    render(
-      <MemoryRouter>
-        <FetchedIssues comparedIssues={comparedIssues} />
-      </MemoryRouter>
-    );
-    const issue = screen.getByText(/Teststring2/);
-    expect(issue).toBeInTheDocument();
+    expect(headerTitle).toBeInTheDocument();
+    expect(headerState).toBeInTheDocument();
   });
 });

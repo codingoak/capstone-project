@@ -25,6 +25,7 @@ describe('MyIssueDetails', () => {
       </MemoryRouter>
     );
     const terms = screen.getAllByRole('term');
+
     expect(terms).toHaveLength(7);
   });
 
@@ -35,6 +36,7 @@ describe('MyIssueDetails', () => {
       </MemoryRouter>
     );
     const definitions = screen.getAllByRole('definition');
+
     expect(definitions).toHaveLength(8);
   });
 
@@ -45,6 +47,7 @@ describe('MyIssueDetails', () => {
       </MemoryRouter>
     );
     const userName = screen.getByText('codingoak');
+
     expect(userName).toBeInTheDocument();
   });
 
@@ -55,6 +58,7 @@ describe('MyIssueDetails', () => {
       </MemoryRouter>
     );
     const title = screen.getByText('This is an issue title');
+
     expect(title).toBeInTheDocument();
   });
 
@@ -65,6 +69,7 @@ describe('MyIssueDetails', () => {
       </MemoryRouter>
     );
     const state = screen.getByText('open');
+
     expect(state).toBeInTheDocument();
   });
 
@@ -75,6 +80,7 @@ describe('MyIssueDetails', () => {
       </MemoryRouter>
     );
     const RemoveButton = screen.getByRole('button', { name: 'REMOVE' });
+
     expect(RemoveButton).toBeInTheDocument();
   });
 });

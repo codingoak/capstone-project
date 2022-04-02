@@ -1,12 +1,20 @@
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { nanoid } from 'nanoid';
+
 import styled from 'styled-components/macro';
 
 import BackArrow from '../components/BackArrow';
 import { ButtonPrimary } from '../components/Button';
 import HeadingMain from '../components/HeadingMain';
+import useStore, { useMyIssues, useUserdata } from '../hooks/useStore';
 
-export default function CreateIssueForm({ handleMyIssues, username }) {
+export default function CreateIssueForm() {
+  const setMyIssues = useMyIssues(state => state.setMyIssues);
+  const myIssues = useMyIssues(state => state.myIssues);
+  const userdata = useUserdata(state => state.userdata);
+  const username = useStore(state => state.username);
+
   const {
     register,
     handleSubmit,
@@ -132,6 +140,27 @@ export default function CreateIssueForm({ handleMyIssues, username }) {
       </main>
     </>
   );
+
+  function handleMyIssues({ body, isPinned, labels, milestone, title, user }) {
+    const id = nanoid();
+    const date = new Date().toLocaleString();
+
+    setMyIssues([
+      {
+        user,
+        avatar: userdata.avatar_url,
+        body,
+        created_at: date,
+        id,
+        isPinned,
+        labels,
+        milestone,
+        state: 'open',
+        title,
+      },
+      ...myIssues,
+    ]);
+  }
 
   function onSubmit(data) {
     navigate('/myissues');
