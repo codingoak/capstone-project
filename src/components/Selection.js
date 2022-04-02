@@ -11,18 +11,17 @@ export default function Selection() {
   return (
     <SelectionForm aria-label="Select box">
       <Select
-        options={options}
-        value={options.find(obj => obj.value === selectedProject)}
-        onChange={e => setSelectedProject(e.value)}
         aria-label="choose a project"
-        name="Repositories"
-        placeholder="Select a repository..."
         getOptionLabel={e => (
           <div style={{ display: 'flex', alignItems: 'center' }}>
             {e.icon}
             <span style={{ marginLeft: 5 }}>{e.label}</span>
           </div>
         )}
+        name="Repositories"
+        onChange={e => setSelectedProject(e.value)}
+        options={options}
+        placeholder="Select a repository..."
         theme={theme => ({
           ...theme,
           colors: {
@@ -30,13 +29,13 @@ export default function Selection() {
             neutral50: 'var(--font-color-medium)',
           },
         })}
+        value={options.find(obj => obj.value === selectedProject)}
       />
     </SelectionForm>
   );
 }
 
 const SelectionForm = styled.form`
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   margin: 0 10px 10px;
   padding-top: 10px;
 `;

@@ -30,21 +30,21 @@ export default function CreateIssueForm() {
       isPinned: false,
     },
   });
-  const user = watch('user');
-  const title = watch('title');
   const body = watch('body');
-  const milestone = watch('milestone');
   const labels = watch('labels');
+  const milestone = watch('milestone');
   const maxTitleLength = 100;
   const maxUserLength = 30;
   const maxBodyLength = 2000;
   const maxMilestoneLength = 50;
   const maxLabelsLength = 100;
+  const navigate = useNavigate();
   const separatedLabels = labels
     .split(',')
     .map(label => label.trim())
     .filter(tag => tag.length > 0);
-  const navigate = useNavigate();
+  const title = watch('title');
+  const user = watch('user');
 
   return (
     <>
@@ -210,7 +210,9 @@ const StyledForm = styled.form`
 
   input {
     border-radius: 5px;
-    border: 1px solid var(--border-color-light);
+    border: 1px solid var(--border-color-medium);
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 8px 18px -5px,
+      rgba(0, 0, 0, 0.3) 0px 6px 13px -8px;
     font-family: monospace;
     font-size: 0.9rem;
     height: 2rem;
@@ -234,11 +236,14 @@ const StyledForm = styled.form`
 
   textarea {
     border-radius: 5px;
-    border: 1px solid var(--border-color-light);
+    border: 1px solid var(--border-color-medium);
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 8px 18px -5px,
+      rgba(0, 0, 0, 0.3) 0px 6px 13px -8px;
     font-family: monospace;
     font-size: 0.9rem;
     ::placeholder {
       color: var(--font-color-medium);
+      padding-left: 5px;
     }
   }
 `;

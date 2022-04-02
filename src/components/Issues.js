@@ -3,7 +3,15 @@ import { NavLink } from 'react-router-dom';
 
 import styled from 'styled-components/macro';
 
-export default function Issues({ issues, togglePin }) {
+import useStore, { useMyIssues, usePinnedIssues } from '../hooks/useStore';
+
+export default function Issues({ issues }) {
+  const pinnedIssues = usePinnedIssues.getState().pinnedIssues;
+  const setComparedIssues = useStore.getState().setComparedIssues;
+  const setMyIssues = useMyIssues.getState().setMyIssues;
+  const setPinnedIssues = usePinnedIssues.getState().setPinnedIssues;
+  const sortPins = useStore.getState().sortPins;
+
   return (
     <>
       {issues?.map(issue => {
@@ -56,6 +64,45 @@ export default function Issues({ issues, togglePin }) {
       })}
     </>
   );
+
+  function togglePin(prevId, prevIssues) {
+    // Check if id matchs
+    const checkedIssues = prevIssues.map(prevIssue => {
+      if (prevIssue.id === prevId) {
+        return {
+          ...prevIssue,
+          isPinned: !prevIssue.isPinned,
+        };
+      } else {
+        return {
+          ...prevIssue,
+        };
+      }
+    });
+    sortPins(checkedIssues);
+
+    // set to compared(fetched) or set to my issues
+    if (prevIssues[0].hasOwnProperty('url')) {
+      setComparedIssues(checkedIssues);
+    } else {
+      setMyIssues(checkedIssues);
+    }
+
+    // creates an array with all the pinned issues
+    const nextIssues = [...checkedIssues, ...pinnedIssues];
+
+    const uniqueIssues = Array.from(
+      new Set(nextIssues.map(nextIssue => nextIssue.id))
+    ).map(id => {
+      return nextIssues.find(nextIssue => nextIssue.id === id);
+    });
+
+    const uniquePinnedIssues = uniqueIssues.filter(
+      uniqueIssue => uniqueIssue.isPinned
+    );
+
+    setPinnedIssues(uniquePinnedIssues);
+  }
 }
 
 const Link = styled(NavLink)`

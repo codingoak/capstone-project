@@ -1,5 +1,4 @@
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 
 import Issues from './Issues';
@@ -32,21 +31,14 @@ describe('Issues', () => {
     expect(buttons).toHaveLength(2);
   });
 
-  it('calls togglePin from PinButton', () => {
-    const togglePin = jest.fn();
+  it('renders the empty pin icon', () => {
     render(
       <MemoryRouter>
-        <Issues
-          issues={[
-            { id: 333, title: 'Teststring3', state: 'open', clicked: true },
-          ]}
-          togglePin={togglePin}
-        />
+        <Issues issues={issues} />
       </MemoryRouter>
     );
-    const PinButton = screen.getByRole('button');
-    userEvent.click(PinButton);
+    const emptyPin = screen.getByLabelText('Pin empty');
 
-    expect(togglePin).toHaveBeenCalled();
+    expect(emptyPin).toBeInTheDocument();
   });
 });

@@ -6,11 +6,10 @@
 
 App for tracking issues. With My Tracker, issues can be loaded from selected GitHub repositories. The issues can be saved by pinning them to local storage and then appear at the top of the respective page.
 
-<img align="right" src="./src/images/app-preview.gif" alt="app preview" width="270">
-
 ## `Features`
 
 - Track issues from GitHub
+  <img align="right" src="./src/images/app-preview.gif" alt="app preview" width="270">
 - Create and edit your own issues
 - Detailed issue overview
 - Issues are pinnable
@@ -21,7 +20,7 @@ App for tracking issues. With My Tracker, issues can be loaded from selected Git
 - [React](https://beta.reactjs.org/)
 - [React Router](https://reactrouter.com/)
 - [React Select](https://react-select.com/home)
-- [React-Hook-Form](https://react-hook-form.com/)
+- [React Hook Form](https://react-hook-form.com/)
 - [styled-components](https://styled-components.com/)
 - [Storybook](https://storybook.js.org/)
 - [Testing Library](https://testing-library.com/)

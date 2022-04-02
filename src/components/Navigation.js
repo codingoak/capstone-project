@@ -45,7 +45,8 @@ const Link = styled(NavLink)`
   place-items: center;
   z-index: 2;
   &.active {
-    background-color: var(--bg-color-dark);
+    border-top: 2px solid var(--bg-color-secondary);
+    border-radius: 11px 11px 0 0;
     transform: translateY(-8px);
   }
 `;

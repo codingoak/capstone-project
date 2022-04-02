@@ -30,7 +30,6 @@ export default function ProfilePage() {
                   <h3>{userdata.login}</h3>
                 </div>
               </ProfilHead>
-
               <ProfileBody>
                 <dt>Public repos:</dt>
                 <dd>{userdata.public_repos}</dd>

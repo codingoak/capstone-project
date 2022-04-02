@@ -7,6 +7,7 @@ const useStore = create(set => ({
   isLoading: false,
   paginationUrls: null,
   selectedProject: null,
+  showRemoveDialog: false,
   userDataStatus: null,
   username: '',
 
@@ -25,11 +26,26 @@ const useStore = create(set => ({
   setSelectedProject: selectedProject => {
     set({ selectedProject });
   },
+  setShowRemoveDialog: showRemoveDialog => {
+    set({ showRemoveDialog });
+  },
   setUserDataStatus: userDataStatus => {
     set({ userDataStatus });
   },
   setUsername: username => {
     set({ username });
+  },
+
+  sortPins: issues => {
+    issues.sort((a, b) => {
+      if (a.isPinned === true) {
+        return -1;
+      }
+      if (b.isPinned === true) {
+        return +1;
+      }
+      return 0;
+    });
   },
 }));
 

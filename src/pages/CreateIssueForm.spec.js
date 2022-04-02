@@ -4,12 +4,10 @@ import { MemoryRouter } from 'react-router-dom';
 import CreateIssueForm from './CreateIssueForm';
 
 describe('CreateIssueForm', () => {
-  const username = 'codingoak';
-
   it('renders the five textfields', () => {
     render(
       <MemoryRouter>
-        <CreateIssueForm username={username} />
+        <CreateIssueForm />
       </MemoryRouter>
     );
     const textFields = screen.getAllByRole('textbox');
@@ -20,7 +18,7 @@ describe('CreateIssueForm', () => {
   it('renders the button', () => {
     render(
       <MemoryRouter>
-        <CreateIssueForm username={username} />
+        <CreateIssueForm />
       </MemoryRouter>
     );
     const submitButton = screen.getByRole('button', { name: 'SUBMIT' });

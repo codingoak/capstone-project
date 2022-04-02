@@ -15,16 +15,16 @@ describe('MyIssues', () => {
     expect(mainHeader).toBeInTheDocument();
   });
 
-  it('renders the issues header', () => {
+  it('renders the emptu message', () => {
     render(
       <MemoryRouter>
         <MyIssues />
       </MemoryRouter>
     );
-    const issuesHeaderTitle = screen.getByText('Title');
-    const issuesHeaderState = screen.getByText('State');
+    const emptyMessage = screen.getByText(
+      /Create an issue with the create form/i
+    );
 
-    expect(issuesHeaderTitle).toBeInTheDocument();
-    expect(issuesHeaderState).toBeInTheDocument();
+    expect(emptyMessage).toBeInTheDocument();
   });
 });

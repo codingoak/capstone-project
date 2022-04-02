@@ -111,7 +111,9 @@ const StyledForm = styled.form`
 
   input {
     border-radius: 5px;
-    border: 1px solid var(--border-color-light);
+    border: 1px solid var(--border-color-medium);
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+      rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
     font-size: 0.9rem;
     height: 2rem;
     width: 200px;

@@ -5,7 +5,6 @@ import HeadingIssues from './HeadingIssues';
 describe('HeadingIssues', () => {
   it('renders the heading with the Title and State', () => {
     render(<HeadingIssues />);
-
     const headerTitle = screen.getByText('Title');
     const headerState = screen.getByText('State');
 

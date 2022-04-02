@@ -24,12 +24,8 @@ describe('Dashboard', () => {
       </MemoryRouter>
     );
     const placeholder = screen.getByText(/Select a repository/i);
-    expect(placeholder).toBeInTheDocument();
-    const emptyMessage = screen.getByText(
-      'Select an option from the box above.'
-    );
 
-    expect(emptyMessage).toBeInTheDocument();
+    expect(placeholder).toBeInTheDocument();
   });
 
   it('renders the empty message', () => {

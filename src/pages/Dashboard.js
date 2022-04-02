@@ -12,7 +12,7 @@ import Selection from '../components/Selection';
 import TopicOverview from '../components/TopicOverview';
 import useStore, { usePinnedIssues } from '../hooks/useStore';
 
-export default function Dashboard({ sortPins, togglePin }) {
+export default function Dashboard() {
   const comparedIssues = useStore(state => state.comparedIssues);
   const hasError = useStore(state => state.hasError);
   const isLoading = useStore(state => state.isLoading);
@@ -23,6 +23,7 @@ export default function Dashboard({ sortPins, togglePin }) {
   const setHasError = useStore(state => state.setHasError);
   const setIsLoading = useStore(state => state.setIsLoading);
   const setPaginationUrls = useStore(state => state.setPaginationUrls);
+  const sortPins = useStore(state => state.sortPins);
 
   useEffect(() => {
     getData(selectedProject);
@@ -64,7 +65,7 @@ export default function Dashboard({ sortPins, togglePin }) {
       )}
       {comparedIssues && !isLoading && !hasError && (
         <>
-          <FetchedIssues togglePin={togglePin} />
+          <FetchedIssues />
           {paginationUrls && !isLoading && !hasError && (
             <Pagination getData={getData} />
           )}
@@ -185,6 +186,8 @@ const TopicContainer = styled.section`
   background: linear-gradient(#144e74, var(--bg-color-dark), #144e74);
   border: 1px solid black;
   border-radius: 5px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 8px 18px -5px,
+    rgba(0, 0, 0, 0.3) 0px 6px 13px -8px;
   margin: 10px 10px 0;
   padding: 5px 0;
 `;
