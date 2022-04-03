@@ -6,6 +6,7 @@ describe('HeadingMain', () => {
   it('renders the heading with the title "HeadingMain"', () => {
     render(<HeadingMain title={'HeadingMain'} />);
     const heading = screen.getByText('HeadingMain');
+
     expect(heading).toBeInTheDocument();
   });
 });

@@ -2,25 +2,26 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components/macro';
 
 import { ButtonSecondary, ButtonPrimary } from './Button';
+import useStore, { useMyIssues } from '../hooks/useStore';
 
-export default function RemoveDialog({
-  issueId,
-  handleShowRemoveDialog,
-  handleRemoveIssue,
-}) {
+export default function RemoveDialog({ id }) {
+  const myIssues = useMyIssues(state => state.myIssues);
   const navigate = useNavigate();
+  const setMyIssues = useMyIssues(state => state.setMyIssues);
+  const setShowRemoveDialog = useStore(state => state.setShowRemoveDialog);
+
   return (
     <Wrapper>
       <ButtonPrimary
         children={'CANCEL'}
         onClick={() => {
-          handleShowRemoveDialog();
+          setShowRemoveDialog(false);
         }}
       />
       <ButtonSecondary
         children={'REMOVE'}
         onClick={() => {
-          removeIssue(issueId);
+          removeIssue(id);
         }}
       />
     </Wrapper>
@@ -28,7 +29,7 @@ export default function RemoveDialog({
 
   function removeIssue(id) {
     navigate('/myissues');
-    handleRemoveIssue(id);
+    setMyIssues(myIssues.filter(myIssue => myIssue.id !== id));
   }
 }
 

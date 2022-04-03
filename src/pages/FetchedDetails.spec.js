@@ -34,6 +34,7 @@ describe('Fetched issue details', () => {
       </MemoryRouter>
     );
     const number = screen.getByText(1168898651);
+
     expect(number).toBeInTheDocument();
   });
 
@@ -44,6 +45,7 @@ describe('Fetched issue details', () => {
       </MemoryRouter>
     );
     const userName = screen.getByText('codingoak');
+
     expect(userName).toBeInTheDocument();
   });
 
@@ -54,6 +56,7 @@ describe('Fetched issue details', () => {
       </MemoryRouter>
     );
     const title = screen.getByText('This is an issue title');
+
     expect(title).toBeInTheDocument();
   });
 
@@ -64,6 +67,7 @@ describe('Fetched issue details', () => {
       </MemoryRouter>
     );
     const state = screen.getByText('open');
+
     expect(state).toBeInTheDocument();
   });
 });

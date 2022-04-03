@@ -1,10 +1,16 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import styled from 'styled-components/macro';
 
 import { ButtonPrimary, ButtonSecondary } from '../components/Button';
 import HeadingMain from '../components/HeadingMain';
+import useStore, { useUserdata } from '../hooks/useStore';
 
-export default function ProfilePage({ handleLogout, userdata }) {
+export default function ProfilePage() {
+  const navigate = useNavigate();
+  const setUserdata = useUserdata(state => state.setUserdata);
+  const setUsername = useStore(state => state.setUsername);
+  const userdata = useUserdata(state => state.userdata);
+
   return (
     <>
       <HeadingMain title="PROFILE" />
@@ -24,7 +30,6 @@ export default function ProfilePage({ handleLogout, userdata }) {
                   <h3>{userdata.login}</h3>
                 </div>
               </ProfilHead>
-
               <ProfileBody>
                 <dt>Public repos:</dt>
                 <dd>{userdata.public_repos}</dd>
@@ -60,6 +65,12 @@ export default function ProfilePage({ handleLogout, userdata }) {
       </>
     </>
   );
+
+  function handleLogout() {
+    navigate('/');
+    setUsername('');
+    setUserdata('');
+  }
 }
 
 const Avatar = styled.img`

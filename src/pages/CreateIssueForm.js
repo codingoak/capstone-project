@@ -1,12 +1,20 @@
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { nanoid } from 'nanoid';
+
 import styled from 'styled-components/macro';
 
 import BackArrow from '../components/BackArrow';
 import { ButtonPrimary } from '../components/Button';
 import HeadingMain from '../components/HeadingMain';
+import useStore, { useMyIssues, useUserdata } from '../hooks/useStore';
 
-export default function CreateIssueForm({ handleMyIssues, username }) {
+export default function CreateIssueForm() {
+  const setMyIssues = useMyIssues(state => state.setMyIssues);
+  const myIssues = useMyIssues(state => state.myIssues);
+  const userdata = useUserdata(state => state.userdata);
+  const username = useStore(state => state.username);
+
   const {
     register,
     handleSubmit,
@@ -22,21 +30,21 @@ export default function CreateIssueForm({ handleMyIssues, username }) {
       isPinned: false,
     },
   });
-  const user = watch('user');
-  const title = watch('title');
   const body = watch('body');
-  const milestone = watch('milestone');
   const labels = watch('labels');
+  const milestone = watch('milestone');
   const maxTitleLength = 100;
   const maxUserLength = 30;
   const maxBodyLength = 2000;
   const maxMilestoneLength = 50;
   const maxLabelsLength = 100;
+  const navigate = useNavigate();
   const separatedLabels = labels
     .split(',')
     .map(label => label.trim())
     .filter(tag => tag.length > 0);
-  const navigate = useNavigate();
+  const title = watch('title');
+  const user = watch('user');
 
   return (
     <>
@@ -133,6 +141,27 @@ export default function CreateIssueForm({ handleMyIssues, username }) {
     </>
   );
 
+  function handleMyIssues({ body, isPinned, labels, milestone, title, user }) {
+    const id = nanoid();
+    const date = new Date().toLocaleString();
+
+    setMyIssues([
+      {
+        user,
+        avatar: userdata.avatar_url,
+        body,
+        created_at: date,
+        id,
+        isPinned,
+        labels,
+        milestone,
+        state: 'open',
+        title,
+      },
+      ...myIssues,
+    ]);
+  }
+
   function onSubmit(data) {
     navigate('/myissues');
     handleMyIssues({
@@ -181,7 +210,9 @@ const StyledForm = styled.form`
 
   input {
     border-radius: 5px;
-    border: 1px solid var(--border-color-light);
+    border: 1px solid var(--border-color-medium);
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 8px 18px -5px,
+      rgba(0, 0, 0, 0.3) 0px 6px 13px -8px;
     font-family: monospace;
     font-size: 0.9rem;
     height: 2rem;
@@ -205,11 +236,14 @@ const StyledForm = styled.form`
 
   textarea {
     border-radius: 5px;
-    border: 1px solid var(--border-color-light);
+    border: 1px solid var(--border-color-medium);
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 8px 18px -5px,
+      rgba(0, 0, 0, 0.3) 0px 6px 13px -8px;
     font-family: monospace;
     font-size: 0.9rem;
     ::placeholder {
       color: var(--font-color-medium);
+      padding-left: 5px;
     }
   }
 `;

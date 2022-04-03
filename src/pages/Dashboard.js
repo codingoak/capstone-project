@@ -1,30 +1,41 @@
+import { useEffect } from 'react';
+
 import { keyframes } from 'styled-components/macro';
 import styled from 'styled-components/macro';
 
 import { ButtonPrimary } from '../components/Button';
 import FetchedIssues from '../components/FetchedIssues';
 import HeadingMain from '../components/HeadingMain';
+import Pagination from '../components/Pagination';
+
 import Selection from '../components/Selection';
 import TopicOverview from '../components/TopicOverview';
+import useStore, { usePinnedIssues } from '../hooks/useStore';
 
-export default function Dashboard({
-  comparedIssues,
-  getData,
-  handleRepoChange,
-  hasError,
-  isLoading,
-  selectedProject,
-  togglePin,
-}) {
+export default function Dashboard() {
+  const comparedIssues = useStore(state => state.comparedIssues);
+  const hasError = useStore(state => state.hasError);
+  const isLoading = useStore(state => state.isLoading);
+  const paginationUrls = useStore(state => state.paginationUrls);
+  const pinnedIssues = usePinnedIssues(state => state.pinnedIssues);
+  const selectedProject = useStore(state => state.selectedProject);
+  const setComparedIssues = useStore(state => state.setComparedIssues);
+  const setHasError = useStore(state => state.setHasError);
+  const setIsLoading = useStore(state => state.setIsLoading);
+  const setPaginationUrls = useStore(state => state.setPaginationUrls);
+  const sortPins = useStore(state => state.sortPins);
+
+  useEffect(() => {
+    getData(selectedProject);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedProject]);
+
   return (
     <>
       <HeadingMain title="DASHBOARD" />
       <TopicContainer>
-        <Selection
-          handleRepoChange={handleRepoChange}
-          selectedProject={selectedProject}
-        />
-        {selectedProject && <TopicOverview selectedProject={selectedProject} />}
+        <Selection />
+        {selectedProject && <TopicOverview />}
       </TopicContainer>
       {isLoading && (
         <LoadingContainer>
@@ -54,10 +65,10 @@ export default function Dashboard({
       )}
       {comparedIssues && !isLoading && !hasError && (
         <>
-          <FetchedIssues
-            comparedIssues={comparedIssues}
-            togglePin={togglePin}
-          />
+          <FetchedIssues />
+          {paginationUrls && !isLoading && !hasError && (
+            <Pagination getData={getData} />
+          )}
         </>
       )}
       {hasError && (
@@ -71,6 +82,70 @@ export default function Dashboard({
       )}
     </>
   );
+
+  function compareIssues(data) {
+    const compared = data.map(fetchedIssue => {
+      const foundIssue = pinnedIssues?.find(
+        savedIssue => savedIssue.id === fetchedIssue.id
+      );
+      if (foundIssue) {
+        return {
+          ...fetchedIssue,
+          isPinned: foundIssue.isPinned,
+        };
+      } else {
+        return {
+          ...fetchedIssue,
+          isPinned: false,
+        };
+      }
+    });
+
+    sortPins(compared);
+    setComparedIssues(compared);
+  }
+
+  async function getData(url) {
+    window.scrollTo(0, 0);
+
+    if (selectedProject) {
+      try {
+        setIsLoading(true);
+        setHasError(false);
+        const response = await fetch(url);
+
+        if (response.ok) {
+          getDataForPagination(response);
+          const data = await response.json();
+          compareIssues(data);
+        } else {
+          throw new Error('Response not ok');
+        }
+      } catch (error) {
+        console.error(error);
+        setHasError(true);
+      }
+      setIsLoading(false);
+    }
+  }
+
+  function getDataForPagination(response) {
+    const link = response.headers.get('Link');
+    const links = link?.split(',');
+    const urls = links?.map(link => {
+      return {
+        url: link.split(';')[0].replace('<', '').replace('>', '').trim(),
+        title: link
+          .split(';')[1]
+          .replace('rel', '')
+          .replace('="', '')
+          .replace('"', '')
+          .trim(),
+      };
+    });
+
+    setPaginationUrls(urls);
+  }
 }
 
 const TurnAnimation = keyframes`
@@ -111,6 +186,8 @@ const TopicContainer = styled.section`
   background: linear-gradient(#144e74, var(--bg-color-dark), #144e74);
   border: 1px solid black;
   border-radius: 5px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 8px 18px -5px,
+    rgba(0, 0, 0, 0.3) 0px 6px 13px -8px;
   margin: 10px 10px 0;
   padding: 5px 0;
 `;

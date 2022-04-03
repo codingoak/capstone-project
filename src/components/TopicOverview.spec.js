@@ -2,12 +2,8 @@ import { render, screen } from '@testing-library/react';
 import TopicOverview from './TopicOverview';
 
 describe('TopicOverview', () => {
-  const selectedProject =
-    'https://api.github.com/repos/reactjs/reactjs.org/issues';
-
   it('renders the topic overview', () => {
-    render(<TopicOverview selectedProject={selectedProject} />);
-
+    render(<TopicOverview />);
     const exclamationMark = screen.getByLabelText(/Exclamation mark/i);
     const title = screen.getByText(/open issues/i);
 

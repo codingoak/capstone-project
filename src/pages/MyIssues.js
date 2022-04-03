@@ -3,8 +3,11 @@ import styled from 'styled-components/macro';
 import HeadingIssues from '../components/HeadingIssues';
 import HeadingMain from '../components/HeadingMain';
 import Issues from '../components/Issues';
+import { useMyIssues } from '../hooks/useStore';
 
-export default function MyIssues({ myIssues, togglePin }) {
+export default function MyIssues() {
+  const myIssues = useMyIssues(state => state.myIssues);
+
   return (
     <>
       <HeadingMain title="MY ISSUES" />
@@ -16,7 +19,7 @@ export default function MyIssues({ myIssues, togglePin }) {
             <i>Create an issue with the create form.</i>
           </EmptyState>
         )}
-        <Issues issues={myIssues} togglePin={togglePin} />
+        <Issues issues={myIssues} />
       </main>
     </>
   );

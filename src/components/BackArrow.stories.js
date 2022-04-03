@@ -5,4 +5,4 @@ export default {
   component: BackArrow,
 };
 
-export const Default = () => <BackArrow to="/dashboard" />;
+export const Default = () => <BackArrow to="/" />;

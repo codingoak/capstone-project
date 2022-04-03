@@ -11,6 +11,7 @@ describe('Navigation', () => {
       </MemoryRouter>
     );
     const links = screen.getAllByRole('link');
+
     expect(links).toHaveLength(4);
   });
 
@@ -21,6 +22,7 @@ describe('Navigation', () => {
       </MemoryRouter>
     );
     const linkGithub = screen.getByRole('link', { name: 'GitHub issues' });
+
     expect(linkGithub).toBeInTheDocument();
   });
 
@@ -31,6 +33,7 @@ describe('Navigation', () => {
       </MemoryRouter>
     );
     const linkCreateIssue = screen.getByRole('link', { name: 'Create Issue' });
+
     expect(linkCreateIssue).toBeInTheDocument();
   });
 
@@ -42,6 +45,7 @@ describe('Navigation', () => {
     );
 
     const linkMyIssues = screen.getByRole('link', { name: 'My Issues' });
+
     expect(linkMyIssues).toBeInTheDocument();
   });
 });

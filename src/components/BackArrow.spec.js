@@ -10,6 +10,8 @@ describe('BackArrow', () => {
         <BackArrow to="/dashboard" />
       </MemoryRouter>
     );
-    expect(screen.getByTitle('Back')).toBeInTheDocument();
+    const title = screen.getByTitle('Back');
+
+    expect(title).toBeInTheDocument();
   });
 });

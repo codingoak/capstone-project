@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom';
+
 import styled from 'styled-components/macro';
 
 export default function BackArrow({ to }) {
@@ -19,7 +20,6 @@ export default function BackArrow({ to }) {
 }
 
 const Navlink = styled(NavLink)`
-  /* opacity: 0.8; */
   :hover {
     cursor: pointer;
     opacity: 1;

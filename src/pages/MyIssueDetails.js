@@ -6,20 +6,18 @@ import BackArrow from '../components/BackArrow';
 import { ButtonPrimarySmall, ButtonSecondary } from '../components/Button';
 import HeadingMain from '../components/HeadingMain';
 import RemoveDialog from '../components/RemoveDialog';
+import useStore, { useMyIssues } from '../hooks/useStore';
 
-export default function MyIssueDetails({
-  avatar,
-  handleEditIssue,
-  handleRemoveIssue,
-  myIssue,
-  myIssues,
-}) {
-  const [showRemoveDialog, setShowRemoveDialog] = useState(false);
-  const [editTitle, setEditTitle] = useState(false);
+export default function MyIssueDetails({ avatar, myIssue }) {
   const [editBody, setEditBody] = useState(false);
-  const [editState, setEditState] = useState(false);
-  const [editMilestone, setEditMilestone] = useState(false);
   const [editLabels, setEditLabels] = useState(false);
+  const [editMilestone, setEditMilestone] = useState(false);
+  const [editState, setEditState] = useState(false);
+  const [editTitle, setEditTitle] = useState(false);
+  const myIssues = useMyIssues(state => state.myIssues);
+  const setMyIssues = useMyIssues(state => state.setMyIssues);
+  const setShowRemoveDialog = useStore(state => state.setShowRemoveDialog);
+  const showRemoveDialog = useStore(state => state.showRemoveDialog);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -28,15 +26,12 @@ export default function MyIssueDetails({
   return (
     <>
       <HeadingMain title="DETAILS" />
-
       <Back>
         <BackArrow to="/myissues" />
       </Back>
-
       <Message>
         <Asterisk>*</Asterisk> Click on the values to edit.
       </Message>
-
       <Wrapper>
         <Top>
           <ProfilHead>
@@ -52,7 +47,6 @@ export default function MyIssueDetails({
               <h2>{myIssue.user}</h2>
             </div>
           </ProfilHead>
-
           <ProfileBody>
             <dt id="state">
               State<Asterisk>*</Asterisk>:
@@ -108,7 +102,6 @@ export default function MyIssueDetails({
             </FlexContainer>
           </ProfileBody>
         </Top>
-
         <Bottom>
           <Title>
             <dt id="title">
@@ -160,7 +153,6 @@ export default function MyIssueDetails({
               )}
             </FlexContainer>
           </Bio>
-
           <More>
             <>
               {editLabels ? (
@@ -212,20 +204,13 @@ export default function MyIssueDetails({
             </>
           </More>
         </Bottom>
-
         <ButtonContainer>
-          {!showRemoveDialog && (
+          {showRemoveDialog ? (
+            <RemoveDialog id={myIssue.id} />
+          ) : (
             <ButtonSecondary
               children={'REMOVE'}
               onClick={() => setShowRemoveDialog(true)}
-            />
-          )}
-          {showRemoveDialog && (
-            <RemoveDialog
-              issueId={myIssue.id}
-              myIssues={myIssues}
-              handleRemoveIssue={handleRemoveIssue}
-              handleShowRemoveDialog={handleShowRemoveDialog}
             />
           )}
         </ButtonContainer>
@@ -233,8 +218,20 @@ export default function MyIssueDetails({
     </>
   );
 
-  function handleShowRemoveDialog() {
-    setShowRemoveDialog(false);
+  function handleEditIssue(prevIssue) {
+    const date = new Date().toLocaleString();
+    const editedIssues = myIssues.map(myIssue => {
+      if (myIssue.id === prevIssue.id) {
+        return {
+          ...prevIssue,
+          updated_at: date,
+        };
+      } else {
+        return myIssue;
+      }
+    });
+
+    setMyIssues(editedIssues);
   }
 }
 
@@ -334,7 +331,7 @@ const More = styled.dl`
 
 const StyledInput = styled.input`
   border-radius: 5px;
-  border: 1px solid var(--border-color-light);
+  border: 1px solid var(--border-color-medium);
   width: 70%;
   height: 2rem;
 `;
