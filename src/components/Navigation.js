@@ -56,7 +56,7 @@ const Navbar = styled(motion.nav)`
   color: var(--font-color-light);
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  height: 58px;
+  height: 64px;
   position: fixed;
   width: 100%;
 `;
