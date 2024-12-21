@@ -2,11 +2,11 @@
 
 > This is my capstone project for the web development bootcamp at [neueFische](https://www.neuefische.de/weiterbildung/web-development)
 
-## `About`
+### `About`
 
 App for tracking issues. With My Tracker, issues can be loaded from selected GitHub repositories. The issues can be saved by pinning them to local storage and then appear at the top of the respective page.
 
-## `Features`
+### `Features`
 
 - Track issues from GitHub
   <img align="right" src="./src/images/app-preview.gif" alt="app preview" width="270">
@@ -15,7 +15,7 @@ App for tracking issues. With My Tracker, issues can be loaded from selected Git
 - Issues are pinnable
 - Simple login with a profile page
 
-## `Tech Stack`
+### `Tech Stack`
 
 - [React](https://beta.reactjs.org/)
 - [React Router](https://reactrouter.com/)
@@ -27,7 +27,7 @@ App for tracking issues. With My Tracker, issues can be loaded from selected Git
 - [Framer Motion](https://www.framer.com/motion/)
 - [Zustand](https://docs.pmnd.rs/zustand/introduction)
 
-## `Installation`
+### `Installation`
 
 - Clone the repository
 - Install dependencies: `npm i`
